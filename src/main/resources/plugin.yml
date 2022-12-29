@@ -1,0 +1,43 @@
+name: PowerToolS
+version: '${project.version}'
+main: me.overlight.powertools.PowerTools
+author: _OverLight_
+depend: []
+softdepend: [ ProtocolLib, Vault ]
+website: http://www.daneshian.ir/
+prefix: PowerToolS
+description: Give staffs powerful options for detecting cheaters
+
+commands:
+  powertools:
+    description: Use PowerToolS options
+    permission: powertools
+    permission-message: "You don't have enough permission to execute this command"
+    usage: ""
+    aliases: [ "pts"]
+  report:
+    description: report player, bug & other
+    usage: ""
+
+
+permissions:
+  powertools:
+    default: op
+    children:
+      - powertools.alerts
+      - powertools.player.knockback
+      - powertools.player.fall
+      - powertools.player.freeze
+      - powertools.player.rotate
+      - powertools.player.hide
+      - powertools.player.cps.lmb
+      - powertools.player.cps.rmb
+      - powertools.player.cps
+      - powertools.player.playtime
+      - powertools.kits.create
+      - powertools.kits.list
+      - powertools.kits.delete
+      - powertools.player.freeze.chat
+      - powertools.help
+      - powertools.plugin.reload
+      - powertools.player.protect

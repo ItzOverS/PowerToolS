@@ -1,0 +1,122 @@
+name: PowerToolS
+minecraft-version (maven): +1.8
+
+PowerToolS v1.0
+ - added freeze method, knockback method
+ - created prefix
+
+PowerToolS v2.0
+ - added sticks
+ - added cps check method
+ - added private chat with frozen players
+
+PowerToolS v2.1
+ - added chatChannels & ChannelManager
+ - added /pts tabCompleter
+
+PowerToolS v2.2
+ - plugin bugfixed
+ - <freeze> bug fix
+ - changed prefix
+
+PowerToolS v2.3
+ - added new methods to cps check
+ - tabCompleter bug fixed
+ - added fallDamage method
+
+PowerToolS v3.0
+ - added config.yml
+ - added <ChatManager> AddON
+ - added <maxCps method & AutoClicker check> AddON
+ - added more permissions
+
+PowerToolS v3.1
+ - added ChangeLog.txt
+ - added kits
+ - added MasterDamageProtect method
+ - reloaded tabCompleter
+ - bug fix
+
+PowerToolS v3.2
+ - added <UsernameManager> AddON
+
+PowerTools v3.3
+ - added <ForceSpawn> AddON
+ - added <kitPower ( enable, disable in config.yml)> AddON
+ - added VL to AutoClickDetector
+ - AutoClickDetector bugFixed
+ - added <Join & Quit message> AddON
+ - added <AFK Check> AddON
+ - added ConsolePrefix
+
+PowerToolS v4.0
+ - added *GUI* (SourceCode)
+ - AutoClickDetector BugFix
+
+PowerToolS v4.1
+ - switched API version ( 1.17 -> 1.9 )
+ - RELEASED *GUI*
+ - <Vanish> BugFix
+ - <FallCheck> BugFix
+ - Maven getCrashed ( Mulformed \uxxxxx encoding )
+
+PowerToolS v4.2
+ - Fixed MavenCrash
+ - switched API version ( 1.9 -> 1.8.8 )
+
+PowerToolS v4.3
+ - Plugin permissions BugFix
+ - added <randomMOTD> AddON
+ - added costume dependency loading
+ - fixed tooMany fileSize bug ( 8mg -> 65kb )
+ - <HeadRotating> BugFix
+
+PowerToolS v5.0
+ - added knockback to all
+ - added <DiscordWebHooks> AddON
+ - <AFKCheck> BugFix ( SPAM BUG )
+ - fixed /pts reload
+
+PowerToolS v5.1
+ - added <CommandDeny> AddON
+ - added <CommandCooldown> to <ChatManager> AddON
+ - added <AntiWorldDownLoader> AddON
+ - added <PingCheck> AddON
+
+PowerToolS v5.2
+ - CleanUp project files
+ - developed sources to prevent from server get lagging by plugin
+ - added <NoRepawn> AddON to <SurvivalAdddONs>
+ - plugin errors BugFix
+ - added <pvpManager> AddON
+ - added <ChatGame> AddON to <SurvivalAddONs>
+
+
+PowerToolS v5.3
+ [=] fixed plugin reload bug
+ [=] fixed afkCheck falseTrack
+ [+] added MemoryUsageManager
+ [+] added report method
+ [=] fixed memoryUsageManager spam bug
+
+PowerToolS v5.4
+ [+] added Bedwars AddOns
+ [+] added TNT & FireBall Knockback control to BedwarsAddOns
+ [+] added AntiTeamUp addon to BedwarsAddOns
+ [/] improved AntiSpam (2x)
+ [/] improved AntiRaw
+ [=] AntiRaw BugFix ( Flag normal messages )
+ [=] fixed TNT & FireBall knockback multiplier
+ [=] fixed AntiTeamUp comboChecks
+ [+] added ForcePing AddOn
+ [+] added Hub AddOns
+ [+] added KnockbackPlates to Hub AddOns
+ [=] fixed KnockbackPlates verticalVelocity
+ [=] fixed AntiTeamUp continue Many players in pvp
+ [+] added AntiRejoin AddON
+
+PowerToolS v6.0
+ [/] moved AntiRejoin, ForcePing & RandomMOTD to ServerAddOns
+ [=] fixed "report"'s bug
+ [=] fixed normalPlayers command execute ( plugin )
+ [+] added ServerAddOns.BanMOTD

@@ -1,0 +1,236 @@
+# Welcome to PowerTools config!!
+# You can use this plugin addons in this file!
+discordWebhook:
+  enabled: false
+  url: ""
+
+ChatManager:
+  enabled: false
+  AntiSpam:
+    enabled: true
+    maxSpam: 2 # if player spam 3 times will kick!
+    filterSplitters: true
+    Kick:
+      enabled: true
+      msg: "&6SPAM is not allowed on this server" # Use '\n' for nextLine
+  WordBlock:
+    enabled: true
+    Words: ["fuck", "bitch", "fvck", "rid", "kir"]
+    Modes:
+      UniCodes: true
+      Splitters: true
+      MultiLetter: true
+    msg: "&cWe flagged your message"
+  AntiDuplicate:
+    enabled: true
+    maxDuplicate: 2
+    msg: "&cDuplicated text in message"
+  MessageDelay:
+    enabled: true
+    delay: 2
+    msg: "&cYou have to wait to send another message"
+  PlayerMentions:
+    enabled: false
+    Mode: "title" # ["title", "chat", "both"]
+  CommandCooldown:
+    enabled: true
+    delay: 1 # 1 Second command cooldown
+
+UsernameManager:
+  enabled: false
+  alert-on-discord: false
+  WordBlock:
+    enabled: true
+    Words: ["fuck", "fvck", "bitch"]
+    Modes:
+      Splitters: true
+      MultiLetter: true
+    Action: "BAN" # You can insert [KICK, BAN] items in string
+    msg: "&cBad name"
+
+cpsCheck:
+  enabled: false
+  maxCps:
+    RMB:
+      enabled: true
+      alert-on-discord: false
+      max: 40
+    LMB:
+      enabled: true
+      alert-on-discord: false
+      max: 35
+  AutoClickerCheck:
+    enabled: true
+    clickerRange: 1
+    alert-on-discord: true
+    startCheck:
+      RMB: 15
+      LMB: 15
+
+ForceSpawn:
+  enabled: false
+  world: "world"
+  location:
+    x: 100
+    y: 100
+    z: 100
+  head:
+    yaw: 0
+    pitch: 90
+
+Kits:
+  enabled: false
+
+JoinMessage:
+  enabled: false
+  messages:
+    # Insert %NAME% for player userName
+    # Insert %NUM% for what players join before
+    # Insert %ONLINE% for amount of onlinePlayers on server
+    FirstJoin: "&6Welcome %NAME% to {serverName}! #%NUM%"
+    NotFirstJoin: "&6[&a+&6]&a%NAME%"
+
+QuitMessage:
+  enabled: false
+    # Insert %NAME% for player userName
+    # Insert %ONLINE% for amount of onlinePlayers on server
+  message: "&6[&c-&6]&a%NAME%"
+
+afkCheck:
+  enabled: false
+  kickOnAFK: true
+  maxDelayNoAction: 300000 # 300000 MiliSec = 300 Sec = 5 Min
+  alert-on-discord: true
+  Actions:
+    Chat: true
+    CommandExecute: true
+    Interact: true
+    Move: true
+    ChangeHeadVictor: true
+  notification:
+    chat:
+      enabled: true
+      AFKmessage: "&8* %NAME% is now afk"
+      NotAFKmessage: "&8* %NAME% is no longer afk"
+    tab:
+      enabled: false
+      tag: " &cAFK"
+
+CommandDeny:
+  enabled: false
+  commands: ["?", "help", "pl", "plugins", "rl", "reload", "version", "timings", "about", "ver", "bukkit"]
+  alert-on-discord: false
+  denyPluginNameOnStart: true # like /help OR /bukkit:help
+  ignoreOps: true
+
+AntiWorldDownLoader: # Anti WDL
+  enabled: false
+  continueOperators: false
+  alert-on-discord: true
+
+pingCheck:
+  enabled: false
+  maxPing: 1000
+  alert-on-discord: false
+
+pvpManager:
+  enabled: false
+
+# -->> Note: This option may create lag in public servers ( +10 players )
+pvpRegisterer: # Required 100mg/1cps
+  enabled: false
+  registerDamages:
+    enabled: true
+    miniDamage: 1 # 1 HP = 1/2 One Halth
+  registerKnockback: true
+
+Report:
+  enabled: false
+  delayBetweenReports: 600000 # 600000 miliSeconds = 600 Seconds = 10 Minutes
+  reportTheySelf: false
+
+
+SurvivalAddOns:
+  enabled: false
+  NoRespawn: # BETA #When player kill by another player a head will drop from dead player! If that head place, player will respawn... else they're spectator
+    enabled: false
+
+  ChatGame:
+    # Delays are in InGameTicks: 20 ticks = 1 second: 1200 ticks = 1 minute
+    enabled: false
+    delay: 18000 # = every 15 mins
+    rewardsPerGame: 1 # AI only select 1 reward per game
+    answerTime: 1200 # 1 min insert -1 for disable
+    rewards:
+      Money: 10000 # 10000$ REQUIRED *VAULT ECONOMY*
+      IRON_BLOCK: 1
+      GOLD_BLOCK: 1
+      EMERALD_BLOCK: 1
+      DIAMOND: 3
+
+BedwarsAddOns:
+  enabled: false
+  AntiTeamup:
+    enabled: false
+    distance: 5
+    maxVL: 20
+
+  TntKnockback:
+    enabled: false
+    multiply: 1.6
+
+  FireballKnockback:
+    enabled: false
+    multiply: 1.4
+
+HubAddOns:
+  enabled: false
+  KnockbackPlates:
+    enabled: false
+    locations:
+      001:
+        world: "World" # Insert world's NAME
+        location: [100, 100] #NOTE: [X, Z]
+        mode: "HEAD" # Insert "HEAD" to knockback to head direction or "FORCE" to knockback to a default location
+        knockback: [1, 2, 1] # this only work when on FORCE
+        multiply: 2 # this only work when on HEAD
+        verticalNormal: 2
+  VoidTP:
+    enabled: false
+    respawnLcation:
+      x: 100
+      y: 100
+      z: 100
+    teleportY: -5 # When player's Y position get lower than this value will teleport to the respawnLocation
+
+ServerAddOns:
+  enabled: false
+  randomMOTD:
+    enabled: false
+    MOTDs:
+      - "&6THIS IS MY SERVER!"
+      - "&6ANOTHER &5SPIGOT SERVER"
+
+  ForcePing:
+    enabled: false
+    maxDelay: 5000
+
+  AntiRejoin: # Works better if ForcePing enabled
+    enabled: false
+    wait: 5000
+
+  BanMOTD:
+    enabled: false
+    MOTD: "&cYou're Banned from mc.example.net"
+
+WorldEnvironments:
+  enabled: false
+  allowHunger: false
+  allowDamage: false
+  allowPvp: false
+  allowTp: true
+  allowFly: true
+  allowBlockBreak: false
+  allowBlockPlace: false
+  allowInteract: true
+
