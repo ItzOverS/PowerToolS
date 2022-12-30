@@ -13,10 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChatEvent;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,29 +22,30 @@ import java.util.List;
 public class Freeze
         extends Module
         implements Listener {
-    public static List<Player> frozenPlayers = new ArrayList<>();
-    public static HashMap<Player, Location> frozenLocation = new HashMap<>();
-    public static HashMap<Player, Player> playerFrozenBy = new HashMap<>();
+    public static List<String> frozenPlayers = new ArrayList<>();
+    public static HashMap<String, Location> frozenLocation = new HashMap<>();
+    public static HashMap<String, String> playerFrozenBy = new HashMap<>();
     public Freeze() {
         super("Freeze", "Freeze player for ScreenShots", "PowerTools Freeze {player}", new String[] {"fr", "freeze"});
     }
 
     public static void freezePlayer(Player executor, Player player){
-        if(frozenPlayers.contains(player)){
-            executor.sendMessage(PlMessages.Freeze_TargetIsNoLongerFrozen.get());
-            playerFrozenBy.remove(player);
-            frozenPlayers.remove(player);
+        if(frozenPlayers.contains(player.getName())){
+            executor.sendMessage(PlMessages.Freeze_TargetIsNoLongerFrozen.get().replace("%PLAYER_NAME%", player.getName()));
+            playerFrozenBy.remove(player.getName());
+            frozenPlayers.remove(player.getName());
         } else{
-            executor.sendMessage(PlMessages.Freeze_TargetIsNowFrozen.get());
-            playerFrozenBy.put(player, executor);
-            frozenPlayers.add(player);
+            executor.sendMessage(PlMessages.Freeze_TargetIsNowFrozen.get().replace("%PLAYER_NAME%", player.getName()));
+            playerFrozenBy.put(player.getName(), executor.getName());
+            frozenPlayers.add(player.getName());
+            frozenLocation.put(player.getName(), player.getLocation());
         }
     }
 
     @EventHandler
     public void playerMoveEvent(PlayerMoveEvent e){
-        if(frozenPlayers.contains(e.getPlayer())){
-            e.getPlayer().teleport(frozenLocation.get(e.getPlayer()));
+        if(frozenPlayers.contains(e.getPlayer().getName())){
+            e.getPlayer().teleport(frozenLocation.get(e.getPlayer().getName()));
         }
     }
 
@@ -64,10 +62,10 @@ public class Freeze
 
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void playerChat(PlayerChatEvent e){
-        if (frozenPlayers.contains(e.getPlayer())) {
+    public void playerChat(AsyncPlayerChatEvent e){
+        if (frozenPlayers.contains(e.getPlayer().getName())) {
             for (Player player : Bukkit.getOnlinePlayers()) {
-                if (player.hasPermission("powertools.player.freeze.chat")) {
+                if (player.hasPermission("powertools.modules.freeze.chat")) {
                     player.sendMessage(ChatColor.GOLD + "FR: " + e.getPlayer().getName() + ": " + e.getMessage());
                 }
             }
@@ -78,8 +76,8 @@ public class Freeze
 
     @EventHandler
     public void playerLeft(PlayerQuitEvent e){
-        if(frozenPlayers.contains(e.getPlayer())){
-            Player player = playerFrozenBy.get(e.getPlayer());
+        if(frozenPlayers.contains(e.getPlayer().getName())){
+            Player player = Bukkit.getPlayer(playerFrozenBy.get(e.getPlayer().getName()));
             if(player == null) return;
             if(!player.isOnline()) return;
 

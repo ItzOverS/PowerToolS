@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 
 public class PlPerms {
     public static boolean hasPerm(CommandSender player, String perm){
-        return Vault.perms().has(player, perm);
+        return player.hasPermission(perm);
     }
 
     public enum Perms{
@@ -14,7 +14,7 @@ public class PlPerms {
         KnockBackCommand("modules.knockback.command"),
         KnockBackStick("modules.knockback.stick"),
         FreezeCommand("modules.freeze.command"),
-        FreezeStick("modules.freeze.stick"), 
+        FreezeStick("modules.freeze.stick"),
 
         ;
         private final String perm;
