@@ -1,4 +1,4 @@
-package me.overlight.powertools.pl;
+package me.overlight.powertools.Plugin;
 
 import org.bukkit.ChatColor;
 
