@@ -4,6 +4,7 @@ import me.overlight.powertools.Libraries.ColorFormat;
 import me.overlight.powertools.Libraries.InvGen.InvGen;
 import me.overlight.powertools.Modules.mods.Freeze;
 import me.overlight.powertools.Modules.mods.Knockback;
+import me.overlight.powertools.Modules.mods.Protect;
 import me.overlight.powertools.Plugin.PlMessages;
 import me.overlight.powertools.Plugin.PlPerms;
 import me.overlight.powertools.Plugin.PlSticks;
@@ -22,44 +23,63 @@ public class MainCommand
         implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        switch(args[0]){
-            case "knockback": case "kb":
-                if(!PlPerms.hasPerm(sender, PlPerms.Perms.KnockBackCommand.get())){
+        switch(args[0]) {
+            case "knockback":
+            case "kb":
+                if (!PlPerms.hasPerm(sender, PlPerms.Perms.KnockBackCommand.get())) {
                     sender.sendMessage(PlMessages.NoPermission.get());
                     return false;
                 }
-                if(args.length == 2){
-                    if(isPlayerValid(args[1]))
+                if (args.length == 2) {
+                    if (isPlayerValid(args[1]))
                         Knockback.testKnockback((Player) sender, getPlayer(args[1]));
                     else
                         sender.sendMessage(PlMessages.PlayerNotFind.get());
-                } else if(args.length == 3){
-                    if(!Objects.equals(args[2], "stick")) return true;
-                    if(isPlayerValid(args[1])){
+                } else if (args.length == 3) {
+                    if (!Objects.equals(args[2], "stick")) return true;
+                    if (isPlayerValid(args[1])) {
                         getPlayer(args[1]).getInventory().addItem(PlSticks.KnockBackStick);
                         sender.sendMessage(PlMessages.KnockBack_StickSimplifyGiven.get().replace("%PLAYER_NAME%", getPlayer(args[1]).getName()));
-                    } else{
+                    } else {
                         sender.sendMessage(PlMessages.PlayerNotFind.get());
                     }
                 }
                 break;
-            case "freeze": case "fr":
-                if(!PlPerms.hasPerm(sender, PlPerms.Perms.FreezeCommand.get())){
+            case "freeze":
+            case "fr":
+                if (!PlPerms.hasPerm(sender, PlPerms.Perms.FreezeCommand.get())) {
                     sender.sendMessage(PlMessages.NoPermission.get());
                     return false;
                 }
-                if(args.length == 2){
-                    if(isPlayerValid(args[1]))
+                if (args.length == 2) {
+                    if (isPlayerValid(args[1]))
                         Freeze.freezePlayer((Player) sender, getPlayer(args[1]));
                     else
                         sender.sendMessage(PlMessages.PlayerNotFind.get());
-                } else if(args.length == 3){
-                    if(!Objects.equals(args[2], "stick")) return true;
-                    if(isPlayerValid(args[1])){
+                } else if (args.length == 3) {
+                    if (!Objects.equals(args[2], "stick")) return true;
+                    if (isPlayerValid(args[1])) {
                         getPlayer(args[1]).getInventory().addItem(PlSticks.FreezeStick);
                         sender.sendMessage(PlMessages.Freeze_StickSimplifyGiven.get().replace("%PLAYER_NAME%", getPlayer(args[1]).getName()));
-                    } else{
+                    } else {
                         sender.sendMessage(PlMessages.PlayerNotFind.get());
+                    }
+                }
+                break;
+            case "protect":
+            case "prot":
+                if (!PlPerms.hasPerm(sender, PlPerms.Perms.ProtectCommand.get())) {
+                    sender.sendMessage(PlMessages.NoPermission.get());
+                    return false;
+                }
+
+                if (args.length == 2) {
+                    if (Protect.protectedPlayers.contains(sender.getName())) {
+                        sender.sendMessage(PlMessages.Protect_PlayerIsNoLongerProtected.get().replace("%PLAYER_NAME%", args[1]));
+                        Protect.protectedPlayers.remove(args[1]);
+                    } else{
+                        sender.sendMessage(PlMessages.Protect_PlayerIsNowProtected.get().replace("%PLAYER_NAME%", args[1]));
+                        Protect.protectedPlayers.add(args[1]);
                     }
                 }
                 break;

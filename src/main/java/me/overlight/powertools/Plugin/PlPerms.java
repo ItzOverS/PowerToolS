@@ -15,6 +15,7 @@ public class PlPerms {
         KnockBackStick("modules.knockback.stick"),
         FreezeCommand("modules.freeze.command"),
         FreezeStick("modules.freeze.stick"),
+        ProtectCommand("modules.protect.command"),
 
         ;
         private final String perm;
