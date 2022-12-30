@@ -3,12 +3,13 @@ package me.overlight.powertools.AddOns;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class AddOnManager {
     public static List<AddOn> addOns = new ArrayList<>();
     public static AddOn getAddOnByName(String name){
         for(AddOn on: addOns){
-            if(on.name() == name){
+            if(Objects.equals(on.name(), name)){
                 return on;
             }
         }

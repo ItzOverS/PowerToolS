@@ -7,6 +7,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,11 +19,11 @@ public class InvGen {
         }
         return inv;
     }
-    public static ItemStack generateItem(Material mat, int amount, String displayName, List<String> Lore){
+    public static ItemStack generateItem(Material mat, int amount, String displayName, String[] Lore){
         ItemStack stack = new ItemStack(mat, amount);
         ItemMeta meta = stack.getItemMeta();
         meta.setDisplayName(displayName);
-        meta.setLore(Lore);
+        meta.setLore(Arrays.asList(Lore));
         stack.setItemMeta(meta);
         return stack;
     }
@@ -35,7 +36,7 @@ public class InvGen {
                 if(i.getItem(m) == null)
                     i.setItem(m, stack);
         }
-        return i; 
+        return i;
     }
     public static Inventory cloneInventory(Inventory inventory, boolean costumeInv){
         Inventory inv;
