@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class PowerTools
         extends JavaPlugin {
+    public static PowerTools INSTANCE;
     @Override
     public void onLoad() {
         PacketEvents.create(this);
@@ -18,7 +19,8 @@ public class PowerTools
 
     @Override
     public void onEnable() {
-        
+        INSTANCE = this;
+        saveDefaultConfig();
     }
 
     @Override
