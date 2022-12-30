@@ -1,4 +1,4 @@
-package me.overlight.powertools.WebHooks;/*
+package me.overlight.powertools.Libraries.WebHooks;/*
  * Decompiled with CFR 0.152.
  */
 
