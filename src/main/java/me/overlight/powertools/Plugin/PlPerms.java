@@ -11,8 +11,10 @@ public class PlPerms {
 
     public enum Perms{
 
-        KnockBackCommand("modules.command.knockback"),
-        KnockBackStick("modules.stick.knockback"),
+        KnockBackCommand("modules.knockback.command"),
+        KnockBackStick("modules.knockback.stick"),
+        FreezeCommand("modules.freeze.command"),
+        FreezeStick("modules.freeze.stick"), 
 
         ;
         private final String perm;
