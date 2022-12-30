@@ -4,6 +4,7 @@ import me.overlight.powertools.Libraries.ColorFormat;
 import me.overlight.powertools.Libraries.InvGen.InvGen;
 import me.overlight.powertools.Modules.mods.Knockback;
 import me.overlight.powertools.Plugin.PlMessages;
+import me.overlight.powertools.Plugin.PlPerms;
 import me.overlight.powertools.Plugin.PlSticks;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -22,6 +23,10 @@ public class MainCommand
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         switch(args[0]){
             case "knockback": case "kb":
+                if(!PlPerms.hasPerm(sender, PlPerms.Perms.KnockBackCommand.get())){
+                    sender.sendMessage(PlMessages.NoPermission.get());
+                    return false;
+                }
                 if(args.length == 2){
                     if(isPlayerValid(args[1]))
                         Knockback.testKnockback((Player) sender, getPlayer(args[1]));
