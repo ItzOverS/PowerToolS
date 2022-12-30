@@ -14,7 +14,6 @@ public enum PlMessages {
     KnockBack_PlayerInBlock(ColorFormat.formatColor("@color_gold%PLAYER_NAME% @color_redis in block & i can't give they knockback")),
     Freeze_TargetIsNowFrozen(ColorFormat.formatColor("@color_gold%PLAYER_NAME% @color_greenis now frozen")),
     Freeze_TargetIsNoLongerFrozen(ColorFormat.formatColor("@color_gold%PLAYER_NAME% @color_redis no longer frozen")),
-
     NoPermission(ColorFormat.formatColor("@color_redYou don't have enough permission to do this!"))
 
     ;
