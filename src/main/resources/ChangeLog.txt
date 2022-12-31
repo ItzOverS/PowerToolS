@@ -15,7 +15,7 @@ PowerToolS v1.0:
  [+] added new methods to cps check
  [=] tabCompleter bug fixed
  [+] added fallDamage method
- [+] added config.yml
+ [+] added PowerTools.config.yml
  [+] added <ChatManager> AddON
  [+] added <maxCps method & AutoClicker check> AddON
  [+] added more permissions
@@ -26,7 +26,7 @@ PowerToolS v1.0:
  [=] bug fix
  [+] added <UsernameManager> AddON
  [+] added <ForceSpawn> AddON
- [+] added <kitPower ( enable, disable in config.yml)> AddON
+ [+] added <kitPower ( enable, disable in PowerTools.config.yml)> AddON
  [+] added VL to AutoClickDetector
  [=] AutoClickDetector bugFixed
  [+] added <Join & Quit message> AddON

@@ -1,12 +1,10 @@
 package me.overlight.powertools.AddOns;
 
 import me.overlight.powertools.PowerTools;
-import org.bukkit.configuration.file.FileConfiguration;
 
 public class AddOn {
     private String name, version, description, perm;
     private boolean enabled;
-    public static FileConfiguration config;
     public PowerTools plugin;
     public AddOn(String name, String version, String description, String requiredPerm, boolean stats){
         this.name = name;
@@ -15,7 +13,6 @@ public class AddOn {
         this.perm = requiredPerm;
         this.enabled = stats;
         this.plugin = PowerTools.INSTANCE;
-        config = this.plugin.getConfig();
         if(stats) onEnabled();
     }
 

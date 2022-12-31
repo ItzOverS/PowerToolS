@@ -1,5 +1,11 @@
 package me.overlight.powertools.AddOns;
 
+import me.overlight.powertools.Modules.Module;
+import me.overlight.powertools.PowerTools;
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.event.Listener;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,5 +36,15 @@ public class AddOnManager {
             addOns.forEach(AddOn::onDisabled);
             addOns.clear();
         } catch(Exception ignored){ }
+    }
+    public static void loadAddons(){
+        for(AddOn addon: addOns){
+            if(addon instanceof Listener)
+                PowerTools.INSTANCE.getServer().getPluginManager().registerEvents((Listener)addon, PowerTools.INSTANCE);
+            else if(addon instanceof Runnable)
+                Bukkit.getScheduler().runTaskTimerAsynchronously(PowerTools.INSTANCE, (Runnable) addon, 0, 40);
+            else if(addon instanceof CommandExecutor)
+                PowerTools.INSTANCE.getServer().getPluginCommand("powertools").setExecutor((CommandExecutor) addon);
+        }
     }
 }

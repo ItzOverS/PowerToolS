@@ -1,6 +1,7 @@
 package me.overlight.powertools.AddOns.Main;
 
 import me.overlight.powertools.AddOns.AddOn;
+import me.overlight.powertools.PowerTools;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,46 +18,46 @@ public class WorldEnvironments
         extends AddOn
         implements Listener {
 
-    public WorldEnvironments(boolean stats) {
-        super("WorldEnvironments", "1.0", "Control World Environments", "NONE", stats);
+    public WorldEnvironments() {
+        super("WorldEnvironments", "1.0", "Control World Environments", "NONE", PowerTools.config.getBoolean("WorldEnvironments.enabled"));
     }
 
     @EventHandler
     public void entityDamagedEntity(EntityDamageByEntityEvent e){
         if(!(e.getEntity() instanceof Player)) return;
         if(!(e.getDamager() instanceof Player)) return;
-        if(!config.getBoolean(this.getName() + ".allowPvp")) e.setCancelled(true);
+        if(!PowerTools.config.getBoolean(this.getName() + ".allowPvp")) e.setCancelled(true);
     }
     @EventHandler
     public void entityDamaged(EntityDamageEvent e) {
         if(!(e.getEntity() instanceof Player)) return;
-        if(!config.getBoolean(this.getName() + ".allowDamage")) e.setCancelled(true);
+        if(!PowerTools.config.getBoolean(this.getName() + ".allowDamage")) e.setCancelled(true);
     }
     @EventHandler
     public void entityTeleport(EntityTeleportEvent e) {
         if(!(e.getEntity() instanceof Player)) return;
-        if(!config.getBoolean(this.getName() + ".allowTp")) e.setCancelled(true);
+        if(!PowerTools.config.getBoolean(this.getName() + ".allowTp")) e.setCancelled(true);
     }
     @EventHandler
     public void entityFlight(PlayerMoveEvent e) {
         if(!e.getPlayer().isFlying()) return;
-        if(!config.getBoolean(this.getName() + ".allowFly")) e.setCancelled(true);
+        if(!PowerTools.config.getBoolean(this.getName() + ".allowFly")) e.setCancelled(true);
     }
     @EventHandler
     public void blockBreak(BlockBreakEvent e) {
-        if(!config.getBoolean(this.getName() + ".allowBlockBreak")) e.setCancelled(true);
+        if(!PowerTools.config.getBoolean(this.getName() + ".allowBlockBreak")) e.setCancelled(true);
     }
     @EventHandler
     public void blockPlace(BlockPlaceEvent e) {
-        if(!config.getBoolean(this.getName() + ".allowBlockPlace")) e.setCancelled(true);
+        if(!PowerTools.config.getBoolean(this.getName() + ".allowBlockPlace")) e.setCancelled(true);
     }
     @EventHandler
     public void blockPlace(PlayerInteractEvent e) {
-        if(!config.getBoolean(this.getName() + ".allowInteract")) e.setCancelled(true);
+        if(!PowerTools.config.getBoolean(this.getName() + ".allowInteract")) e.setCancelled(true);
     }
     @EventHandler
     public void entityHunger(FoodLevelChangeEvent e) {
         if(!(e.getEntity() instanceof Player)) return;
-        if (!config.getBoolean(this.getName() + ".allowHunger")) e.setCancelled(true);
+        if (!PowerTools.config.getBoolean(this.getName() + ".allowHunger")) e.setCancelled(true);
     }
 }

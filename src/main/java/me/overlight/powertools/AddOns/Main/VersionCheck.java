@@ -9,11 +9,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class versionCheck
+public class VersionCheck
         extends AddOn
         implements Listener {
-    public versionCheck(boolean stats) {
-        super("versionCheck", "1.0", "check players version", "NONE", stats);
+    public VersionCheck() {
+        super("VersionCheck", "1.0", "check players version", "NONE", PowerTools.config.getBoolean("VersionCheck.enabled"));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

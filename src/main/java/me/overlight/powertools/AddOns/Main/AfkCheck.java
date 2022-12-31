@@ -2,17 +2,18 @@ package me.overlight.powertools.AddOns.Main;
 
 import me.overlight.powertools.AddOns.AddOn;
 import me.overlight.powertools.AddOns.impls.AFKManager;
+import me.overlight.powertools.PowerTools;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
 
-public class afkCheck
+public class AfkCheck
         extends AddOn
         implements Listener, Runnable {
 
-    public afkCheck(boolean stats) {
-        super("afkCheck", "1.0", "manager players afk stats", "NONE", stats);
+    public AfkCheck() {
+        super("AfkCheck", "1.0", "manager players afk stats", "NONE", PowerTools.config.getBoolean("AfkCheck.enabled"));
     }
 
     public static AFKManager afkManager = new AFKManager();
@@ -37,26 +38,26 @@ public class afkCheck
     @EventHandler(priority = EventPriority.LOW)
     public void playerMove(PlayerMoveEvent e){
         if(e.getFrom().distance(e.getTo()) == 0){
-            if(config.getBoolean(this.getName() + ".Actions.ChangeHeadVictor"))
+            if(PowerTools.config.getBoolean(this.getName() + ".Actions.ChangeHeadVictor"))
                 afkManager.playerReacted(e.getPlayer());
             return;
         }
-        if(config.getBoolean(this.getName() + ".Actions.Move"))
+        if(PowerTools.config.getBoolean(this.getName() + ".Actions.Move"))
             afkManager.playerReacted(e.getPlayer());
     }
     @EventHandler(priority = EventPriority.LOW)
     public void playerChat(AsyncPlayerChatEvent e){
-        if(config.getBoolean(this.getName() + ".Actions.Chat"))
+        if(PowerTools.config.getBoolean(this.getName() + ".Actions.Chat"))
             afkManager.playerReacted(e.getPlayer());
     }
     @EventHandler(priority = EventPriority.LOW)
     public void playerExecuteComamnd(PlayerCommandPreprocessEvent e){
-        if(config.getBoolean(this.getName() + ".Actions.CommandExecute"))
+        if(PowerTools.config.getBoolean(this.getName() + ".Actions.CommandExecute"))
             afkManager.playerReacted(e.getPlayer());
     }
     @EventHandler(priority = EventPriority.LOW)
     public void playerInteract(PlayerInteractEvent e){
-        if(config.getBoolean(this.getName() + ".Actions.Interact"))
+        if(PowerTools.config.getBoolean(this.getName() + ".Actions.Interact"))
             afkManager.playerReacted(e.getPlayer());
     }
 }

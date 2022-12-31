@@ -1,8 +1,8 @@
 package me.overlight.powertools;
 
-import com.avaje.ebean.SqlRow;
-import com.avaje.ebeaninternal.server.cluster.Packet;
 import io.github.retrooper.packetevents.PacketEvents;
+import me.overlight.powertools.AddOns.AddOnManager;
+import me.overlight.powertools.AddOns.Main.*;
 import me.overlight.powertools.Command.MainCommand;
 import me.overlight.powertools.Libraries.WebHooks.DiscordAPI;
 import me.overlight.powertools.Libraries.WebHooks.DiscordWebhook;
@@ -18,7 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class PowerTools
         extends JavaPlugin {
     public static PowerTools INSTANCE;
-    FileConfiguration config;
+    public static FileConfiguration config;
     @Override
     public void onLoad() {
         PacketEvents.create(this);
@@ -33,15 +33,15 @@ public class PowerTools
     public void onEnable() {
         INSTANCE = this;
         saveDefaultConfig();
-        config = getConfig();
+        PowerTools.config = getConfig();
 
         getServer().getPluginCommand("powertools").setExecutor(new MainCommand());
         getServer().getPluginCommand("powertools").setTabCompleter(new MainCommand());
 
         discordWebhookConnection:
         {
-            if (config.getBoolean("discordWebhook.enabled")) {
-                String url = config.getString("discordWebhook.url");
+            if (PowerTools.config.getBoolean("discordWebhook.enabled")) {
+                String url = PowerTools.config.getString("discordWebhook.url");
                 if (url == null || url.equals(""))
                     break discordWebhookConnection;
                 getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.GOLD + "Connecting to discord webhook");
@@ -62,6 +62,10 @@ public class PowerTools
 
         ModuleManager.registerModule(new Knockback(), new Freeze(), new Channel(), new MemoryUsage(), new Protect(), new Rotate(), new PlayTime());
         ModuleManager.loadModulesData();
+
+        AddOnManager.registerAddOn(new AfkCheck(), new AntiWorldDownLoader(), new CpsCheck(), new PingCheck(), new ChatManager(), new ForceSpawn(), new JoinMessage(),
+                new QuitMessage(), new UserNameManager(), new CommandDeny(), new PvpManager(), new PvpRegisterer(), new VersionCheck(), new WorldEnvironments());
+        AddOnManager.loadAddons();
     }
 
     @Override

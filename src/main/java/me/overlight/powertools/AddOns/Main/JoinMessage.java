@@ -1,6 +1,7 @@
 package me.overlight.powertools.AddOns.Main;
 
 import me.overlight.powertools.AddOns.AddOn;
+import me.overlight.powertools.PowerTools;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -14,16 +15,16 @@ import java.util.Objects;
 public class JoinMessage
         extends AddOn
         implements Listener {
-    public JoinMessage(boolean stats) {
-        super("JoinMessage", "1.0", "show join message", "NONE", stats);
+    public JoinMessage() {
+        super("JoinMessage", "1.0", "show join message", "NONE", PowerTools.config.getBoolean("JoinMessage.enabled"));
     }
 
     @EventHandler
     public void playerJoin(PlayerJoinEvent e){
         if(this.isEnabled()) {
-            String message = config.getString(this.getName() + ".messages.FirstJoin");
+            String message = PowerTools.config.getString(this.getName() + ".messages.FirstJoin");
             if(contains("plugins\\PowerToolS\\JoinedPlayers.yml", e.getPlayer().getName())){
-                message = config.getString(this.getName() + ".messages.NotFirstJoin");
+                message = PowerTools.config.getString(this.getName() + ".messages.NotFirstJoin");
             }
             assert message != null;
             message = message.replace("%NAME%", e.getPlayer().getName());
@@ -36,7 +37,7 @@ public class JoinMessage
             if(!new File("plugins\\PowerToolS\\JoinedPlayers.yml").exists()){
                 YamlConfiguration config = new YamlConfiguration();
                 try {
-                    config.save(new File("plugins\\PowerToolS\\JoinedPlayers.yml"));
+                    PowerTools.config.save(new File("plugins\\PowerToolS\\JoinedPlayers.yml"));
                 } catch(Exception ignored) { }
             }
             YamlConfiguration yml = YamlConfiguration.loadConfiguration(new File("plugins\\PowerToolS\\JoinedPlayers.yml"));

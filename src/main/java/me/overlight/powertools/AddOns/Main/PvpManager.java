@@ -12,11 +12,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.HashMap;
 
-public class pvpManager
+public class PvpManager
         extends AddOn
         implements Listener {
-    public pvpManager(boolean stats) {
-        super("pvpManager", "1.0", "manage players pvp", "NONE", stats);
+    public PvpManager() {
+        super("PvpManager", "1.0", "manage players pvp", "NONE", PowerTools.config.getBoolean("PvpManager.enabled"));
     }
 
     public static HashMap<String, Boolean> PlayersPvpStats = new HashMap<>();

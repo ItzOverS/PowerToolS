@@ -1,4 +1,4 @@
-# Welcome to PowerTools config!!
+# Welcome to PowerTools PowerTools.config!!
 # You can use this plugin addons in this file!
 discordWebhook:
   enabled: false
@@ -48,7 +48,7 @@ UsernameManager:
     Action: "BAN" # You can insert [KICK, BAN] items in string
     msg: "&cBad name"
 
-cpsCheck:
+CpsCheck:
   enabled: false
   maxCps:
     RMB:
@@ -128,7 +128,7 @@ AntiWorldDownLoader: # Anti WDL
   continueOperators: false
   alert-on-discord: true
 
-pingCheck:
+PingCheck:
   enabled: false
   maxPing: 1000
   alert-on-discord: false

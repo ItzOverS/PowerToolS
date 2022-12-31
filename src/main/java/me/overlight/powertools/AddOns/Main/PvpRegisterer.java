@@ -16,11 +16,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class pvpRegisterer
+public class PvpRegisterer
         extends AddOn
         implements Listener {
-    public pvpRegisterer(boolean stats) {
-        super("pvpRegisterer", "1.0", "register players fake cpses", "NONE", stats);
+    public PvpRegisterer() {
+        super("pvpRegisterer", "1.0", "register player's unregistered clicks", "NONE", PowerTools.config.getBoolean("afkCheck.enabled"));
     }
     public static HashMap<String, Integer> CpsAtAttack = new HashMap<>();
     @EventHandler(priority = EventPriority.MONITOR)
@@ -44,9 +44,9 @@ public class pvpRegisterer
                         range = range / 6;
                 }
                 for (int i = 0; i < range; i++) {
-                    if (config.getBoolean(this.getName() + ".registerDamages.enabled"))
-                        ((Player) e.getEntity()).damage(config.getInt(this.getName() + ".registerDamages.miniDamage"));
-                    if (config.getBoolean(this.getName() + ".registerKnockback"))
+                    if (PowerTools.config.getBoolean(this.getName() + ".registerDamages.enabled"))
+                        ((Player) e.getEntity()).damage(PowerTools.config.getInt(this.getName() + ".registerDamages.miniDamage"));
+                    if (PowerTools.config.getBoolean(this.getName() + ".registerKnockback"))
                         ((Player) e.getEntity()).setVelocity(getVectorConvert(new Vector(0.1, 0.001, 0.1), e.getDamager().getLocation().getDirection()));
                 }
                 CpsAtAttack.remove(e.getDamager().getName());

@@ -17,19 +17,19 @@ public class UserNameManager
         extends AddOn
         implements Listener {
 
-    public UserNameManager(boolean stats) {
-        super("UsernameManager", "1.0", "Manager players usernames", "NONE", stats);
+    public UserNameManager() {
+        super("UsernameManager", "1.0", "Manager players usernames", "NONE", PowerTools.config.getBoolean("UsernameManager.enabled"));
     }
     
     @EventHandler(priority = EventPriority.MONITOR)
     public void playerJoin(PlayerJoinEvent e){
         if(this.isEnabled()) {
-            if (config.getBoolean( this.getName() + ".WordBlock.enabled")) {
+            if (PowerTools.config.getBoolean( this.getName() + ".WordBlock.enabled")) {
                 String message = e.getPlayer().getName().toLowerCase();
                 boolean messageFlagged = false;
                 //------------------------------------>  AI 01:    Random char, splitter
-                if (config.getBoolean(this.getName() + ".WordBlock.Modes.Splitters") || config.getBoolean(this.getName() + ".WordBlock.Modes.MultiLetter")) {
-                    for (String word : config.getStringList(this.getName() + ".WordBlock.Words")) {
+                if (PowerTools.config.getBoolean(this.getName() + ".WordBlock.Modes.Splitters") || PowerTools.config.getBoolean(this.getName() + ".WordBlock.Modes.MultiLetter")) {
+                    for (String word : PowerTools.config.getStringList(this.getName() + ".WordBlock.Words")) {
                         String generatedText = "";
                         int index = 0;
                         for (char chr : message.toCharArray()) {
@@ -47,14 +47,14 @@ public class UserNameManager
                     }
                 }
                 if (messageFlagged) {
-                    if(Objects.equals(config.getString(this.getName() + ".WordBlock.Action"), "BAN")){
-                        if(config.getBoolean(this.getName() + ".alert-on-discord"))
+                    if(Objects.equals(PowerTools.config.getString(this.getName() + ".WordBlock.Action"), "BAN")){
+                        if(PowerTools.config.getBoolean(this.getName() + ".alert-on-discord"))
                             DiscordAPI.sendEmbedOnWebhook(e.getPlayer().getName() + " banned - BadName", e.getPlayer().getName() + " has banned for contains bad words");
-                        Bukkit.getBanList(BanList.Type.NAME).addBan(e.getPlayer().getName(), ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString(this.getName() + ".WordBlock.msg"))), null, null);
-                        e.getPlayer().kickPlayer(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString(this.getName() + ".WordBlock.msg"))));
-                    } else if(Objects.equals(config.getString(this.getName() + ".WordBlock.Action"), "KICK")){
-                        e.getPlayer().kickPlayer(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString(this.getName() + ".WordBlock.msg"))));
-                        if(config.getBoolean(this.getName() + ".alert-on-discord"))
+                        Bukkit.getBanList(BanList.Type.NAME).addBan(e.getPlayer().getName(), ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(PowerTools.config.getString(this.getName() + ".WordBlock.msg"))), null, null);
+                        e.getPlayer().kickPlayer(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(PowerTools.config.getString(this.getName() + ".WordBlock.msg"))));
+                    } else if(Objects.equals(PowerTools.config.getString(this.getName() + ".WordBlock.Action"), "KICK")){
+                        e.getPlayer().kickPlayer(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(PowerTools.config.getString(this.getName() + ".WordBlock.msg"))));
+                        if(PowerTools.config.getBoolean(this.getName() + ".alert-on-discord"))
                             DiscordAPI.sendEmbedOnWebhook(e.getPlayer().getName() + " kicked - BadName", e.getPlayer().getName() + " has kicked for contains bad words");
                     }
                 }

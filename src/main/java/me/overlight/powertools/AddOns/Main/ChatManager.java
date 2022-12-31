@@ -18,8 +18,8 @@ import java.util.*;
 public class ChatManager 
         extends AddOn 
         implements Listener {
-    public ChatManager(boolean stats) {
-        super("ChatManager", "2.0", "Manager players chat", "NONE", stats);
+    public ChatManager() {
+        super("ChatManager", "2.0", "Manager players chat", "NONE", PowerTools.config.getBoolean("ChatManager.enabled"));
     }
 
     public static List<String> DelayMessagePlayers = new ArrayList<>();
@@ -31,37 +31,39 @@ public class ChatManager
         if (this.isEnabled()) {
             String message = e.getMessage().toLowerCase();
             Player sender = e.getPlayer();
-            if (config.getBoolean(this.getName() + ".MessageDelay.enabled")) {
+            if (PowerTools.config.getBoolean(this.getName() + ".MessageDelay.enabled")) {
                 if (!DelayMessagePlayers.contains(sender.getName())) {
                     DelayMessagePlayers.add(sender.getName());
                     Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
                         DelayMessagePlayers.remove(sender.getName());
-                    }, config.getInt(this.getName() + ".MessageDelay.delay") * 20L);
+                    }, PowerTools.config.getInt(this.getName() + ".MessageDelay.delay") * 20L);
                 } else {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString(this.getName() + ".MessageDelay.msg")));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".MessageDelay.msg")));
                     e.setCancelled(true);
                     return;
                 }
             }
-            if (config.getBoolean(this.getName() + ".AntiSpam.enabled")) {
+            if (PowerTools.config.getBoolean(this.getName() + ".AntiSpam.enabled")) {
                 if (getDuplicates(message, LastMSG.get(e.getPlayer().getName())) > new HashSet<>(Arrays.asList(removeSymbols(message.toLowerCase(), new String[]{",", "|", "!", "@", "#", "$", "%", "^", "&", "(", ")", "[", "]", "{", "}", "`", "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"}).split(" "))).size() / 2) {
                     SpamAmount.put(sender.getName(), SpamAmount.containsKey(sender.getName()) ? SpamAmount.get(sender.getName()) + 1 : 1);
                 } else {
                     SpamAmount.put(sender.getName(), 0);
                     LastMSG.put(sender.getName(), message);
                 }
-                if (SpamAmount.get(sender.getName()) >= config.getInt(this.getName() + ".AntiSpam.maxSpam")) {
-                    if (config.getBoolean(this.getName() + ".AntiSpam.Kick.enabled")) {
+                if (SpamAmount.get(sender.getName()) >= PowerTools.config.getInt(this.getName() + ".AntiSpam.maxSpam")) {
+                    if (PowerTools.config.getBoolean(this.getName() + ".AntiSpam.Kick.enabled")) {
                         e.setCancelled(true);
-                        Bukkit.getPlayer(sender.getName()).kickPlayer(ChatColor.translateAlternateColorCodes('&', config.getString(this.getName() + ".AntiSpam.Kick.msg")));
-                        return;
+                        Bukkit.getScheduler().runTask(PowerTools.INSTANCE, () ->  {
+                                Bukkit.getPlayer(sender.getName()).kickPlayer(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".AntiSpam.Kick.msg")));
+                        });
+                    return;
                     }
                 }
             }
-            if (config.getBoolean(this.getName() + ".WordBlock.enabled")) {
+            if (PowerTools.config.getBoolean(this.getName() + ".WordBlock.enabled")) {
                 boolean messageFlagged = false;
                 //------------------------------------>  AI 01:    Random char, splitter
-                if (config.getBoolean(this.getName() + ".WordBlock.Modes.Splitters") || config.getBoolean(this.getName() + ".WordBlock.Modes.MultiLetter")) {
+                if (PowerTools.config.getBoolean(this.getName() + ".WordBlock.Modes.Splitters") || PowerTools.config.getBoolean(this.getName() + ".WordBlock.Modes.MultiLetter")) {
                     String msg = removeSymbols(message.toLowerCase(), new String[]{",", "|", "!", "@", "#", "$", "%", "^", "&", "(", ")", "[", "]", "{", "}", "`", "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"});
                     for(String text: msg.split(" ")){
                         String tex = "";
@@ -71,7 +73,7 @@ public class ChatManager
                                 tex += ch;
                                 index++;
                             }
-                            if(config.getStringList(this.getName() + ".WordBlock.Words").contains(tex)){
+                            if(PowerTools.config.getStringList(this.getName() + ".WordBlock.Words").contains(tex)){
                                 messageFlagged = true;
                                 break;
                             }
@@ -79,7 +81,7 @@ public class ChatManager
                     }
                     if(!messageFlagged){
                         msg = msg.replace(" ", "");
-                        for(String str: config.getStringList(this.getName() + ".WordBlock.Words")){
+                        for(String str: PowerTools.config.getStringList(this.getName() + ".WordBlock.Words")){
                             if(msg.contains(str)){
                                 messageFlagged = true;
                                 break;
@@ -88,8 +90,8 @@ public class ChatManager
                     }
                 }
                 //------------------------------------>  AI 02:    UniCodes
-                if (config.getBoolean(this.getName() + ".WordBlock.Modes.UniCodes")) {
-                    for (String word : config.getStringList(this.getName() + ".WordBlock.Words")) {
+                if (PowerTools.config.getBoolean(this.getName() + ".WordBlock.Modes.UniCodes")) {
+                    for (String word : PowerTools.config.getStringList(this.getName() + ".WordBlock.Words")) {
                         String generatedText = "";
                         int index = 0;
                         for (char chr : message.toCharArray()) {
@@ -107,26 +109,26 @@ public class ChatManager
                     }
                 }
                 if (messageFlagged) {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString(this.getName() + ".WordBlock.msg")));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".WordBlock.msg")));
                     e.setCancelled(true);
                     return;
                 }
             }
-            if (config.getBoolean(this.getName() + ".AntiDuplicate.enabled")) {
+            if (PowerTools.config.getBoolean(this.getName() + ".AntiDuplicate.enabled")) {
                 String newMSG = removeSymbols(message.toLowerCase(), new String[]{",", "|", "!", "@", "#", "$", "%", "^", "&", "(", ")", "[", "]", "{", "}", "`", "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"});
                 String[] Words = newMSG.split(" ");
                 Set<String> words = new HashSet<>(Arrays.asList(Words));
                 for (String str : words) {
-                    if (Count(newMSG, str) > config.getLong(this.getName() + ".AntiDuplicate.maxDuplicate")) {
+                    if (Count(newMSG, str) > PowerTools.config.getLong(this.getName() + ".AntiDuplicate.maxDuplicate")) {
                         e.setCancelled(true);
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString(this.getName() + ".AntiDuplicate.msg")));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".AntiDuplicate.msg")));
                         return;
                     }
                 }
             }
-            if (config.getBoolean(this.getName() + ".PlayerMentions.enabled")) {
+            if (PowerTools.config.getBoolean(this.getName() + ".PlayerMentions.enabled")) {
                 if (ContainsNameOnText(message) != null) {
-                    String mode = config.getString(this.getName() + ".PlayerMentions.Mode");
+                    String mode = PowerTools.config.getString(this.getName() + ".PlayerMentions.Mode");
                     List<String> mentionedPlayers = ContainsNameOnText(message);
                     assert mentionedPlayers != null;
                     for (String name : mentionedPlayers) {
@@ -147,7 +149,7 @@ public class ChatManager
     @EventHandler
     public void playerCommandExecute(PlayerCommandPreprocessEvent e){
         if(this.isEnabled()){
-            if(config.getBoolean("ChatManager.CommandCooldown.enabled")){
+            if(PowerTools.config.getBoolean("ChatManager.CommandCooldown.enabled")){
                 if(PlayersCommandCooldown.contains(e.getPlayer().getName())){
                     e.setCancelled(true);
                     e.getPlayer().sendMessage(ChatColor.RED + "Please wait before send another command!");
@@ -156,7 +158,7 @@ public class ChatManager
                     PlayersCommandCooldown.add(e.getPlayer().getName());
                     Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
                         PlayersCommandCooldown.remove(e.getPlayer().getName());
-                    }, config.getInt("ChatManager.CommandCooldown.delay") * 20L);
+                    }, PowerTools.config.getInt("ChatManager.CommandCooldown.delay") * 20L);
                 }
             }
         }

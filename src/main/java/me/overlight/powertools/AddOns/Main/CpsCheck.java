@@ -24,7 +24,7 @@ import java.util.List;
 
 import static me.overlight.powertools.PowerTools.Alert;
 
-public class cpsCheck
+public class CpsCheck
         extends AddOn
         implements Listener {
 
@@ -33,8 +33,8 @@ public class cpsCheck
     public static HashMap<String, Integer> PlayerCpsTaskID = new HashMap<>(); 
     
     
-    public cpsCheck(boolean stats) {
-        super("cpsCheck", "1.1", "check players cps", "NONE", stats);
+    public CpsCheck() {
+        super("CpsCheck", "1.1", "check players cps", "NONE", PowerTools.config.getBoolean("CpsCheck.enabled"));
 
         cpsHistory cpsHis = new cpsHistory();
         for(int i = 0; i < 20; i++){
@@ -112,41 +112,41 @@ public class cpsCheck
                 history.addCps(cpsHistory.cpsType.RMB, rmb);
                 PlayerCpsHistory.put(player.getName(), history);
             }
-            if (config.getBoolean(this.getName() + ".maxCps.LMB.enabled")) {
-                if (lmb > config.getLong(this.getName() + ".maxCps.LMB.max")) {
+            if (PowerTools.config.getBoolean(this.getName() + ".maxCps.LMB.enabled")) {
+                if (lmb > PowerTools.config.getLong(this.getName() + ".maxCps.LMB.max")) {
                     Alert(PowerTools.Target.STAFF, ChatColor.GOLD + player.getName() + " has kicked for " + ChatColor.GOLD + "LMB-MAX-CPS. his cps " + lmb);
                     Bukkit.getScheduler().cancelTask(PlayerCpsTaskID.get(player.getName()));
                     for(int i = 0; i < 5; i++)
                         player.getWorld().spawnEntity(player.getLocation(), EntityType.LIGHTNING);
-                    if(config.getBoolean(this.getName() + ".maxCps.LMB.alert-on-discord")){
+                    if(PowerTools.config.getBoolean(this.getName() + ".maxCps.LMB.alert-on-discord")){
                         DiscordAPI.sendEmbedOnWebhook(player.getName() + " kicked - Using AutoClicker", "I think " + player.getName() + " using **auto clicker**");
                     }
                     player.kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "\nYou has kicked for max cps");
                 }
             }
-            if (config.getBoolean(this.getName() + ".maxCps.RMB.enabled")) {
-                if (rmb > config.getLong(this.getName() + ".maxCps.RMB.max")) {
+            if (PowerTools.config.getBoolean(this.getName() + ".maxCps.RMB.enabled")) {
+                if (rmb > PowerTools.config.getLong(this.getName() + ".maxCps.RMB.max")) {
                     Alert(PowerTools.Target.STAFF, ChatColor.GOLD + player.getName() + " has kicked for " + ChatColor.GOLD + "RMB-MAX-CPS. his cps " + rmb);
                     Bukkit.getScheduler().cancelTask(PlayerCpsTaskID.get(player.getName()));
                     PlayerCpsHistory.remove(player.getName());
                     PlayerCpsTaskID.remove(player.getName());
                     for(int i = 0; i < 5; i++)
                         player.getWorld().spawnEntity(player.getLocation(), EntityType.LIGHTNING);
-                    if(config.getBoolean(this.getName() + ".maxCps.RMB.alert-on-discord")){
+                    if(PowerTools.config.getBoolean(this.getName() + ".maxCps.RMB.alert-on-discord")){
                         DiscordAPI.sendEmbedOnWebhook(player.getName() + " kicked - Using AutoClicker", "I think " + player.getName() + " using **auto clicker**");
                     }
                     player.kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "\nYou has kicked for max cps");
                 }
             }
-            if (config.getBoolean(this.getName() + ".AutoClickerCheck.enabled")) {
-                if(operator(Arrays.asList(history.getHistoryIndex(cpsHistory.cpsType.RMB, 17), history.getHistoryIndex(cpsHistory.cpsType.RMB, 18), history.getHistoryIndex(cpsHistory.cpsType.RMB, 19)), config.getInt(this.getName() + ".AutoClickerCheck.startCheck.RMB")) || operator(Arrays.asList(history.getHistoryIndex(cpsHistory.cpsType.LMB, 17), history.getHistoryIndex(cpsHistory.cpsType.LMB, 18), history.getHistoryIndex(cpsHistory.cpsType.LMB, 19)), config.getInt(this.getName() + ".AutoClickerCheck.startCheck.LMB"))) {
-                    if (checkNums(DifferencesRMB(history), config.getInt(this.getName() + ".AutoClickerCheck.clickerRange"), DifferencesRMB(history).size() / 5) || checkNums(DifferencesLMB(history), config.getInt(this.getName() + ".AutoClickerCheck.clickerRange"), DifferencesLMB(history).size() / 5)) {
+            if (PowerTools.config.getBoolean(this.getName() + ".AutoClickerCheck.enabled")) {
+                if(operator(Arrays.asList(history.getHistoryIndex(cpsHistory.cpsType.RMB, 17), history.getHistoryIndex(cpsHistory.cpsType.RMB, 18), history.getHistoryIndex(cpsHistory.cpsType.RMB, 19)), PowerTools.config.getInt(this.getName() + ".AutoClickerCheck.startCheck.RMB")) || operator(Arrays.asList(history.getHistoryIndex(cpsHistory.cpsType.LMB, 17), history.getHistoryIndex(cpsHistory.cpsType.LMB, 18), history.getHistoryIndex(cpsHistory.cpsType.LMB, 19)), PowerTools.config.getInt(this.getName() + ".AutoClickerCheck.startCheck.LMB"))) {
+                    if (checkNums(DifferencesRMB(history), PowerTools.config.getInt(this.getName() + ".AutoClickerCheck.clickerRange"), DifferencesRMB(history).size() / 5) || checkNums(DifferencesLMB(history), PowerTools.config.getInt(this.getName() + ".AutoClickerCheck.clickerRange"), DifferencesLMB(history).size() / 5)) {
                         int maxVL = 5;
                         if(AutoClickerVL.get(player.getName()) >= maxVL) {
                             Alert(PowerTools.Target.STAFF, ChatColor.GOLD + player.getName() + ChatColor.RED + " kicked for using auto clickers");
                             for(int i = 0; i < 5; i++)
                                 player.getWorld().spawnEntity(player.getLocation(), EntityType.LIGHTNING);
-                            if(config.getBoolean(this.getName() + ".AutoClickerCheck.alert-on-discord")){
+                            if(PowerTools.config.getBoolean(this.getName() + ".AutoClickerCheck.alert-on-discord")){
                                 DiscordAPI.sendEmbedOnWebhook(player.getName() + " kicked - Using AutoClicker", "I think " + player.getName() + " using **auto clicker**");
                             }
                             player.kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "\nI think you're using AutoClicker");
