@@ -5,6 +5,7 @@ import me.overlight.powertools.Libraries.InvGen.InvGen;
 import me.overlight.powertools.Modules.mods.Freeze;
 import me.overlight.powertools.Modules.mods.Knockback;
 import me.overlight.powertools.Modules.mods.Protect;
+import me.overlight.powertools.Modules.mods.Rotate;
 import me.overlight.powertools.Plugin.PlMessages;
 import me.overlight.powertools.Plugin.PlPerms;
 import me.overlight.powertools.Plugin.PlSticks;
@@ -61,6 +62,27 @@ public class MainCommand
                     if (isPlayerValid(args[1])) {
                         getPlayer(args[1]).getInventory().addItem(PlSticks.FreezeStick);
                         sender.sendMessage(PlMessages.Freeze_StickSimplifyGiven.get().replace("%PLAYER_NAME%", getPlayer(args[1]).getName()));
+                    } else {
+                        sender.sendMessage(PlMessages.PlayerNotFind.get());
+                    }
+                }
+                break;
+            case "rotate":
+            case "rot":
+                if (!PlPerms.hasPerm(sender, PlPerms.Perms.RotateCommand.get())) {
+                    sender.sendMessage(PlMessages.NoPermission.get());
+                    return false;
+                }
+                if (args.length == 2) {
+                    if (isPlayerValid(args[1]))
+                        Rotate.testRotate((Player) sender, getPlayer(args[1]));
+                    else
+                        sender.sendMessage(PlMessages.PlayerNotFind.get());
+                } else if (args.length == 3) {
+                    if (!Objects.equals(args[2], "stick")) return true;
+                    if (isPlayerValid(args[1])) {
+                        getPlayer(args[1]).getInventory().addItem(PlSticks.RotateStick);
+                        sender.sendMessage(PlMessages.Rotate_StickSimplifyGiven.get().replace("%PLAYER_NAME%", getPlayer(args[1]).getName()));
                     } else {
                         sender.sendMessage(PlMessages.PlayerNotFind.get());
                     }

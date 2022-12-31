@@ -16,6 +16,8 @@ public class PlPerms {
         FreezeCommand("modules.freeze.command"),
         FreezeStick("modules.freeze.stick"),
         ProtectCommand("modules.protect.command"),
+        RotateCommand("modules.rotate.command"),
+        RotateStick("modules.rotate.stick"),
 
         ;
         private final String perm;
