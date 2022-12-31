@@ -19,10 +19,9 @@ public class Protect
 
     public static List<String> protectedPlayers = new ArrayList<>();
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler
     public void playerDamage(EntityDamageEvent e){
         if(!(e.getEntity() instanceof Player)) return;
-
         if(protectedPlayers.contains(e.getEntity().getName())){
             e.setCancelled(true);
         }

@@ -98,7 +98,13 @@ public class MainCommand
                 if (args.length == 2) {
                     if (isPlayerValid(args[1])) {
                         Timer time = PlayTime.PlayTime.get(args[1]);
-                        sender.sendMessage(PlInfo.PREFIX + ChatColor.RED + args[1] + " has " + ChatColor.GOLD + (time.hour == 0 ? "" : time.hour + " hour" + (time.hour == 1 ? " " : "s ")) + (time.minute == 0 ? "" : time.minute + " minute" + (time.minute == 1 ? " " : "s ")) + (time.second == 0 ? "" : time.second + " second" + (time.second == 1 ? " " : "s ")) + ChatColor.RED + " playTime!");
+                        sender.sendMessage(PlInfo.PREFIX +
+                                ChatColor.GOLD + args[1] + ChatColor.GREEN + " has " +
+                                ChatColor.GOLD +
+                                (time.hour == 0 ? "" : time.hour + " hour" + (time.hour == 1 ? " " : "s ")) +
+                                (time.minute == 0 ? "" : time.minute + " minute" + (time.minute == 1 ? " " : "s ")) +
+                                (time.second == 0 ? "" : time.second + " second" + (time.second == 1 ? " " : "s ")) +
+                                ChatColor.GREEN + " playTime!");
                     }
                     else
                         sender.sendMessage(PlMessages.PlayerNotFind.get());

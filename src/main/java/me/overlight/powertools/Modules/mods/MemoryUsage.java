@@ -10,7 +10,7 @@ public class MemoryUsage
         extends Module
         implements Runnable{
     public MemoryUsage() {
-        super("Memory Usage", "Check for memory usage", "", null, 0, 100);
+        super("Memory Usage", "Check for memory usage", "", new String[]{}, 0, 100);
     }
 
     public static long lastMaxMemoryNotify;
