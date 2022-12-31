@@ -8,6 +8,7 @@ import me.overlight.powertools.AddOns.Bedwars.TntKnockback;
 import me.overlight.powertools.AddOns.Hub.KnockbackPlate;
 import me.overlight.powertools.AddOns.Hub.VoidTP;
 import me.overlight.powertools.AddOns.Main.*;
+import me.overlight.powertools.AddOns.Survival.NoRespawn;
 import me.overlight.powertools.Command.MainCommand;
 import me.overlight.powertools.Libraries.WebHooks.DiscordAPI;
 import me.overlight.powertools.Libraries.WebHooks.DiscordWebhook;
@@ -74,6 +75,8 @@ public class PowerTools
             AddOnManager.registerAddOn(new AntiTeamUp(), new TntKnockback(), new FireBallKnockback());
         if(config.getBoolean("HubAddOns.enabled"))
             AddOnManager.registerAddOn(new KnockbackPlate(), new VoidTP());
+        if(config.getBoolean("SurvivalAddOns.enabled"))
+            AddOnManager.registerAddOn(new ChatManager(), new NoRespawn());
         AddOnManager.loadAddons();
     }
 
