@@ -5,6 +5,8 @@ import me.overlight.powertools.AddOns.AddOnManager;
 import me.overlight.powertools.AddOns.Bedwars.AntiTeamUp;
 import me.overlight.powertools.AddOns.Bedwars.FireBallKnockback;
 import me.overlight.powertools.AddOns.Bedwars.TntKnockback;
+import me.overlight.powertools.AddOns.Hub.KnockbackPlate;
+import me.overlight.powertools.AddOns.Hub.VoidTP;
 import me.overlight.powertools.AddOns.Main.*;
 import me.overlight.powertools.Command.MainCommand;
 import me.overlight.powertools.Libraries.WebHooks.DiscordAPI;
@@ -68,9 +70,10 @@ public class PowerTools
 
         AddOnManager.registerAddOn(new AfkCheck(), new AntiWorldDownLoader(), new CpsCheck(), new PingCheck(), new ChatManager(), new ForceSpawn(), new JoinMessage(),
                 new QuitMessage(), new UserNameManager(), new CommandDeny(), new PvpManager(), new PvpRegisterer(), new VersionCheck(), new WorldEnvironments());
-        if(config.getBoolean("BedwarsAddOns.enabled")){
+        if(config.getBoolean("BedwarsAddOns.enabled"))
             AddOnManager.registerAddOn(new AntiTeamUp(), new TntKnockback(), new FireBallKnockback());
-        }
+        if(config.getBoolean("HubAddOns.enabled"))
+            AddOnManager.registerAddOn(new KnockbackPlate(), new VoidTP());
         AddOnManager.loadAddons();
     }
 

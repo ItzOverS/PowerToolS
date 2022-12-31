@@ -197,7 +197,7 @@ HubAddOns:
         verticalNormal: 2
   VoidTP:
     enabled: false
-    respawnLcation:
+    respawnLocation:
       x: 100
       y: 100
       z: 100
