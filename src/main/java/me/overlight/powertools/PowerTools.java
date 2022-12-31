@@ -28,7 +28,7 @@ public class PowerTools
         getServer().getPluginCommand("powertools").setExecutor(new MainCommand());
         getServer().getPluginCommand("powertools").setTabCompleter(new MainCommand());
 
-        ModuleManager.registerModule(new Knockback(), new Freeze(), new Channel(), new MemoryUsage(), new Protect());
+        ModuleManager.registerModule(new Knockback(), new Freeze(), new Channel(), new MemoryUsage(), new Protect(), new Rotate(), new PlayTime());
         ModuleManager.loadModulesData();
     }
 

@@ -2,14 +2,15 @@ package me.overlight.powertools.Command;
 
 import me.overlight.powertools.Libraries.ColorFormat;
 import me.overlight.powertools.Libraries.InvGen.InvGen;
-import me.overlight.powertools.Modules.mods.Freeze;
-import me.overlight.powertools.Modules.mods.Knockback;
-import me.overlight.powertools.Modules.mods.Protect;
-import me.overlight.powertools.Modules.mods.Rotate;
+import me.overlight.powertools.Modules.impls.Timer;
+import me.overlight.powertools.Modules.mods.*;
+import me.overlight.powertools.Plugin.PlInfo;
 import me.overlight.powertools.Plugin.PlMessages;
 import me.overlight.powertools.Plugin.PlPerms;
 import me.overlight.powertools.Plugin.PlSticks;
+import me.overlight.powertools.PowerTools;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -86,6 +87,21 @@ public class MainCommand
                     } else {
                         sender.sendMessage(PlMessages.PlayerNotFind.get());
                     }
+                }
+                break;
+            case "playtime":
+            case "pt":
+                if (!PlPerms.hasPerm(sender, PlPerms.Perms.PlayTimeCommand.get())) {
+                    sender.sendMessage(PlMessages.NoPermission.get());
+                    return false;
+                }
+                if (args.length == 2) {
+                    if (isPlayerValid(args[1])) {
+                        Timer time = PlayTime.PlayTime.get(args[1]);
+                        sender.sendMessage(PlInfo.PREFIX + ChatColor.RED + args[1] + " has " + ChatColor.GOLD + (time.hour == 0 ? "" : time.hour + " hour" + (time.hour == 1 ? " " : "s ")) + (time.minute == 0 ? "" : time.minute + " minute" + (time.minute == 1 ? " " : "s ")) + (time.second == 0 ? "" : time.second + " second" + (time.second == 1 ? " " : "s ")) + ChatColor.RED + " playTime!");
+                    }
+                    else
+                        sender.sendMessage(PlMessages.PlayerNotFind.get());
                 }
                 break;
             case "protect":
