@@ -13,5 +13,5 @@ powertools.kits.list                           show a list with created kits
 powertools.kits.delete                         remove kit
 powertools.player.freeze.chat                  recive frozen player's chat
 powertools.help                                get help
-powertools.plugin.reload                       reload plugin's data
+PowerTools.INSTANCE.reload                       reload plugin's data
 powertools.player.protect                      protect player from damage

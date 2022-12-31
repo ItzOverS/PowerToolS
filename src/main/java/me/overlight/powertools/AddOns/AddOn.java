@@ -6,7 +6,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 public class AddOn {
     private String name, version, description, perm;
     private boolean enabled;
-    public FileConfiguration config;
+    public static FileConfiguration config;
     public PowerTools plugin;
     public AddOn(String name, String version, String description, String requiredPerm, boolean stats){
         this.name = name;
@@ -15,13 +15,14 @@ public class AddOn {
         this.perm = requiredPerm;
         this.enabled = stats;
         this.plugin = PowerTools.INSTANCE;
-        this.config = this.plugin.getConfig();
+        config = this.plugin.getConfig();
         if(stats) onEnabled();
     }
 
     public void onEnabled() { }
+    public void onDisabled() { }
 
-    public String name() {
+    public String getName() {
         return name;
     }
     public String version() {
@@ -34,6 +35,10 @@ public class AddOn {
         return perm;
     }
     public boolean enabled() {
+        return enabled;
+    }
+
+    protected boolean isEnabled() {
         return enabled;
     }
 }

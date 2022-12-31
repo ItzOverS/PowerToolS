@@ -9,7 +9,7 @@ public class AddOnManager {
     public static List<AddOn> addOns = new ArrayList<>();
     public static AddOn getAddOnByName(String name){
         for(AddOn on: addOns){
-            if(Objects.equals(on.name(), name)){
+            if(Objects.equals(on.getName(), name)){
                 return on;
             }
         }
@@ -21,6 +21,14 @@ public class AddOnManager {
     public static void unRegisterAddOn(AddOn ... addOn){
         try {
             addOns.removeAll(Arrays.asList(addOn));
+            Arrays.asList(addOn).forEach(AddOn::onDisabled);
+        } catch(Exception ignored){ }
+    }
+    public static void unRegisterAll(){
+        try {
+
+            addOns.forEach(AddOn::onDisabled);
+            addOns.clear();
         } catch(Exception ignored){ }
     }
 }

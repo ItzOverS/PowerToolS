@@ -2,7 +2,6 @@ package me.overlight.powertools.Modules.mods;
 
 import me.overlight.powertools.Libraries.ColorFormat;
 import me.overlight.powertools.Modules.Module;
-import me.overlight.powertools.Plugin.PlInfo;
 import me.overlight.powertools.Plugin.PlMessages;
 import me.overlight.powertools.Plugin.PlPerms;
 import me.overlight.powertools.Plugin.PlSticks;

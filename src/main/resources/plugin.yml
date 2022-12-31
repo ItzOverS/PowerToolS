@@ -39,5 +39,5 @@ permissions:
       - powertools.kits.delete
       - powertools.player.freeze.chat
       - powertools.help
-      - powertools.plugin.reload
+      - PowerTools.INSTANCE.reload
       - powertools.player.protect

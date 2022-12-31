@@ -1,5 +1,4 @@
 package me.overlight.powertools.Plugin;
-
 import me.overlight.powertools.Libraries.ColorFormat;
 import me.overlight.powertools.Libraries.InvGen.InvGen;
 import org.bukkit.Material;
