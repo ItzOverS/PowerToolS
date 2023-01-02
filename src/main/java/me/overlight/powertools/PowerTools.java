@@ -8,6 +8,10 @@ import me.overlight.powertools.AddOns.Bedwars.TntKnockback;
 import me.overlight.powertools.AddOns.Hub.KnockbackPlate;
 import me.overlight.powertools.AddOns.Hub.VoidTP;
 import me.overlight.powertools.AddOns.Main.*;
+import me.overlight.powertools.AddOns.Server.AntiRejoin;
+import me.overlight.powertools.AddOns.Server.BanMOTD;
+import me.overlight.powertools.AddOns.Server.ForcePing;
+import me.overlight.powertools.AddOns.Server.RandomMOTD;
 import me.overlight.powertools.AddOns.Survival.NoRespawn;
 import me.overlight.powertools.AddOns.Survival.RandomSpawn;
 import me.overlight.powertools.Command.MainCommand;
@@ -78,6 +82,8 @@ public class PowerTools
             AddOnManager.registerAddOn(new KnockbackPlate(), new VoidTP());
         if(config.getBoolean("SurvivalAddOns.enabled"))
             AddOnManager.registerAddOn(new ChatManager(), new NoRespawn(), new RandomSpawn());
+        if(config.getBoolean("ServerAddOns.enabled"))
+            AddOnManager.registerAddOn(new RandomMOTD(), new BanMOTD(), new AntiRejoin(), new ForcePing());
         AddOnManager.loadAddons();
     }
 
