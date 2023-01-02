@@ -13,7 +13,7 @@ How to Install?
 3- start your server                                              
 
 Futures: 
-* Methods to check hackers (knockback, rotator & ...)
+* Methods to detect hackers (knockback, rotator & ...)
 * Detect AutoClickers & HighCpsChecks (customizable)
 * Chat & UserName manager (customizable)
 * Join & Quit messages (customizable)
