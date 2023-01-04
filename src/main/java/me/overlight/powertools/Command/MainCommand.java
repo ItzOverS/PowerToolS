@@ -117,13 +117,48 @@ public class MainCommand
                     return false;
                 }
 
-                if (args.length == 2) {
+                if (args.length == 1) {
                     if (Protect.protectedPlayers.contains(sender.getName())) {
-                        sender.sendMessage(PlMessages.Protect_PlayerIsNoLongerProtected.get().replace("%PLAYER_NAME%", args[1]));
-                        Protect.protectedPlayers.remove(args[1]);
+                        sender.sendMessage(PlMessages.Protect_YouAreNoLongerProtected.get());
+                        Protect.protectedPlayers.remove(sender.getName());
+                    } else {
+                        sender.sendMessage(PlMessages.Protect_YouAreNowProtected.get());
+                        Protect.protectedPlayers.add(sender.getName());
+                    }
+                } else if (args.length == 2) {
+                    if(isPlayerValid(args[1])) {
+                        if (Protect.protectedPlayers.contains(sender.getName())) {
+                            sender.sendMessage(PlMessages.Protect_PlayerIsNoLongerProtected.get().replace("%PLAYER_NAME%", args[1]));
+                            Protect.protectedPlayers.remove(args[1]);
+                        } else {
+                            sender.sendMessage(PlMessages.Protect_PlayerIsNowProtected.get().replace("%PLAYER_NAME%", args[1]));
+                            Protect.protectedPlayers.add(args[1]);
+                        }
+                    }
+                }
+                break;
+            case "vanish":
+                if (!PlPerms.hasPerm(sender, PlPerms.Perms.VanishCommand.get())) {
+                    sender.sendMessage(PlMessages.NoPermission.get());
+                    return false;
+                }
+                if (args.length == 1) {
+                    if (Vanish.vanishedPlayers.contains(((Player)sender).getUniqueId())) {
+                        sender.sendMessage(PlMessages.Vanish_YouAreNoLongerVanish.get());
+                        Vanish.vanishPlayer(Bukkit.getPlayer(sender.getName()));
                     } else{
-                        sender.sendMessage(PlMessages.Protect_PlayerIsNowProtected.get().replace("%PLAYER_NAME%", args[1]));
-                        Protect.protectedPlayers.add(args[1]);
+                        sender.sendMessage(PlMessages.Vanish_YouAreNowVanish.get());
+                        Vanish.vanishPlayer(Bukkit.getPlayer(sender.getName()));
+                    }
+                } else if(args.length == 2){
+                    if(isPlayerValid(args[1])) {
+                        if (Vanish.vanishedPlayers.contains(Bukkit.getPlayer(args[1]).getUniqueId())) {
+                            sender.sendMessage(PlMessages.Vanish_PlayerIsNoLongerVanish.get().replace("%PLAYER_NAME%", args[1]));
+                            Vanish.vanishPlayer(Bukkit.getPlayer(args[1]));
+                        } else {
+                            sender.sendMessage(PlMessages.Vanish_PlayerIsNowVanish.get().replace("%PLAYER_NAME%", args[1]));
+                            Vanish.vanishPlayer(Bukkit.getPlayer(args[1]));
+                        }
                     }
                 }
                 break;

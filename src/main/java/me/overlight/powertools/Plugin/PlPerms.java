@@ -19,6 +19,7 @@ public class PlPerms {
         RotateCommand("modules.rotate.command"),
         RotateStick("modules.rotate.stick"),
         PlayTimeCommand("modules.playtime.command"),
+        VanishCommand("modules.vanish.command"),
 
         ;
         private final String perm;
