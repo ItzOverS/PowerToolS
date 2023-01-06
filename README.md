@@ -1,7 +1,8 @@
 # PowerToolS
 
-A powerful plugin for staffs to detect cheaters & costume options for gamemodes
 
+
+**_A powerful plugin for staffs to detect cheaters & costume options for gamemodes_**
 
 How to Install?                                                           
 0- stop your server if running                                                                                                         
@@ -25,8 +26,8 @@ How to Use pluin:
 You can execute /pts help for chat help
 or execute /pts for gui
 
-Dependcies:                                                                    
-Vault-Economy: https://www.spigotmc.org/resources/vault.34315/                                                               
-PlaceHolderAPI: https://www.spigotmc.org/resources/placeholderapi.6245/
+Dependcies:                 
+- Vault-Economy: https://www.spigotmc.org/resources/vault.34315/
+- PlaceHolderAPI: https://www.spigotmc.org/resources/placeholderapi.6245/
 
-Report any bug & issues in github page
+**Report any bug & issues in github page**
