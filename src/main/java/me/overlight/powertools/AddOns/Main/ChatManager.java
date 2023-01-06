@@ -1,5 +1,6 @@
 package me.overlight.powertools.AddOns.Main;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import me.overlight.powertools.AddOns.AddOn;
 import me.overlight.powertools.PowerTools;
 import org.bukkit.Bukkit;
@@ -38,7 +39,7 @@ public class ChatManager
                         DelayMessagePlayers.remove(sender.getName());
                     }, PowerTools.config.getInt(this.getName() + ".MessageDelay.delay") * 20L);
                 } else {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".MessageDelay.msg")));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".MessageDelay.msg"))));
                     e.setCancelled(true);
                     return;
                 }
@@ -54,7 +55,7 @@ public class ChatManager
                     if (PowerTools.config.getBoolean(this.getName() + ".AntiSpam.Kick.enabled")) {
                         e.setCancelled(true);
                         Bukkit.getScheduler().runTask(PowerTools.INSTANCE, () ->  {
-                                Bukkit.getPlayer(sender.getName()).kickPlayer(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".AntiSpam.Kick.msg")));
+                                Bukkit.getPlayer(sender.getName()).kickPlayer(ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".AntiSpam.Kick.msg"))));
                         });
                     return;
                     }
@@ -109,7 +110,7 @@ public class ChatManager
                     }
                 }
                 if (messageFlagged) {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".WordBlock.msg")));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".WordBlock.msg"))));
                     e.setCancelled(true);
                     return;
                 }
@@ -121,7 +122,7 @@ public class ChatManager
                 for (String str : words) {
                     if (Count(newMSG, str) > PowerTools.config.getLong(this.getName() + ".AntiDuplicate.maxDuplicate")) {
                         e.setCancelled(true);
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".AntiDuplicate.msg")));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".AntiDuplicate.msg"))));
                         return;
                     }
                 }

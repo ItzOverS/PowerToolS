@@ -1,5 +1,6 @@
 package me.overlight.powertools.AddOns.Main;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import me.overlight.powertools.AddOns.AddOn;
 import me.overlight.powertools.PowerTools;
 import org.bukkit.Bukkit;
@@ -22,7 +23,7 @@ public class QuitMessage
             assert message != null;
             message = message.replace("%NAME%", e.getPlayer().getName());
             message = message.replace("%ONLINE%", String.valueOf(Bukkit.getOnlinePlayers().size()));
-            e.setQuitMessage(ChatColor.translateAlternateColorCodes('&', message));
+            e.setQuitMessage(ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(e.getPlayer(), message)));
         }
     }
 }
