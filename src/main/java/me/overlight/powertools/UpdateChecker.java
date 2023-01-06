@@ -18,12 +18,13 @@ import java.net.URL;
 import java.util.Objects;
 
 public class UpdateChecker {
+    public static String downloadLink = null;
     public static boolean isUpToDate() throws IOException, ParseException {
         return Objects.equals(getLatestVersion(), PlInfo.VERSION);
     }
 
     public static String getDownloadLink(){
-        return null;
+        return downloadLink;
     }
 
     public static String getLatestVersion() throws IOException, ParseException {
@@ -43,6 +44,7 @@ public class UpdateChecker {
             JSONArray js = (JSONArray)(json.parse(response.toString()));
             if(js.size() == 0) return null;
             JSONObject latestVersionJson = (JSONObject) js.get(js.size() - 1);
+            downloadLink = (String) latestVersionJson.get("browser_download_url");
             return (String) latestVersionJson.get("tag_name");
         }
         return null;
