@@ -1,7 +1,4 @@
 # PowerToolS
-░█▀▀█ █▀▀█ █───█ █▀▀ █▀▀█ ▀▀█▀▀ █▀▀█ █▀▀█ █── ░█▀▀▀█                                                                                                                        
-░█▄▄█ █──█ █▄█▄█ █▀▀ █▄▄▀ ─░█── █──█ █──█ █── ─▀▀▀▄▄                                                                                                                         
-░█─── ▀▀▀▀ ─▀─▀─ ▀▀▀ ▀─▀▀ ─░█── ▀▀▀▀ ▀▀▀▀ ▀▀▀ ░█▄▄▄█
 
 A powerful plugin for staffs to detect cheaters & costume options for gamemodes
 
