@@ -26,7 +26,7 @@ You can execute /pts help for chat help
 or execute /pts for gui
 
 Dependcies:                                                                    
-Vault-Economy: https://www.spigotmc.org/resources/vault.34315/
+Vault-Economy: https://www.spigotmc.org/resources/vault.34315/                                                               
 PlaceHolderAPI: https://www.spigotmc.org/resources/placeholderapi.6245/
 
 Report any bug & issues in github page
