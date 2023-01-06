@@ -2,7 +2,7 @@ name: PowerToolS
 version: '${project.version}'
 main: me.overlight.powertools.PowerTools
 author: _OverLight_
-depend: [ Vault, PlaceHolderAPI ]
+depend: [ Vault, PlaceholderAPI ]
 softdepend: []
 website: http://www.daneshian.ir/
 prefix: PowerToolS

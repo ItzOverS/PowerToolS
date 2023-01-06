@@ -15,6 +15,7 @@ import me.overlight.powertools.AddOns.Server.RandomMOTD;
 import me.overlight.powertools.AddOns.Survival.NoRespawn;
 import me.overlight.powertools.AddOns.Survival.RandomSpawn;
 import me.overlight.powertools.Command.MainCommand;
+import me.overlight.powertools.Libraries.ColorFormat;
 import me.overlight.powertools.Libraries.WebHooks.DiscordAPI;
 import me.overlight.powertools.Libraries.WebHooks.DiscordWebhook;
 import me.overlight.powertools.Modules.ModuleManager;
@@ -26,6 +27,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
 
 public class PowerTools
         extends JavaPlugin {
@@ -88,6 +92,14 @@ public class PowerTools
         AddOnManager.loadAddons();
 
         PacketEvents.get().init();
+
+        try{
+            if(!UpdateChecker.isUpToDate()){
+                getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("@color_greenThere is a newer version available"));
+            }
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
