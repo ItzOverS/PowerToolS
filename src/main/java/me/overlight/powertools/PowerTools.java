@@ -22,6 +22,7 @@ import me.overlight.powertools.Modules.ModuleManager;
 import me.overlight.powertools.Modules.mods.*;
 import me.overlight.powertools.Plugin.PlInfo;
 import me.overlight.powertools.Plugin.PlMessages;
+import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -92,13 +93,23 @@ public class PowerTools
         AddOnManager.loadAddons();
 
         PacketEvents.get().init();
+        getServer().getConsoleSender().sendMessage("");
+        getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("   @color_dark_green___  @color_aqua__________   "));
+        getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("  @color_dark_green/ _ \\@color_aqua/_  __/ __/ @color_dark_gray Welcome to PowerToolS v" + PlInfo.VERSION));
+        getServer().getConsoleSender().sendMessage(ColorFormat.formatColor(" @color_dark_green/ ___/ @color_aqua/ / _\\ \\   @color_dark_gray Running on Spigot/Bukkit"));
+        getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("@color_dark_green/_/    @color_aqua/_/ /___/  @color_dark_gray  by ItzOver"));
+        getServer().getConsoleSender().sendMessage("");
+        getServer().getConsoleSender().sendMessage("");
+
 
         try{
             if(!UpdateChecker.isUpToDate()){
-                getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("@color_greenThere is a newer version available"));
+                getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_greenThere is a newer version available"));
+            } else {
+                getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_greenPlugin is up to date"));
             }
         } catch (IOException | ParseException e) {
-            throw new RuntimeException(e);
+            getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_redFailed to check for updates | check your network connection"));
         }
     }
 
