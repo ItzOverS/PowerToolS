@@ -2,7 +2,7 @@ name: PowerToolS
 version: '${project.version}'
 main: me.overlight.powertools.PowerTools
 author: _OverLight_
-depend: [ Vault ]
+depend: [ Vault, PlaceHolderAPI ]
 softdepend: []
 website: http://www.daneshian.ir/
 prefix: PowerToolS
@@ -23,21 +23,3 @@ commands:
 permissions:
   powertools:
     default: op
-    children:
-      - powertools.alerts
-      - powertools.player.knockback
-      - powertools.player.fall
-      - powertools.player.freeze
-      - powertools.player.rotate
-      - powertools.player.hide
-      - powertools.player.cps.lmb
-      - powertools.player.cps.rmb
-      - powertools.player.cps
-      - powertools.player.playtime
-      - powertools.kits.create
-      - powertools.kits.list
-      - powertools.kits.delete
-      - powertools.player.freeze.chat
-      - powertools.help
-      - PowerTools.INSTANCE.reload
-      - powertools.player.protect
