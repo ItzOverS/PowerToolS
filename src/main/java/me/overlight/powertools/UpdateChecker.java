@@ -18,7 +18,7 @@ import java.net.URL;
 import java.util.Objects;
 
 public class UpdateChecker {
-    public static String downloadLink = null;
+    private static String downloadLink = null;
     public static boolean isUpToDate() throws IOException, ParseException {
         return Objects.equals(getLatestVersion(), PlInfo.VERSION);
     }
