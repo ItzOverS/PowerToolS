@@ -5,6 +5,7 @@ import me.overlight.powertools.PowerTools;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +46,8 @@ public class AddOnManager {
                 Bukkit.getScheduler().runTaskTimerAsynchronously(PowerTools.INSTANCE, (Runnable) addon, 0, 40);
             else if(addon instanceof CommandExecutor)
                 PowerTools.INSTANCE.getServer().getPluginCommand("powertools").setExecutor((CommandExecutor) addon);
+            else if(addon instanceof PluginMessageListener)
+                PowerTools.INSTANCE.getServer().getMessenger().registerIncomingPluginChannel(PowerTools.INSTANCE, addon.channel(), (PluginMessageListener) addon);
         }
     }
 }

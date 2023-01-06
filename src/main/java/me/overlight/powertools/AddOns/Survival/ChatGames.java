@@ -2,7 +2,7 @@ package me.overlight.powertools.AddOns.Survival;
 
 import me.overlight.powertools.APIs.Vault;
 import me.overlight.powertools.AddOns.AddOn;
-import me.overlight.powertools.Libraries.InvGen.InvGen;
+import me.overlight.powertools.Libraries.InvGen;
 import me.overlight.powertools.Plugin.PlInfo;
 import me.overlight.powertools.PowerTools;
 import org.bukkit.Bukkit;

@@ -1,17 +1,13 @@
 package me.overlight.powertools.Command;
 
-import me.overlight.powertools.Libraries.ColorFormat;
-import me.overlight.powertools.Libraries.InvGen.InvGen;
 import me.overlight.powertools.Modules.impls.Timer;
 import me.overlight.powertools.Modules.mods.*;
 import me.overlight.powertools.Plugin.PlInfo;
 import me.overlight.powertools.Plugin.PlMessages;
 import me.overlight.powertools.Plugin.PlPerms;
 import me.overlight.powertools.Plugin.PlSticks;
-import me.overlight.powertools.PowerTools;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

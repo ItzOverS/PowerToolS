@@ -20,6 +20,7 @@ import me.overlight.powertools.Libraries.WebHooks.DiscordWebhook;
 import me.overlight.powertools.Modules.ModuleManager;
 import me.overlight.powertools.Modules.mods.*;
 import me.overlight.powertools.Plugin.PlInfo;
+import me.overlight.powertools.Plugin.PlMessages;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -34,7 +35,7 @@ public class PowerTools
     public void onLoad() {
         PacketEvents.create(this);
         PacketEvents.get().getSettings()
-                .checkForUpdates(true)
+                .checkForUpdates(false)
                 .bStats(true)
                 .fallbackServerVersion(PacketEvents.get().getServerUtils().getVersion());
         PacketEvents.get().load();
@@ -85,6 +86,8 @@ public class PowerTools
         if(config.getBoolean("ServerAddOns.enabled"))
             AddOnManager.registerAddOn(new RandomMOTD(), new BanMOTD(), new AntiRejoin(), new ForcePing());
         AddOnManager.loadAddons();
+
+        PacketEvents.get().init();
     }
 
     @Override
@@ -98,11 +101,13 @@ public class PowerTools
     }
     public static void Alert(Target targ, String msg){
         for(Player player: Bukkit.getOnlinePlayers()){
+            String message = (!msg.startsWith(PlInfo.PREFIX) ? PlInfo.PREFIX : "") + msg;
             if(targ == Target.STAFF) {
                 if (player.isOp())
-                    player.sendMessage(PlInfo.PREFIX + msg);
+                    player.sendMessage(message);
             } else {
-                player.sendMessage(PlInfo.PREFIX + msg);
+                player.sendMessage(message);
+
             }
         }
     }

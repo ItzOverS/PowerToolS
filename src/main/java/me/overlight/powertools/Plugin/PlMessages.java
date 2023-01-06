@@ -1,6 +1,7 @@
 package me.overlight.powertools.Plugin;
 
 import me.overlight.powertools.Libraries.ColorFormat;
+import me.overlight.powertools.Libraries.RepItem;
 
 import java.awt.*;
 
@@ -25,6 +26,8 @@ public enum PlMessages {
     Vanish_PlayerIsNoLongerVanish(ColorFormat.formatColor("@color_gold%PLAYER_NAME% @color_red is no longer vanish")),
     Vanish_YouAreNowVanish(ColorFormat.formatColor("@color_greenYou're now vanish")),
     Vanish_YouAreNoLongerVanish(ColorFormat.formatColor("@color_redYou're no longer vanish")),
+    PlayerJoinedUsing(ColorFormat.formatColor("@color_gold%PLAYER_NAME%@color_green joined using @color_red%CLIENT% %VERSION%")),
+    FailedToDetectClient(ColorFormat.formatColor("@color_redFailed to detect @color_gold%PLAYER_NAME%@color_red's client")),
     NoPermission(ColorFormat.formatColor("@color_redYou don't have enough permission to do this!"))
 
     ;
@@ -32,7 +35,9 @@ public enum PlMessages {
     PlMessages(String name){
         this.name = name;
     }
-    public String get(){
-        return PlInfo.PREFIX + this.name;
+    public String get(RepItem ... items){
+        String item = this.name;
+        for(RepItem i : items) item = item.replace(i.key(), i.value());
+        return PlInfo.PREFIX + item;
     }
 }

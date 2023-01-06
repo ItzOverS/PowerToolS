@@ -6,6 +6,7 @@ public class AddOn {
     private String name, version, description, perm;
     private boolean enabled;
     public PowerTools plugin;
+    private String channel = null;
     public AddOn(String name, String version, String description, String requiredPerm, boolean stats){
         this.name = name;
         this.version = version;
@@ -13,6 +14,17 @@ public class AddOn {
         this.perm = requiredPerm;
         this.enabled = stats;
         this.plugin = PowerTools.INSTANCE;
+        this.channel = null;
+        if(stats) onEnabled();
+    }
+    public AddOn(String name, String version, String description, String requiredPerm, boolean stats, String channel){
+        this.name = name;
+        this.version = version;
+        this.description = description;
+        this.perm = requiredPerm;
+        this.enabled = stats;
+        this.plugin = PowerTools.INSTANCE;
+        this.channel = channel;
         if(stats) onEnabled();
     }
 
@@ -30,6 +42,9 @@ public class AddOn {
     }
     public String perm() {
         return perm;
+    }
+    public String channel() {
+        return channel;
     }
     public boolean enabled() {
         return enabled;

@@ -1,4 +1,4 @@
-package me.overlight.powertools.Libraries.InvGen;
+package me.overlight.powertools.Libraries;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
