@@ -16,6 +16,7 @@ import me.overlight.powertools.AddOns.Survival.NoRespawn;
 import me.overlight.powertools.AddOns.Survival.RandomSpawn;
 import me.overlight.powertools.Command.MainCommand;
 import me.overlight.powertools.Libraries.ColorFormat;
+import me.overlight.powertools.Libraries.PlaceHolders;
 import me.overlight.powertools.Libraries.WebHooks.DiscordAPI;
 import me.overlight.powertools.Libraries.WebHooks.DiscordWebhook;
 import me.overlight.powertools.Modules.ModuleManager;
@@ -103,6 +104,7 @@ public class PowerTools
 
 
         try{
+            getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_goldChecking for updates"));
             if(!UpdateChecker.isUpToDate()){
                 getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_greenThere is a newer version available"));
             } else {
@@ -110,6 +112,11 @@ public class PowerTools
             }
         } catch (IOException | ParseException e) {
             getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_redFailed to check for updates | check your network connection"));
+        }
+
+        if(!new PlaceHolders().isRegistered()) {
+            new PlaceHolders().register();
+            getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_greenSuccess registered placeholders"));
         }
     }
 
