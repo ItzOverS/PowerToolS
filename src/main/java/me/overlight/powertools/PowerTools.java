@@ -9,6 +9,7 @@ import me.overlight.powertools.AddOns.Bedwars.TntKnockback;
 import me.overlight.powertools.AddOns.Hub.KnockbackPlate;
 import me.overlight.powertools.AddOns.Hub.VoidTP;
 import me.overlight.powertools.AddOns.Main.*;
+import me.overlight.powertools.AddOns.Main.PvpRegisterer.PvpRegisterer;
 import me.overlight.powertools.AddOns.Server.AntiRejoin;
 import me.overlight.powertools.AddOns.Server.BanMOTD;
 import me.overlight.powertools.AddOns.Server.ForcePing;
@@ -23,8 +24,6 @@ import me.overlight.powertools.Libraries.WebHooks.DiscordWebhook;
 import me.overlight.powertools.Modules.ModuleManager;
 import me.overlight.powertools.Modules.mods.*;
 import me.overlight.powertools.Plugin.PlInfo;
-import me.overlight.powertools.Plugin.PlMessages;
-import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -118,6 +117,10 @@ public class PowerTools
         if(!new PlaceHolders().isRegistered()) {
             new PlaceHolders().register();
             getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_greenSuccess registered placeholders"));
+        }
+
+        if(!PacketEvents.get().isInitialized() && !PacketEvents.get().isInitializing()){
+            PacketEvents.get().init();
         }
     }
 
