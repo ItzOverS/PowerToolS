@@ -133,6 +133,8 @@ public class PowerTools
             getServer().getMessenger().unregisterOutgoingPluginChannel(this, "WDL|CONTROL");
         }
         getServer().getMessenger().unregisterIncomingPluginChannel(this, (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12))?"mc:brand":"MC|BRAND");
+
+        AddOnManager.unRegisterAddOn();
     }
 
     public enum Target{
