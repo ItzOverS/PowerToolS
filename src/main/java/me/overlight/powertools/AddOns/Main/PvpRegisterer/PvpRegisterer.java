@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class PvpRegisterer
-        extends AddOn {
+        extends AddOn implements Listener {
     public PvpRegisterer() {
         super("pvpRegisterer", "1.0", "register player's unregistered clicks", "NONE", PowerTools.config.getBoolean("pvpRegisterer.enabled"));
         PacketEvents.get().getEventManager().registerListener(new PacketListener());
