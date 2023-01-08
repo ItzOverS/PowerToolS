@@ -81,3 +81,12 @@ PowerToolS v1.0:
  [=] fixed "report"'s bug
  [=] fixed normalPlayers command execute ( plugin )
  [+] added ServerAddOns.BanMOTD
+
+PowerToolS v1.1:
+ [+] added UpdateChecker + Link gen
+ [=] fixed some bugs ( cps detector )
+
+PowerToolS v1.2:
+ [/] implemented spigot NMS on project
+ [+] improved WDL check for +1.12
+ [+] improved MC Client check for +1.12
