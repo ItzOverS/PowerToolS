@@ -43,11 +43,11 @@ public class AddOnManager {
             if(!addon.isEnabled()) continue;
             if(addon instanceof Listener)
                 PowerTools.INSTANCE.getServer().getPluginManager().registerEvents((Listener)addon, PowerTools.INSTANCE);
-            else if(addon instanceof Runnable)
+            if(addon instanceof Runnable)
                 Bukkit.getScheduler().runTaskTimerAsynchronously(PowerTools.INSTANCE, (Runnable) addon, 0, 40);
-            else if(addon instanceof CommandExecutor)
+            if(addon instanceof CommandExecutor)
                 PowerTools.INSTANCE.getServer().getPluginCommand("powertools").setExecutor((CommandExecutor) addon);
-            else if(addon instanceof PluginMessageListener)
+            if(addon instanceof PluginMessageListener)
                 PowerTools.INSTANCE.getServer().getMessenger().registerIncomingPluginChannel(PowerTools.INSTANCE, addon.channel(), (PluginMessageListener) addon);
         }
     }
