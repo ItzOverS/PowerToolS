@@ -1,5 +1,8 @@
-package me.overlight.powertools.AddOns.Main;
+package me.overlight.powertools.AddOns.Main.PvpRegisterer;
 
+import de.valuga.spigot.packet.PacketHandler;
+import io.github.retrooper.packetevents.PacketEvents;
+import io.github.retrooper.packetevents.event.PacketListenerAbstract;
 import me.overlight.powertools.AddOns.AddOn;
 import me.overlight.powertools.Modules.mods.Protect;
 import me.overlight.powertools.PowerTools;
@@ -10,6 +13,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -17,31 +22,21 @@ import java.util.HashMap;
 import java.util.List;
 
 public class PvpRegisterer
-        extends AddOn
-        implements Listener {
+        extends AddOn {
     public PvpRegisterer() {
-        super("pvpRegisterer", "1.0", "register player's unregistered clicks", "NONE", PowerTools.config.getBoolean("afkCheck.enabled"));
+        super("pvpRegisterer", "1.0", "register player's unregistered clicks", "NONE", PowerTools.config.getBoolean("pvpRegisterer.enabled"));
+        PacketEvents.get().getEventManager().registerListener(new PacketListener());
     }
     public static HashMap<String, Integer> CpsAtAttack = new HashMap<>();
-    @EventHandler(priority = EventPriority.MONITOR)
+    public static HashMap<String, Vector> firstVelocity = new HashMap<>();
+    @EventHandler
     public void playerInteractAtEntity(EntityDamageByEntityEvent e){
-        if(!(e.getDamager() instanceof Player && e.getDamager() instanceof Player))
-            return;
+        if(!(e.getDamager() instanceof Player)) return;
         if(!Protect.protectedPlayers.contains(e.getEntity().getName())) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
                 int range = 1;
                 if (CpsAtAttack.containsKey(e.getDamager().getName())) {
-                    range = CpsAtAttack.get(e.getDamager().getName());
-                    if (range > 10 && range < 17)
-                        range = range / 2;
-                    else if (range >= 17 && range < 25)
-                        range = range / 3;
-                    else if (range >= 25 && range < 35)
-                        range = range / 4;
-                    else if (range >= 35 && range < 42)
-                        range = range / 5;
-                    else if (range >= 42 && range < 50)
-                        range = range / 6;
+                    range = CpsAtAttack.getOrDefault(e.getDamager().getName(), 0) / 2;
                 }
                 for (int i = 0; i < range; i++) {
                     if (PowerTools.config.getBoolean(this.getName() + ".registerDamages.enabled"))
@@ -51,7 +46,6 @@ public class PvpRegisterer
                 }
                 CpsAtAttack.remove(e.getDamager().getName());
             }, 8);
-            CpsAtAttack.put(e.getDamager().getName(), (CpsAtAttack.containsKey(e.getDamager().getName()))? CpsAtAttack.get(e.getDamager().getName()) + 1: 1);
         }
     }
 
