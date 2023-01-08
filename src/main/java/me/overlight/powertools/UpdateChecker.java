@@ -2,6 +2,7 @@ package me.overlight.powertools;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import io.github.retrooper.packetevents.PacketEvents;
 import me.overlight.powertools.Plugin.PlInfo;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -20,7 +21,8 @@ import java.util.Objects;
 public class UpdateChecker {
     private static String downloadLink = null;
     public static boolean isUpToDate() throws IOException, ParseException {
-        return Objects.equals(getLatestVersion(), PlInfo.VERSION);
+        String requestAns = getLatestVersion();
+        return requestAns != null && isOlderThan(PlInfo.VERSION, getLatestVersion());
     }
 
     public static String getDownloadLink(){
@@ -50,5 +52,15 @@ public class UpdateChecker {
             return (String) latestVersionJson.get("tag_name");
         }
         return null;
+    }
+
+    private static boolean isOlderThan(String v1/*PowerToolS version*/, String v2){
+        if(Integer.parseInt(v1.split("\\.")[0]) > Integer.parseInt(v2.split("\\.")[0])){
+            return false;
+        } else if(Integer.parseInt(v1.split("\\.")[0]) == Integer.parseInt(v2.split("\\.")[0])){
+            return isOlderThan(v1.substring(v1.split("\\.")[0].length() + 1), v2.substring(v2.split("\\.")[0].length() + 1));
+        } else{
+            return true;
+        }
     }
 }
