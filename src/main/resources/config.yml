@@ -153,6 +153,14 @@ Report:
   delayBetweenReports: 600000 # 600000 miliSeconds = 600 Seconds = 10 Minutes
   reportTheySelf: false
 
+SlashServer:
+  enabled: false
+  servers:
+    #  ServerName - command
+    survival: ["survival"]
+    bedwars: ["bw"]
+    pvp: ["pvp"]
+
 
 SurvivalAddOns:
   enabled: false
