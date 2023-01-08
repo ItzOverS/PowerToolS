@@ -1,6 +1,7 @@
 package me.overlight.powertools.AddOns.Main;
 
 import io.github.retrooper.packetevents.PacketEvents;
+import io.github.retrooper.packetevents.utils.server.ServerVersion;
 import me.overlight.powertools.AddOns.AddOn;
 import me.overlight.powertools.Libraries.RepItem;
 import me.overlight.powertools.Plugin.PlMessages;
@@ -23,7 +24,7 @@ public class VersionCheck
         implements PluginMessageListener {
     public static HashMap<String, String> playersClientBrand = new HashMap<>();
     public VersionCheck() {
-        super("VersionCheck", "1.0", "check players version", "NONE", PowerTools.config.getBoolean("VersionCheck.enabled"), "MC|Brand");
+        super("VersionCheck", "1.0", "check players version", "NONE", PowerTools.config.getBoolean("VersionCheck.enabled"), (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12))?"mc:brand":"MC|BRAND");
     }
     @Override
     public void onPluginMessageReceived(String channel, Player player, byte[] message) {
