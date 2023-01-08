@@ -11,8 +11,12 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerPortalEvent;
+
+import java.util.Objects;
 
 public class WorldEnvironments
         extends AddOn
@@ -59,5 +63,10 @@ public class WorldEnvironments
     public void entityHunger(FoodLevelChangeEvent e) {
         if(!(e.getEntity() instanceof Player)) return;
         if (!PowerTools.config.getBoolean(this.getName() + ".allowHunger")) e.setCancelled(true);
+    }
+    @EventHandler
+    public void playerWorldChange(PlayerPortalEvent e){
+        if(PowerTools.config.getBoolean(this.getName() + ".disableEnd") && Objects.equals(e.getTo().getWorld().getName(), "world_the_end")) e.setCancelled(true);
+        if(PowerTools.config.getBoolean(this.getName() + ".disableNether") && Objects.equals(e.getTo().getWorld().getName(), "world_nether")) e.setCancelled(true);
     }
 }

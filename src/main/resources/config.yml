@@ -245,4 +245,6 @@ WorldEnvironments:
   allowBlockBreak: false
   allowBlockPlace: false
   allowInteract: true
+  disableNether: false
+  disableEnd: false
 
