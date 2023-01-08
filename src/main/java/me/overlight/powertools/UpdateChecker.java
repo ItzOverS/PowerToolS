@@ -43,7 +43,9 @@ public class UpdateChecker {
             JSONParser json = new JSONParser();
             JSONArray js = (JSONArray)(json.parse(response.toString()));
             if(js.size() == 0) return null;
-            JSONObject latestVersionJson = (JSONObject) js.get(js.size() - 1);
+            int index = 0;
+            while((Boolean) ((JSONObject) js.get(index)).get("prerelease")) index++;
+            JSONObject latestVersionJson = (JSONObject) js.get(index);
             downloadLink = (String) latestVersionJson.get("browser_download_url");
             return (String) latestVersionJson.get("tag_name");
         }
