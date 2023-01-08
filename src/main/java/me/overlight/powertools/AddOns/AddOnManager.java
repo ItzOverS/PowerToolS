@@ -40,6 +40,7 @@ public class AddOnManager {
     }
     public static void loadAddons(){
         for(AddOn addon: addOns){
+            if(!addon.isEnabled()) continue;
             if(addon instanceof Listener)
                 PowerTools.INSTANCE.getServer().getPluginManager().registerEvents((Listener)addon, PowerTools.INSTANCE);
             else if(addon instanceof Runnable)
