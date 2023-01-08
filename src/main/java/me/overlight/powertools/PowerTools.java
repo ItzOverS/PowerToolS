@@ -1,6 +1,7 @@
 package me.overlight.powertools;
 
 import io.github.retrooper.packetevents.PacketEvents;
+import io.github.retrooper.packetevents.utils.server.ServerVersion;
 import me.overlight.powertools.AddOns.AddOnManager;
 import me.overlight.powertools.AddOns.Bedwars.AntiTeamUp;
 import me.overlight.powertools.AddOns.Bedwars.FireBallKnockback;
@@ -123,6 +124,15 @@ public class PowerTools
     @Override
     public void onDisable() {
         PacketEvents.get().terminate();
+
+        if(PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12)){
+            getServer().getMessenger().unregisterIncomingPluginChannel(this, "wdl:init");
+            getServer().getMessenger().unregisterOutgoingPluginChannel(this, "wdl:control");
+        } else {
+            getServer().getMessenger().unregisterIncomingPluginChannel(this, "WDL|INIT");
+            getServer().getMessenger().unregisterOutgoingPluginChannel(this, "WDL|CONTROL");
+        }
+        getServer().getMessenger().unregisterIncomingPluginChannel(this, (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12))?"mc:brand":"MC|BRAND");
     }
 
     public enum Target{
