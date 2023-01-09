@@ -90,3 +90,5 @@ PowerToolS v1.2:
  [/] implemented spigot NMS on project
  [+] improved WDL check for +1.12
  [+] improved MC Client check for +1.12
+ [+] added SlashServer addon
+ [+] added endDisabler & netherDisabler to WorldENVs

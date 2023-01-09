@@ -4,6 +4,9 @@
 *.iml
 *.ipr
 *.iws
+ChangeLog.txt
+icon.png
+perms.txt
 
 # IntelliJ
 out/
@@ -111,3 +114,6 @@ buildNumber.properties
 
 # Common working directory
 run/
+!/src/main/resources/ChangeLog.txt
+!/src/main/resources/ChangeLog.txt
+src/main/resources/ChangeLog.txt
