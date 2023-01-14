@@ -7,14 +7,7 @@ import me.overlight.powertools.Libraries.RepItem;
 import me.overlight.powertools.Plugin.PlMessages;
 import me.overlight.powertools.PowerTools;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.messaging.PluginMessageListener;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitScheduler;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -34,13 +27,13 @@ public class VersionCheck
                     client.equals("eyser")? "Geyser": client.equals("FML")? "Forge": client.equals("fabric")? "Fabric": client.startsWith("lunarclient")? "LunarClient":
                     client.equals("Feather Forge")? "FeatherClient": client;
             playersClientBrand.put(player.getName(), client);
-            PowerTools.Alert(PowerTools.Target.STAFF, PlMessages.PlayerJoinedUsing.get(
+            PowerTools.Alert(PowerTools.Target.STAFF, PlMessages.ClDetector_PlayerJoinedUsing.get(
                     new RepItem("%PLAYER_NAME%", player.getName()),
                     new RepItem("%VERSION%", PacketEvents.get().getPlayerUtils().getClientVersion(player).toString().replace("v_", "").replace("_", ".")),
                     new RepItem("%CLIENT%", client))
             );
         } catch (UnsupportedEncodingException e) {
-            PowerTools.Alert(PowerTools.Target.STAFF, PlMessages.FailedToDetectClient.get(new RepItem("%PLAYER_NAME%", player.getName())));
+            PowerTools.Alert(PowerTools.Target.STAFF, PlMessages.ClDetector_FailedToDetectClient.get(new RepItem("%PLAYER_NAME%", player.getName())));
             playersClientBrand.put(player.getName(), "INVALID");
         }
     }

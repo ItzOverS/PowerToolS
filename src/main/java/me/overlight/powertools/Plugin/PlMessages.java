@@ -3,8 +3,6 @@ package me.overlight.powertools.Plugin;
 import me.overlight.powertools.Libraries.ColorFormat;
 import me.overlight.powertools.Libraries.RepItem;
 
-import java.awt.*;
-
 public enum PlMessages {
 
     PlayerNotFind(ColorFormat.formatColor("@color_redPlayer not find")),
@@ -26,8 +24,9 @@ public enum PlMessages {
     Vanish_PlayerIsNoLongerVanish(ColorFormat.formatColor("@color_gold%PLAYER_NAME% @color_red is no longer vanish")),
     Vanish_YouAreNowVanish(ColorFormat.formatColor("@color_greenYou're now vanish")),
     Vanish_YouAreNoLongerVanish(ColorFormat.formatColor("@color_redYou're no longer vanish")),
-    PlayerJoinedUsing(ColorFormat.formatColor("@color_gold%PLAYER_NAME%@color_green joined using @color_red%CLIENT% %VERSION%")),
-    FailedToDetectClient(ColorFormat.formatColor("@color_redFailed to detect @color_gold%PLAYER_NAME%@color_red's client")),
+    ClDetector_PlayerJoinedUsing(ColorFormat.formatColor("@color_gold%PLAYER_NAME%@color_green joined using @color_red%CLIENT% %VERSION%")),
+    ClDetector_FailedToDetectClient(ColorFormat.formatColor("@color_redFailed to detect @color_gold%PLAYER_NAME%@color_red's client")),
+    ExtensionLoader_SimplifyLoadedExtension(ColorFormat.formatColor("@color_greenSimplify connected @color_gold%EXTENSION% @color_red")),
     NoPermission(ColorFormat.formatColor("@color_redYou don't have enough permission to do this!"))
 
     ;
