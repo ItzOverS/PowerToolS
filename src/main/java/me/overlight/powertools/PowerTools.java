@@ -109,6 +109,8 @@ public class PowerTools
             AddOnManager.registerAddOn(new ChatManager(), new NoRespawn(), new RandomSpawn());
         if(config.getBoolean("ServerAddOns.enabled"))
             AddOnManager.registerAddOn(new RandomMOTD(), new BanMOTD(), new AntiRejoin(), new ForcePing());
+        if(config.getBoolean("RenderAddOns.enabled"))
+            AddOnManager.registerAddOn(new ScoreBoards());
         AddOnManager.loadAddons();
 
         try{
