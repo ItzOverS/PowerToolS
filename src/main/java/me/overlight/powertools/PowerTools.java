@@ -11,6 +11,7 @@ import me.overlight.powertools.AddOns.Hub.VoidTP;
 import me.overlight.powertools.AddOns.Main.*;
 import me.overlight.powertools.AddOns.Main.PvpRegisterer.PvpRegisterer;
 import me.overlight.powertools.AddOns.Render.ScoreBoards;
+import me.overlight.powertools.AddOns.Render.TabList;
 import me.overlight.powertools.AddOns.Server.AntiRejoin;
 import me.overlight.powertools.AddOns.Server.BanMOTD;
 import me.overlight.powertools.AddOns.Server.ForcePing;
@@ -110,7 +111,7 @@ public class PowerTools
         if(config.getBoolean("ServerAddOns.enabled"))
             AddOnManager.registerAddOn(new RandomMOTD(), new BanMOTD(), new AntiRejoin(), new ForcePing());
         if(config.getBoolean("RenderAddOns.enabled"))
-            AddOnManager.registerAddOn(new ScoreBoards());
+            AddOnManager.registerAddOn(new ScoreBoards(), new TabList());
         AddOnManager.loadAddons();
 
         try{

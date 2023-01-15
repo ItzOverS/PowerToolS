@@ -248,3 +248,25 @@ WorldEnvironments:
   disableNether: false
   disableEnd: false
 
+RenderAddOns:
+  enabled: false
+  TabList:
+    enabled: false
+    switchDelay: 40 # 20 ticks = 1 second
+    lists:
+      index01:
+        header:
+          - '&6Welcome to Minecraft Server'
+          - ''
+        footer:
+          - ''
+          - '&6Use /discord join our discord'
+        per-player: "%vault_rank% %player_name% %cl-version%"
+      index02:
+        header:
+          - '&6Welcome to Minecraft Server'
+          - ''
+        footer:
+          - ''
+          - '&6Use /teamspeak join our teamspeak'
+        per-player: "%vault_rank% %player_name% %cl-version%"
