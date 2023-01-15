@@ -250,6 +250,20 @@ WorldEnvironments:
 
 RenderAddOns:
   enabled: false
+  ScoreBoards:
+    enabled: false
+    switchDelay: 20 # 20 ticks = 1 second
+    name: "Minecraft server"
+    boards:
+      index01:
+        - "&2Welcome to minecraft server"
+        - "&2On %onlines-size%/%max-onlines-size%"
+        - "&2You're using %cl-brand%"
+      index02:
+        - "&2Welcome to minecraft server"
+        - "&2On %onlines-size%/%max-onlines-size%"
+        - "&2You're using %cl-version%"
+    # You can insert more items than these
   TabList:
     enabled: false
     switchDelay: 40 # 20 ticks = 1 second
