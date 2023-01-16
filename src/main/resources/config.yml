@@ -146,6 +146,7 @@ pvpRegisterer: # Required 100mg/1cps
   registerDamages:
     enabled: true
     miniDamage: 1 # 1 HP = 1/2 One Halth
+  chance: 85 # 85% / 100%
   registerKnockback: true
 
 CommandRedirect:
