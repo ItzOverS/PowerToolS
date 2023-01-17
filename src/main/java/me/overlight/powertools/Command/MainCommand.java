@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class MainCommand
-        implements CommandExecutor, TabCompleter {
+        implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         switch(args[0]) {
@@ -161,11 +161,6 @@ public class MainCommand
         }
 
         return true;
-    }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return null;
     }
 
     public boolean isPlayerValid(String username){

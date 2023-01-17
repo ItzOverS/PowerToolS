@@ -20,6 +20,7 @@ import me.overlight.powertools.AddOns.Survival.FallingBlocks;
 import me.overlight.powertools.AddOns.Survival.NoRespawn;
 import me.overlight.powertools.AddOns.Survival.RandomSpawn;
 import me.overlight.powertools.Command.MainCommand;
+import me.overlight.powertools.Command.TabComplete;
 import me.overlight.powertools.Libraries.ColorFormat;
 import me.overlight.powertools.Libraries.PlaceHolders;
 import me.overlight.powertools.Libraries.WebHooks.DiscordAPI;
@@ -29,6 +30,7 @@ import me.overlight.powertools.Modules.mods.*;
 import me.overlight.powertools.Plugin.PlInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -61,7 +63,7 @@ public class PowerTools
         PowerTools.config = getConfig();
 
         getServer().getPluginCommand("powertools").setExecutor(new MainCommand());
-        getServer().getPluginCommand("powertools").setTabCompleter(new MainCommand());
+        getServer().getPluginCommand("powertools").setTabCompleter(new TabComplete());
 
         discordWebhookConnection:
         {
