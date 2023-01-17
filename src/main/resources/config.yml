@@ -143,11 +143,9 @@ ChatFormat:
 # -->> Note: This option may create lag in public servers ( +10 players )
 pvpRegisterer: # Required 100mg/1cps
   enabled: false
-  registerDamages:
-    enabled: true
-    miniDamage: 1 # 1 HP = 1/2 One Halth
-  chance: 85 # 85% / 100%
+  registerDamages: true
   registerKnockback: true
+  chance: 85 # 85% / 100%
 
 CommandRedirect:
   enabled: false

@@ -7,9 +7,11 @@ import io.github.retrooper.packetevents.packetwrappers.play.in.useentity.Wrapped
 import me.overlight.powertools.Modules.mods.Protect;
 import me.overlight.powertools.PowerTools;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class AttackPacketListener
         extends PacketListenerAbstract {
@@ -20,14 +22,23 @@ public class AttackPacketListener
         WrappedPacketInUseEntity action = new WrappedPacketInUseEntity(event.getNMSPacket());
         if(Protect.protectedPlayers.contains(event.getPlayer().getName())) return;
         if(action.getAction() != WrappedPacketInUseEntity.EntityUseAction.ATTACK) return;
+        Random random = new Random();
+        if(random.nextInt(100) + 1 > PowerTools.config.getInt("pvpRegisterer.chance")) return;
+        PvpRegisterer.combo.put(event.getPlayer().getName(), PvpRegisterer.combo.getOrDefault(event.getPlayer().getName(), 0) + 1);
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                PvpRegisterer.combo.put(event.getPlayer().getName(), PvpRegisterer.combo.get(event.getPlayer().getName()) - 1);
+            }
+        }.runTaskLater(PowerTools.INSTANCE, 20);
+        if(PvpRegisterer.combo.getOrDefault(event.getPlayer().getName(), 0) < 6) return;
         if(!(action.getEntity() instanceof LivingEntity)) return;
-        event.setCancelled(true);
-        if (PowerTools.config.getBoolean("pvpRegisterer.registerDamages.enabled"))
-            ((LivingEntity)action.getEntity()).setHealth(((LivingEntity) action.getEntity()).getHealth() - PowerTools.config.getInt("pvpRegisterer.registerDamages.miniDamage"));
+        if (PowerTools.config.getBoolean("pvpRegisterer.registerDamages"))
+            ((LivingEntity)action.getEntity()).setHealth(((LivingEntity) action.getEntity()).getHealth() - 1);
         if (PowerTools.config.getBoolean("pvpRegisterer.registerKnockback")){
             Vector vec = action.getEntity().getVelocity().multiply(event.getPlayer().getLocation().getDirection()).multiply(0.5);
             if(vec.getY() < 0) vec.setY(-vec.getY());
-            ((LivingEntity)action.getEntity()).setVelocity((action.getEntity().isOnGround()?event.getPlayer().getLocation().getDirection().multiply(0.1): vec));
+            ((LivingEntity)action.getEntity()).setVelocity((action.getEntity().isOnGround()?event.getPlayer().getLocation().getDirection().multiply(0.3): vec));
         }
     }
 
