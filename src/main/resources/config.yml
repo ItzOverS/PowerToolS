@@ -188,6 +188,15 @@ SurvivalAddOns:
       EMERALD_BLOCK: 1
       DIAMOND: 3
 
+  FallingBlocks:
+    enabled: false
+    doNotApplyOn: # be-careful about what you insert here
+      - WATER
+      - LAVA
+    nullBlocks:
+      - AIR
+      - GRASS
+
 BedwarsAddOns:
   enabled: false
   AntiTeamup:

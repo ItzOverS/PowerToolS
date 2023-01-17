@@ -16,6 +16,7 @@ import me.overlight.powertools.AddOns.Server.AntiRejoin;
 import me.overlight.powertools.AddOns.Server.BanMOTD;
 import me.overlight.powertools.AddOns.Server.ForcePing;
 import me.overlight.powertools.AddOns.Server.RandomMOTD;
+import me.overlight.powertools.AddOns.Survival.FallingBlocks;
 import me.overlight.powertools.AddOns.Survival.NoRespawn;
 import me.overlight.powertools.AddOns.Survival.RandomSpawn;
 import me.overlight.powertools.Command.MainCommand;
@@ -104,7 +105,7 @@ public class PowerTools
         if(config.getBoolean("HubAddOns.enabled"))
             AddOnManager.registerAddOn(new KnockbackPlate(), new VoidTP());
         if(config.getBoolean("SurvivalAddOns.enabled"))
-            AddOnManager.registerAddOn(new ChatManager(), new NoRespawn(), new RandomSpawn());
+            AddOnManager.registerAddOn(new ChatManager(), new NoRespawn(), new RandomSpawn(), new FallingBlocks());
         if(config.getBoolean("ServerAddOns.enabled"))
             AddOnManager.registerAddOn(new RandomMOTD(), new BanMOTD(), new AntiRejoin(), new ForcePing());
         if(config.getBoolean("RenderAddOns.enabled"))
