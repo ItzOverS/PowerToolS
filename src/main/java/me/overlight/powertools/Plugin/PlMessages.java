@@ -26,7 +26,9 @@ public enum PlMessages {
     Vanish_YouAreNoLongerVanish(ColorFormat.formatColor("@color_redYou're no longer vanish")),
     ClDetector_PlayerJoinedUsing(ColorFormat.formatColor("@color_gold%PLAYER_NAME%@color_green joined using @color_red%CLIENT% %VERSION%")),
     ClDetector_FailedToDetectClient(ColorFormat.formatColor("@color_redFailed to detect @color_gold%PLAYER_NAME%@color_red's client")),
-    ExtensionLoader_SimplifyLoadedExtension(ColorFormat.formatColor("@color_greenSimplify connected @color_gold%EXTENSION% @color_red")),
+    CpsCheck_KickedForMaxCps(ColorFormat.formatColor("@color_gold%PLAYER_NAME% @color_red has kicked for max %TYPE% cps. cps: %CPS%")),
+    CpsCheck_UsingAutoClicker(ColorFormat.formatColor("@color_gold%PLAYER_NAME% @color_red using auto clicker")),
+    CpsCheck_KickedForAutoClicker(ColorFormat.formatColor("@color_gold%PLAYER_NAME% @color_red kicked for using auto clicker")),
     NoPermission(ColorFormat.formatColor("@color_redYou don't have enough permission to do this!"))
 
     ;
