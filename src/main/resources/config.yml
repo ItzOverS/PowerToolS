@@ -188,6 +188,9 @@ SurvivalAddOns:
       EMERALD_BLOCK: 1
       DIAMOND: 3
 
+  RandomSpawn:
+    enabled: false
+
   FallingBlocks:
     enabled: false
     doNotApplyOn: # be-careful about what you insert here
