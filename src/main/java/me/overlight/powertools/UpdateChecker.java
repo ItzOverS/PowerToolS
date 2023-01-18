@@ -20,9 +20,15 @@ import java.util.Objects;
 
 public class UpdateChecker {
     private static String downloadLink = null;
+    private static String latestVersion = null;
     public static boolean isUpToDate() throws IOException, ParseException {
-        String requestAns = getLatestVersion();
-        return requestAns != null && isOlderThan(PlInfo.VERSION, getLatestVersion());
+        return isOlderThan(PlInfo.VERSION, latestVersion);
+    }
+
+    public static boolean canCheckForUpdate() throws IOException, ParseException {
+        String s = getLatestVersion();
+        latestVersion = s;
+        return s != null;
     }
 
     public static String getDownloadLink(){
