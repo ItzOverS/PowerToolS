@@ -48,7 +48,8 @@ public class AddOnManager {
             if(addon instanceof CommandExecutor)
                 PowerTools.INSTANCE.getServer().getPluginCommand("powertools").setExecutor((CommandExecutor) addon);
             if(addon instanceof PluginMessageListener)
-                PowerTools.INSTANCE.getServer().getMessenger().registerIncomingPluginChannel(PowerTools.INSTANCE, addon.channel(), (PluginMessageListener) addon);
+                if(addon.channel() != null)
+                    PowerTools.INSTANCE.getServer().getMessenger().registerIncomingPluginChannel(PowerTools.INSTANCE, addon.channel(), (PluginMessageListener) addon);
         }
     }
 }
