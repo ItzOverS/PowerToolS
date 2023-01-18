@@ -2,6 +2,7 @@ package me.overlight.powertools.Command;
 
 import me.overlight.powertools.Modules.impls.Timer;
 import me.overlight.powertools.Modules.mods.*;
+import me.overlight.powertools.Modules.mods.Freeze;
 import me.overlight.powertools.Plugin.PlInfo;
 import me.overlight.powertools.Plugin.PlMessages;
 import me.overlight.powertools.Plugin.PlPerms;
@@ -11,10 +12,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import java.util.List;
 import java.util.Objects;
 
 public class MainCommand
