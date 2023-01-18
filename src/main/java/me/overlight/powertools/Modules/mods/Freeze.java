@@ -51,6 +51,7 @@ public class Freeze
 
     @EventHandler
     public void playerInteractEvent(PlayerInteractAtEntityEvent e){
+        if(frozenPlayers.contains(e.getPlayer().getName())) e.setCancelled(true);
         if(!(e.getRightClicked() instanceof Player)) return;
         if(e.getPlayer().getItemInHand() != PlSticks.FreezeStick) return;
         if(PlPerms.hasPerm(e.getPlayer(), PlPerms.Perms.FreezeStick.get())){
@@ -106,5 +107,10 @@ public class Freeze
             }
             player.spigot().sendMessage(base);
         }
+    }
+
+    @EventHandler
+    public void playerInteract(PlayerInteractEvent e){
+        if(frozenPlayers.contains(e.getPlayer().getName())) e.setCancelled(true);
     }
 }
