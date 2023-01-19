@@ -16,7 +16,7 @@ public class AntiWorldDownLoader
         extends AddOn
         implements Listener, PluginMessageListener {
     public AntiWorldDownLoader() {
-        super("AntiWorldDownLoader", "1.0", "prevent players from download server's maps using mapDownloaders", "NONE", PowerTools.config.getBoolean("AntiWorldDownLoader.enabled"));
+        super("AntiWorldDownLoader", "1.0", "prevent players from download server's maps using map downloaders", "NONE", PowerTools.config.getBoolean("AntiWorldDownLoader.enabled"));
         if(this.enabled()) {
             if(PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12)){
                 PowerTools.INSTANCE.getServer().getMessenger().registerIncomingPluginChannel(PowerTools.INSTANCE, "wdl:init", this);
@@ -32,8 +32,13 @@ public class AntiWorldDownLoader
     @Override
     public void onDisabled(){
         if(this.isEnabled()) {
-            PowerTools.INSTANCE.getServer().getMessenger().unregisterIncomingPluginChannel(PowerTools.INSTANCE, "WDL|INIT");
-            PowerTools.INSTANCE.getServer().getMessenger().unregisterOutgoingPluginChannel(PowerTools.INSTANCE, "WDL|CONTROL");
+            if(PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12)){
+                PowerTools.INSTANCE.getServer().getMessenger().unregisterIncomingPluginChannel(PowerTools.INSTANCE, "wdl:init", this);
+                PowerTools.INSTANCE.getServer().getMessenger().unregisterOutgoingPluginChannel(PowerTools.INSTANCE, "wdl:control");
+            } else {
+                PowerTools.INSTANCE.getServer().getMessenger().unregisterIncomingPluginChannel(PowerTools.INSTANCE, "WDL|INIT", this);
+                PowerTools.INSTANCE.getServer().getMessenger().unregisterOutgoingPluginChannel(PowerTools.INSTANCE, "WDL|CONTROL");
+            }
         }
     }
 
