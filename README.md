@@ -1,8 +1,4 @@
-# PowerToolS
-
-**_A powerful plugin for staffs to detect cheaters & costume options for gamemodes_**
-
-How to Install?                                                           
+# How to install
 0- stop your server if running                                                                                                         
 1- Download the latest jar file from releases                                                                                            
 2- copy this plugin to server's plugins folder                                                                         
