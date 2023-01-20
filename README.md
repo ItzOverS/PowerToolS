@@ -1,7 +1,5 @@
 # PowerToolS
 
-
-
 **_A powerful plugin for staffs to detect cheaters & costume options for gamemodes_**
 
 How to Install?                                                           
@@ -10,7 +8,7 @@ How to Install?
 2- copy this plugin to server's plugins folder                                                                         
 3- start your server                                              
 
-Futures: 
+# Fetures
 * Methods to detect hackers (knockback, rotator & ...)
 * Detect AutoClickers & HighCpsChecks (customizable)
 * Chat & UserName manager (customizable)
@@ -22,11 +20,7 @@ Futures:
 * Some AddOns for Survival, Bedwars & SkyBlock(Soon) 
 * & more & more ...
 
-How to Use pluin: 
-You can execute /pts help for chat help
-or execute /pts for gui
-
-Dependcies:                 
+# Depedencies
 - Vault-Economy: https://www.spigotmc.org/resources/vault.34315/
 - PlaceHolderAPI: https://www.spigotmc.org/resources/placeholderapi.6245/
 
