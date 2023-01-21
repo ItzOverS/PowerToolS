@@ -22,7 +22,7 @@ public class UpdateChecker {
     private static String downloadLink = null;
     private static String latestVersion = null;
     public static boolean isUpToDate() throws IOException, ParseException {
-        return isOlderThan(PlInfo.VERSION, latestVersion);
+        return !isOlderThan(PlInfo.VERSION, latestVersion);
     }
 
     public static boolean canCheckForUpdate() throws IOException, ParseException {
