@@ -9,6 +9,8 @@ import me.overlight.powertools.AddOns.Bedwars.TntKnockback;
 import me.overlight.powertools.AddOns.Hub.KnockbackPlate;
 import me.overlight.powertools.AddOns.Hub.VoidTP;
 import me.overlight.powertools.AddOns.Main.*;
+import me.overlight.powertools.AddOns.Main.Captcha.Captcha;
+import me.overlight.powertools.AddOns.Main.NetworkChecker;
 import me.overlight.powertools.AddOns.Main.PvpRegisterer.PvpRegisterer;
 import me.overlight.powertools.AddOns.Render.ScoreBoards;
 import me.overlight.powertools.AddOns.Render.TabList;
@@ -100,7 +102,8 @@ public class PowerTools
         getServer().getConsoleSender().sendMessage("");
 
         AddOnManager.registerAddOn(new AfkCheck(), new AntiWorldDownLoader(), new CpsCheck(), new PingCheck(), new ChatManager(), new ForceSpawn(), new JoinMessage(), new CommandRedirect(),
-                new QuitMessage(), new UserNameManager(), new CommandDeny(), new PvpManager(), new PvpRegisterer(), new VersionCheck(), new WorldEnvironments(), new ChatFormat(), new SlashServer());
+                new QuitMessage(), new UserNameManager(), new CommandDeny(), new PvpManager(), new PvpRegisterer(), new VersionCheck(), new WorldEnvironments(), new ChatFormat(),
+                new SlashServer(), new Captcha(), new NetworkChecker(), new AntiBot());
 
         if(config.getBoolean("BedwarsAddOns.enabled"))
             AddOnManager.registerAddOn(new AntiTeamUp(), new TntKnockback(), new FireBallKnockback());
