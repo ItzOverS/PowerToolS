@@ -36,6 +36,10 @@ ChatManager:
     enabled: true
     delay: 1 # 1 Second command cooldown
 
+
+AntiBot:
+  enabled: false
+
 UsernameManager:
   enabled: false
   alert-on-discord: false
