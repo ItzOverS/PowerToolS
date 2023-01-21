@@ -48,6 +48,14 @@ UsernameManager:
     Action: "BAN" # You can insert [KICK, BAN] items in string
     msg: "&cBad name"
 
+Captcha:
+  enabled: false
+  # AIs:
+  # X MapNumber: Give player a map... in map we can see number... player most write the number in chat
+  # GUI: Open a gui with random items... player most select the one has "This One" text
+  # GUI-AB: Open a gui with random items... player most select the one has "So One" text ( Anti-Bypass ) ( NOTE: TenaCity ( hacked client ) can't render its text )
+  AI: "GUI"
+
 CpsCheck:
   enabled: false
   maxCps:
