@@ -29,6 +29,8 @@ public enum PlMessages {
     CpsCheck_KickedForMaxCps(ColorFormat.formatColor("@color_gold%PLAYER_NAME% @color_red has kicked for max %TYPE% cps. cps: %CPS%")),
     CpsCheck_UsingAutoClicker(ColorFormat.formatColor("@color_gold%PLAYER_NAME% @color_red using auto clicker")),
     CpsCheck_KickedForAutoClicker(ColorFormat.formatColor("@color_gold%PLAYER_NAME% @color_red kicked for using auto clicker")),
+    NetworkChecker_PlayerJoinedUsing(ColorFormat.formatColor("@color_gold%PLAYER_NAME% @color_green's IP is %IP%")),
+    NetworkChecker_PlayerTempBannedForInvalidCountry(ColorFormat.formatColor("@color_gold%PLAYER_NAME%@color_green has temp banned for invalid country")),
     NoPermission(ColorFormat.formatColor("@color_redYou don't have enough permission to do this!"))
 
     ;

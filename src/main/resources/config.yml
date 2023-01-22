@@ -36,6 +36,15 @@ ChatManager:
     enabled: true
     delay: 1 # 1 Second command cooldown
 
+NetworkChecker: # This plugin uses an api that only render 45 requests per minute ( sometimes this addon may don't check players )
+  enabled: false
+  CountriesList:
+    # You can insert 'blacklist' or 'whitelist'
+    type: "blacklist"
+    list:
+      - US
+  blackListedIPs:
+    - 127.0.0.1
 
 AntiBot:
   enabled: false

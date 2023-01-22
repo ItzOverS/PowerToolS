@@ -56,7 +56,7 @@ public class NetworkChecker {
     public static JSONObject getPlayerIPv4API(Player player){
         try {
             if(requests > 43) throw new StackOverflowError("Requests per minute excepted");
-            HttpURLConnection client = (HttpURLConnection) new URL("http://ip-api.com/json/" + getPlayerIPv4(player) + "?fields=26894865").openConnection();
+            HttpURLConnection client = (HttpURLConnection) new URL("http://ip-api.com/json/" + getPlayerIPv4(player) + "?fields=1196571").openConnection();
             client.setRequestMethod("GET");
             client.setRequestProperty("accept", "application/json");
             client.setRequestProperty("userAgent", "Mozilla/5.0");
