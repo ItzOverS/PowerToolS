@@ -2,6 +2,7 @@ package me.overlight.powertools;
 
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.utils.server.ServerVersion;
+import me.overlight.powertools.APIs.UpdateChecker;
 import me.overlight.powertools.AddOns.AddOnManager;
 import me.overlight.powertools.AddOns.Bedwars.AntiTeamUp;
 import me.overlight.powertools.AddOns.Bedwars.FireBallKnockback;
@@ -31,9 +32,11 @@ import me.overlight.powertools.Modules.ModuleManager;
 import me.overlight.powertools.Modules.mods.*;
 import me.overlight.powertools.Modules.mods.Freeze;
 import me.overlight.powertools.Plugin.PlInfo;
+import me.overlight.powertools.PowerModules.ExtensionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.parser.ParseException;
@@ -48,6 +51,7 @@ public class PowerTools
         extends JavaPlugin {
     public static PowerTools INSTANCE;
     public static FileConfiguration config;
+
     @Override
     public void onLoad() {
         PacketEvents.create(this);
@@ -116,6 +120,13 @@ public class PowerTools
         if(config.getBoolean("RenderAddOns.enabled"))
             AddOnManager.registerAddOn(new ScoreBoards(), new TabList());
         AddOnManager.loadAddons();
+
+        try {
+            ExtensionManager.hookInto("PowerExt_DiscordLink");
+        } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException |
+                 IllegalAccessException e) {
+            e.printStackTrace();
+        }
 
         try{
             getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_goldChecking for updates"));

@@ -1,5 +1,6 @@
-package me.overlight.powertools;
+package me.overlight.powertools.APIs;
 
+import me.overlight.powertools.PowerTools;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONObject;

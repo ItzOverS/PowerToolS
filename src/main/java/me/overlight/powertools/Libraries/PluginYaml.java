@@ -1,4 +1,4 @@
-package me.overlight.powertools;
+package me.overlight.powertools.Libraries;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 

@@ -1,9 +1,8 @@
 package me.overlight.powertools.AddOns.Main.Captcha;
 
 import me.overlight.powertools.AddOns.AddOn;
-import me.overlight.powertools.NetworkChecker;
 import me.overlight.powertools.Plugin.PlInfo;
-import me.overlight.powertools.PluginYaml;
+import me.overlight.powertools.Libraries.PluginYaml;
 import me.overlight.powertools.PowerTools;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,14 +17,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapView;
-import org.bukkit.material.MaterialData;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.Random;
 
 public class Captcha

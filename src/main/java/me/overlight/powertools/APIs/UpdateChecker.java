@@ -1,4 +1,4 @@
-package me.overlight.powertools;
+package me.overlight.powertools.APIs;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

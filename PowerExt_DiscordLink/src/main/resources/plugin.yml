@@ -1,0 +1,7 @@
+name: PowerExt_DiscordLink
+version: '${project.version}'
+main: me.overlight.powertools.discordlink.PowerExt
+depend: [ PowerToolS ]
+authors: [ _OverLight_ ]
+description: PowerToolS Extension - Link your discord account with your minecraft account
+website: https://github.com/ItzOverS/PowerToolS/

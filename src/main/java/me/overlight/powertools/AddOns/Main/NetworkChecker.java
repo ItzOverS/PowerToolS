@@ -20,18 +20,18 @@ public class NetworkChecker
         implements Listener {
     public NetworkChecker() {
         super("NetworkChecker", "1.0", "Check players ip", "NONE", PowerTools.config.getBoolean("NetworkChecker.enabled"));
-        me.overlight.powertools.NetworkChecker.runRequestChecks();
+        me.overlight.powertools.APIs.NetworkChecker.runRequestChecks();
     }
 
     @EventHandler
     public void event(PlayerJoinEvent e){
-        TextComponent compo = new TextComponent(PlMessages.NetworkChecker_PlayerJoinedUsing.get(new RepItem("%PLAYER_NAME%", e.getPlayer().getName()), new RepItem("%IP%", me.overlight.powertools.NetworkChecker.getPlayerIPv4(e.getPlayer()))));
+        TextComponent compo = new TextComponent(PlMessages.NetworkChecker_PlayerJoinedUsing.get(new RepItem("%PLAYER_NAME%", e.getPlayer().getName()), new RepItem("%IP%", me.overlight.powertools.APIs.NetworkChecker.getPlayerIPv4(e.getPlayer()))));
         String hover = ColorFormat.formatColor(
                 "@color_redUserName@color_gray: @color_red" + e.getPlayer().getName() + "\n" +
-                "@color_redIP@color_gray: @color_red" + me.overlight.powertools.NetworkChecker.getPlayerIPv4(e.getPlayer()) + "\n" +
-                "@color_redCountry@color_gray: @color_red" + me.overlight.powertools.NetworkChecker.getPlayerCountry(e.getPlayer()) + "\n" +
-                "@color_redCity@color_gray: @color_red" + me.overlight.powertools.NetworkChecker.getPlayerCity(e.getPlayer()) + "\n" +
-                "@color_redVpn@color_gray: @color_red" + me.overlight.powertools.NetworkChecker.isPlayerProxy(e.getPlayer()) + "\n"
+                "@color_redIP@color_gray: @color_red" + me.overlight.powertools.APIs.NetworkChecker.getPlayerIPv4(e.getPlayer()) + "\n" +
+                "@color_redCountry@color_gray: @color_red" + me.overlight.powertools.APIs.NetworkChecker.getPlayerCountry(e.getPlayer()) + "\n" +
+                "@color_redCity@color_gray: @color_red" + me.overlight.powertools.APIs.NetworkChecker.getPlayerCity(e.getPlayer()) + "\n" +
+                "@color_redVpn@color_gray: @color_red" + me.overlight.powertools.APIs.NetworkChecker.isPlayerProxy(e.getPlayer()) + "\n"
         );
         compo.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(hover).create()));
         for(OfflinePlayer player: Bukkit.getOperators()){
@@ -39,7 +39,7 @@ public class NetworkChecker
             ((Player) player).spigot().sendMessage(compo);
         }
         {
-            String IPv4 = me.overlight.powertools.NetworkChecker.getPlayerIPv4(e.getPlayer());
+            String IPv4 = me.overlight.powertools.APIs.NetworkChecker.getPlayerIPv4(e.getPlayer());
             if(PowerTools.config.getStringList(this.getName() + ".blackListedIPs").contains(IPv4)){
                 e.getPlayer().setBanned(true);
             }
@@ -47,22 +47,22 @@ public class NetworkChecker
         {
             boolean isWhiteList = PowerTools.config.getString(this.getName() + ".CountriesList.type").equals("whitelist");
             if(isWhiteList){
-                String country = (String)me.overlight.powertools.NetworkChecker.getField(e.getPlayer(), "countryCode");
+                String country = (String) me.overlight.powertools.APIs.NetworkChecker.getField(e.getPlayer(), "countryCode");
                 if(country == null) return;
                 if(!PowerTools.config.getStringList(this.getName() + ".CountriesList.list").contains(country)) {
                     e.getPlayer().setBanned(true);
-                    Bukkit.banIP(me.overlight.powertools.NetworkChecker.getPlayerIPv4(e.getPlayer()));
+                    Bukkit.banIP(me.overlight.powertools.APIs.NetworkChecker.getPlayerIPv4(e.getPlayer()));
                 }
                 for(OfflinePlayer player: Bukkit.getOperators()){
                     if(!player.isOnline()) continue;
                     ((Player) player).sendMessage(PlMessages.NetworkChecker_PlayerTempBannedForInvalidCountry.get(new RepItem("%PLAYER_NAME%", e.getPlayer().getName())));
                 }
             } else{
-                String country = (String)me.overlight.powertools.NetworkChecker.getField(e.getPlayer(), "countryCode");
+                String country = (String) me.overlight.powertools.APIs.NetworkChecker.getField(e.getPlayer(), "countryCode");
                 if(country == null) return;
                 if(PowerTools.config.getStringList(this.getName() + ".CountriesList.list").contains(country)) {
                     e.getPlayer().setBanned(true);
-                    Bukkit.banIP(me.overlight.powertools.NetworkChecker.getPlayerIPv4(e.getPlayer()));
+                    Bukkit.banIP(me.overlight.powertools.APIs.NetworkChecker.getPlayerIPv4(e.getPlayer()));
                 }
                 for(OfflinePlayer player: Bukkit.getOperators()){
                     if(!player.isOnline()) continue;

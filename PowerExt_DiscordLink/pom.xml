@@ -4,18 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>me.overlight</groupId>
-    <artifactId>PowerToolS</artifactId>
-    <version>1.3</version>
+    <groupId>me.overlight.powertools</groupId>
+    <artifactId>PowerExt_DiscordLink</artifactId>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>PowerToolS</name>
+    <name>PowerExt_DiscordLink</name>
 
-    <description>A very powerful tools for staffs and game modes</description>
+    <description>PowerToolS Extension - Link your discord account with your minecraft account</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <url>https://github.com/ItzOverS/PowerToolS/</url>
 
     <build>
         <plugins>
@@ -56,15 +57,11 @@
     <repositories>
         <repository>
             <id>spigotmc-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/snapshots/public/</url>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>placeholderapi</id>
-            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
         <repository>
             <id>jitpack.io</id>
@@ -80,21 +77,21 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>me.clip</groupId>
-            <artifactId>placeholderapi</artifactId>
-            <version>2.9.2</version>
+            <groupId>me.overlight</groupId>
+            <artifactId>PowerToolS</artifactId>
+            <version>1.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.MilkBowl</groupId>
-            <artifactId>VaultAPI</artifactId>
-            <version>1.7</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.retrooper</groupId>
-            <artifactId>packetevents</artifactId>
-            <version>v1.8.4</version>
+            <groupId>com.github.DV8FromTheWorld</groupId>
+            <artifactId>JDA</artifactId>
+            <version>v5.0.0-beta.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>club.minnced</groupId>
+                    <artifactId>opus-java</artifactId>
+                </exclusion>
+            </exclusions>
             <scope>compile</scope>
         </dependency>
     </dependencies>

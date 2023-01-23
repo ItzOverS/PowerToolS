@@ -1,11 +1,9 @@
 package me.overlight.powertools.AddOns.Main;
 
-import me.overlight.powertools.APIs.Infinite;
 import me.overlight.powertools.AddOns.AddOn;
-import me.overlight.powertools.NetworkChecker;
+import me.overlight.powertools.APIs.NetworkChecker;
 import me.overlight.powertools.Plugin.PlInfo;
 import me.overlight.powertools.PowerTools;
-import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -13,7 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import sun.nio.ch.Net;
 
 public class AntiBot
         extends AddOn
