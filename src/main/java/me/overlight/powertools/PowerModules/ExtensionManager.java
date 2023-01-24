@@ -46,8 +46,12 @@ public class ExtensionManager {
             if (!pl.isEnabled()) Bukkit.getPluginManager().enablePlugin(pl);
             Method obj = Class.forName("me.overlight.powertools." + plName.toLowerCase().substring(9) + ".PowerExt").getMethod("getPowerModule");
             PowerModule module = (PowerModule) obj.getDeclaringClass().getField("module").get(obj);
-            addExtension(pl);
             loadConfig(module);
+            if(!PowerTools.config.getBoolean(module.getConfigName() + ".enabled")) {
+                PowerTools.INSTANCE.getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.RED + "Extension not enabled by config.yml: " + module.getConfigName());
+                return false;
+            }
+            addExtension(pl);
             PowerTools.INSTANCE.getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.GREEN + "Success fully hooked into PowerExtension: " + module.getConfigName());
             return true;
         } catch(Exception ex){
