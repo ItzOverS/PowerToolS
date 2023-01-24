@@ -1,0 +1,53 @@
+package me.overlight.powertools.commandpanel;
+
+import me.overlight.powertools.PowerModules.PowerModule;
+import me.overlight.powertools.PowerTools;
+import org.bukkit.command.Command;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public final class Commandpanel
+        extends JavaPlugin
+        implements PowerModule {
+
+    public PowerModule module;
+
+    @Override
+    public void onEnable() {
+        module = this;
+        for(String key: PowerTools.config.getConfigurationSection(getConfigName() + ".panels").getKeys(false)){
+            String command = PowerTools.config.getString(getConfigName() + ".panels." + key + ".command").split(" ")[0];
+            getServer().getPluginCommand(command).setExecutor(new CommandExecutor());
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        // Plugin shutdown logic
+    }
+
+    @Override
+    public String[] getConfiguration() {
+        return new String[]{
+                "enabled:false:boolean",
+                "panels.test01.command:test:string",
+                "panels.test01.panel.title:Test Panel By PowerToolS:string",
+                "panels.test01.panel.rows:6:integer",
+                "panels.test01.panel.items.fill.material:STAIRS:string",
+                "panels.test01.panel.items.fill.name:mc.example.net:string",
+                "panels.test01.panel.items.14.material:EMERALD:string",
+                "panels.test01.panel.items.14.name:Test item:string",
+                "panels.test01.panel.items.16.material:REDSTONE:string",
+                "panels.test01.panel.items.16.name:Test 2 item:string",
+        };
+    }
+
+    @Override
+    public String getConfigName() {
+        return "CommandPanel";
+    }
+
+    @Override
+    public PowerModule getPowerModule() {
+        return this;
+    }
+}
