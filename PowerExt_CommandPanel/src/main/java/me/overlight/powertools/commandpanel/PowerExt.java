@@ -1,5 +1,6 @@
 package me.overlight.powertools.commandpanel;
 
+import me.overlight.powertools.PowerModules.ExtensionManager;
 import me.overlight.powertools.PowerModules.PowerModule;
 import me.overlight.powertools.PowerTools;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,6 +14,7 @@ public final class PowerExt
     @Override
     public void onEnable() {
         module = this;
+        if(ExtensionManager.getByName(getConfigName()) == null) return;
         for(String key: PowerTools.config.getConfigurationSection(getConfigName() + ".panels").getKeys(false)){
             String command = PowerTools.config.getString(getConfigName() + ".panels." + key + ".command").split(" ")[0];
             getServer().getPluginCommand(command).setExecutor(new CommandExecutor());

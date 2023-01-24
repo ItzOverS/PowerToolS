@@ -2,6 +2,7 @@ package me.overlight.powertools.discordlink;
 
 import io.github.retrooper.packetevents.PacketEvents;
 import me.overlight.powertools.Plugin.PlInfo;
+import me.overlight.powertools.PowerModules.ExtensionManager;
 import me.overlight.powertools.PowerModules.PowerModule;
 import me.overlight.powertools.PowerTools;
 import net.dv8tion.jda.api.JDA;
@@ -27,6 +28,7 @@ public final class PowerExt
     @Override
     public void onEnable() {
         // Plugin startup logic
+        if(ExtensionManager.getByName(getConfigName()) == null) return;
         module = this;
         try {
             //((Logger) LogManager.getRootLogger()).addFilter((Filter)new JDAMessageDeny());
