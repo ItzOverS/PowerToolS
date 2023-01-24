@@ -57,11 +57,11 @@ public class ExtensionManager {
     }
 
     public static void loadConfig(PowerModule ext) throws IOException {
-        if(PowerTools.config.contains(ext.getConfigName())) return;
         for(String line: ext.getConfiguration()){
             String key = line.split(":")[0].trim(),
                     value = line.split(":")[1],
                     type = line.split(":")[2];
+            if(PowerTools.config.contains(ext.getConfigName() + "." + key)) continue;
             PowerTools.config.set(ext.getConfigName() + "." + key,
                 (type.equals("boolean"))? Boolean.parseBoolean(value):
                         (type.equals("string"))? value:
