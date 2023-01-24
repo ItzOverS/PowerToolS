@@ -121,12 +121,8 @@ public class PowerTools
             AddOnManager.registerAddOn(new ScoreBoards(), new TabList());
         AddOnManager.loadAddons();
 
-        try {
-            ExtensionManager.hookInto("PowerExt_DiscordLink");
-        } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException |
-                 IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        try { ExtensionManager.hookInto("PowerExt_DiscordLink"); } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | IllegalAccessException e) { e.printStackTrace(); }
+        try { ExtensionManager.hookInto("PowerExt_CommandPanel"); } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | IllegalAccessException e) { e.printStackTrace(); }
 
         try{
             getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_goldChecking for updates"));
