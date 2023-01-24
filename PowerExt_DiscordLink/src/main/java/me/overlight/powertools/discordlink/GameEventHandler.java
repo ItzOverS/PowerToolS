@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -17,6 +18,7 @@ public class GameEventHandler
     public HashMap<String, Location> spawnLocation = new HashMap<>();
     @EventHandler
     public void event(PlayerJoinEvent e){
+        if(PowerExt.discordIDsUser.containsKey(e.getPlayer().getName())) return;
         spawnLocation.put(e.getPlayer().getName(), e.getPlayer().getLocation());
         String ranNum = generateRandomNumber();
         Player p = e.getPlayer();
@@ -27,8 +29,17 @@ public class GameEventHandler
     @EventHandler
     public void event(PlayerMoveEvent e){
         if(PowerExt.discordIDsUser.containsKey(e.getPlayer().getName())) return;
+        if(!spawnLocation.containsKey(e.getPlayer().getName())) return;
 
         e.getPlayer().teleport(spawnLocation.get(e.getPlayer().getName()));
+    }
+
+    @EventHandler
+    public void event(PlayerQuitEvent e){
+        if(PowerExt.discordIDsUser.containsKey(e.getPlayer().getName())) return;
+
+        spawnLocation.remove(e.getPlayer().getName());
+        PowerExt.playerCodes.remove(e.getPlayer().getName());
     }
 
     public String generateRandomNumber(){
