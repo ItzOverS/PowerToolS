@@ -20,7 +20,7 @@ public class DiscordMessageListener
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if(!event.getChannel().getId().equals(PowerTools.config.getString(PowerExt.module.getConfigName()))) return;
+        if(!event.getChannel().getId().equals(PowerTools.config.getString(PowerExt.module.getConfigName() + ".channelID"))) return;
         String m = event.getMessage().getContentDisplay();
         if(m.split(" ").length != 2) return;
         String code = m.split(" ")[1].trim();
