@@ -2,10 +2,9 @@ package me.overlight.powertools.commandpanel;
 
 import me.overlight.powertools.PowerModules.PowerModule;
 import me.overlight.powertools.PowerTools;
-import org.bukkit.command.Command;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class Commandpanel
+public final class PowerExt
         extends JavaPlugin
         implements PowerModule {
 

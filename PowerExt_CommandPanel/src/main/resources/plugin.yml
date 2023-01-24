@@ -1,7 +1,6 @@
-name: Commandpanel
+name: PowerExt_CommandPanel
 version: '${project.version}'
-main: me.overlight.powertools.commandpanel.Commandpanel
+main: me.overlight.powertools.commandpanel.PowerExt
 depend: [ PowerToolS ]
 authors: [ _OverLight_ ]
-description: Power Extension - Connect commands to panels
-website: https://github.com/ItzOverS/PowerToolS
+description: PowerToolS Extension - Connect panels to commands
