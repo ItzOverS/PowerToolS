@@ -1,9 +1,12 @@
 package me.overlight.powertools.commandpanel;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import me.overlight.powertools.Libraries.InvGen;
+import me.overlight.powertools.Libraries.PlaceHolders;
 import me.overlight.powertools.PowerTools;
 import net.minecraft.server.v1_8_R3.InventoryUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -16,7 +19,9 @@ public class CommandExecutor
         implements org.bukkit.command.CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+        if(!(commandSender instanceof Player)) return false;
         for (String x : PowerTools.config.getConfigurationSection("CommandPanel.panels").getKeys(false)) {
+            if(!commandSender.hasPermission(PowerTools.config.getString("CommandPanel.panels." + x + ".permission"))) return false;
             String[] cmd = PowerTools.config.getString("CommandPanel.panels." + x + ".command").split(" ");
             if(cmd.length != strings.length + 1) return false;
             if(!command.getLabel().equalsIgnoreCase(cmd[0].toLowerCase())) return false;
@@ -31,7 +36,11 @@ public class CommandExecutor
                 }
                 if(!m) return false;
                 // Args & command is one!
-                ((Player)commandSender).openInventory(generatePanel(x));
+                ((Player)commandSender).openInventory(generatePanel(x, (Player) commandSender));
+            } else{
+                if(command.getLabel().equals(cmd[0])){
+                    ((Player)commandSender).openInventory(generatePanel(x, (Player) commandSender));
+                }
             }
         }
         return true;
@@ -43,16 +52,16 @@ public class CommandExecutor
         return newStr;
     }
 
-    private Inventory generatePanel(String name){
+    private Inventory generatePanel(String name, Player player){
         Inventory inv = InvGen.fillInv(
-                Bukkit.createInventory(null, PowerTools.config.getInt("CommandPanel.panels." + name + ".rows") * 9, PowerTools.config.getString("CommandPanel.panels." + name + ".title")),
-                InvGen.generateItem(Material.valueOf(PowerTools.config.getString("CommandPanel.panels." + name + ".items.fill.material")), 1, PowerTools.config.getString("CommandPanel.panels." + name + ".items.fill.name"), null),
+                Bukkit.createInventory(null, PowerTools.config.getInt("CommandPanel.panels." + name + ".rows") * 9, PlaceholderAPI.setPlaceholders(player, ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("CommandPanel.panels." + name + ".title")))),
+                InvGen.generateItem(Material.valueOf(PowerTools.config.getString("CommandPanel.panels." + name + ".items.fill.material")), 1, PlaceholderAPI.setPlaceholders(player, ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("CommandPanel.panels." + name + ".items.fill.name"))), null),
                 true
         );
         for(String InvIndex: PowerTools.config.getConfigurationSection("CommandPanel.panels." + name + ".items").getKeys(false)){
             if(InvIndex.equals("fill")) continue;
             int index = Integer.parseInt(InvIndex);
-            inv.setItem(index, InvGen.generateItem(Material.valueOf(PowerTools.config.getString("panels." + name + ".panel.items." + InvIndex + ".material")), 1, PowerTools.config.getString("panels." + name + ".panel.items." + InvIndex + ".name"), null));
+            inv.setItem(index, InvGen.generateItem(Material.valueOf(PowerTools.config.getString("panels." + name + ".panel.items." + InvIndex + ".material")), 1, PlaceholderAPI.setPlaceholders(player, ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("panels." + name + ".panel.items." + InvIndex + ".name"))), null));
         }
         return inv;
     }

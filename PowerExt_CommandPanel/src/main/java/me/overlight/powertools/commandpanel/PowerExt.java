@@ -19,6 +19,7 @@ public final class PowerExt
             String command = PowerTools.config.getString(getConfigName() + ".panels." + key + ".command").split(" ")[0];
             getServer().getPluginCommand(command).setExecutor(new CommandExecutor());
         }
+        getServer().getPluginManager().registerEvents(new InvClickEvent(), this);
     }
 
     @Override
@@ -31,14 +32,19 @@ public final class PowerExt
         return new String[]{
                 "enabled:false:boolean",
                 "panels.test01.command:test:string",
+                "panels.test01.permission:powertools.commandpanel.test01:string",
                 "panels.test01.panel.title:Test Panel By PowerToolS:string",
                 "panels.test01.panel.rows:6:integer",
                 "panels.test01.panel.items.fill.material:STAIRS:string",
                 "panels.test01.panel.items.fill.name:mc.example.net:string",
                 "panels.test01.panel.items.14.material:EMERALD:string",
                 "panels.test01.panel.items.14.name:Test item:string",
+                "panels.test01.panel.items.14.cmd:give @s emerald:string",
+                "panels.test01.panel.items.14.cancelInteract:true:boolean",
                 "panels.test01.panel.items.16.material:REDSTONE:string",
                 "panels.test01.panel.items.16.name:Test 2 item:string",
+                "panels.test01.panel.items.16.cmd:kill @s:string",
+                "panels.test01.panel.items.16.cancelInteract:true:boolean",
         };
     }
 
