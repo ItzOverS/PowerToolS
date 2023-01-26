@@ -9,7 +9,7 @@ public final class PowerExt
         extends JavaPlugin
         implements PowerModule {
 
-    public PowerModule module;
+    public static PowerModule module;
 
     @Override
     public void onEnable() {

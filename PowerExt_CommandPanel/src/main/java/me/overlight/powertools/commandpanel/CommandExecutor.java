@@ -2,9 +2,7 @@ package me.overlight.powertools.commandpanel;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.overlight.powertools.Libraries.InvGen;
-import me.overlight.powertools.Libraries.PlaceHolders;
 import me.overlight.powertools.PowerTools;
-import net.minecraft.server.v1_8_R3.InventoryUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
