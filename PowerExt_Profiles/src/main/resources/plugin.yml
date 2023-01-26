@@ -1,0 +1,8 @@
+name: PowerExt_Profiles
+version: '${project.version}'
+main: me.overlight.powertools.profiles.PowerExt
+depend: [ PowerToolS ]
+authors: [ _OverLight_ ]
+description: PowerToolS Extension - Spec player's profile
+commands:
+  profile:
