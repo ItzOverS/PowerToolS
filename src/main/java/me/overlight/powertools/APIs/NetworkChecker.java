@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
 
@@ -48,6 +49,19 @@ public class NetworkChecker {
         p = player;
         js = json;
         return json.get(field);
+    }
+
+    public static PremiumField isPremium(Player player) {
+        try {
+            HttpURLConnection client = (HttpURLConnection) new URL("").openConnection();
+            client.setRequestMethod("GET");
+            client.setRequestProperty("accept", "application/json");
+            client.setRequestProperty("userAgent", "Mozilla/5.0");
+            if (client.getResponseCode() != 200) return PremiumField.FALSE;
+            return PremiumField.TRUE;
+        } catch(Exception ex){
+            return PremiumField.FALSE;
+        }
     }
 
     public static String getPlayerIPv4(Player player){

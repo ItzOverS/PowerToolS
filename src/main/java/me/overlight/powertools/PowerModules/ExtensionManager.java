@@ -28,6 +28,10 @@ public class ExtensionManager {
         extensions.remove((PowerModule) pl);
     }
     public static void removeAllExtensions(){
+        for(PowerModule ext: extensions){
+            PowerTools.INSTANCE.getServer().getPluginManager().disablePlugin(PowerTools.INSTANCE.getServer().getPluginManager().getPlugin("PowerExt_" + ext.getConfigName()));
+            PowerTools.INSTANCE.getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.RED + "PowerToolS disabled " + ChatColor.GOLD + ext.getConfigName());
+        }
         extensions.clear();
     }
 
@@ -48,7 +52,7 @@ public class ExtensionManager {
             PowerModule module = (PowerModule) obj.getDeclaringClass().getField("module").get(obj);
             loadConfig(module);
             if(!PowerTools.config.getBoolean(module.getConfigName() + ".enabled")) {
-                PowerTools.INSTANCE.getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.RED + "Extension not enabled by config.yml: " + module.getConfigName());
+                PowerTools.INSTANCE.getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.RED + "Extension " + ChatColor.GOLD + module.getConfigName() + ChatColor.RED + " not enabled in config.yml");
                 return false;
             }
             addExtension(pl);

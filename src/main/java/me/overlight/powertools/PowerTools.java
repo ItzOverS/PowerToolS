@@ -33,6 +33,8 @@ import me.overlight.powertools.Modules.mods.*;
 import me.overlight.powertools.Modules.mods.Freeze;
 import me.overlight.powertools.Plugin.PlInfo;
 import me.overlight.powertools.PowerModules.ExtensionManager;
+import me.overlight.powertools.PowerModules.PluginEnabledEvent;
+import me.overlight.powertools.PowerModules.PowerModule;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -121,8 +123,11 @@ public class PowerTools
             AddOnManager.registerAddOn(new ScoreBoards(), new TabList());
         AddOnManager.loadAddons();
 
+        getServer().getPluginManager().registerEvents(new PluginEnabledEvent(), this);
+
         try { ExtensionManager.hookInto("PowerExt_DiscordLink"); } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | IllegalAccessException e) { e.printStackTrace(); }
         try { ExtensionManager.hookInto("PowerExt_CommandPanel"); } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | IllegalAccessException e) { e.printStackTrace(); }
+        try { ExtensionManager.hookInto("PowerExt_Profiles"); } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | IllegalAccessException e) { e.printStackTrace(); }
 
         try{
             getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_goldChecking for updates"));
@@ -164,6 +169,8 @@ public class PowerTools
         getServer().getMessenger().unregisterIncomingPluginChannel(this, (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12))?"mc:brand":"MC|BRAND");
 
         AddOnManager.unRegisterAddOn();
+
+        ExtensionManager.removeAllExtensions();
     }
 
     public enum Target{

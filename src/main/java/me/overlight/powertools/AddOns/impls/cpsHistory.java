@@ -30,12 +30,12 @@ public class cpsHistory {
 
     public Integer getHistoryIndex(cpsType type, int index){
         if(type == cpsType.RMB)
-            if(index > 20)
+            if(index > rmbHis.size())
                 return null;
             else
                 return rmbHis.get(index);
         else
-            if(index > 20)
+            if(index > lmbHis.size())
                 return null;
             else
                 return lmbHis.get(index);
