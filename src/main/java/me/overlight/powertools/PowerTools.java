@@ -105,7 +105,7 @@ public class PowerTools
         getServer().getConsoleSender().sendMessage(ColorFormat.formatColor(" @color_dark_green/ ___/ @color_aqua/ / _\\ \\   @color_dark_gray Running on Spigot/Bukkit"));
         getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("@color_dark_green/_/    @color_aqua/_/ /___/  @color_dark_gray  by ItzOver"));
         getServer().getConsoleSender().sendMessage("");
-        getServer().getConsoleSender().sendMessage("");
+        getServer().getConsoleSender().sendMessage(""); 
 
         AddOnManager.registerAddOn(new AfkCheck(), new AntiWorldDownLoader(), new CpsCheck(), new PingCheck(), new ChatManager(), new ForceSpawn(), new JoinMessage(), new CommandRedirect(),
                 new QuitMessage(), new UserNameManager(), new CommandDeny(), new PvpManager(), new PvpRegisterer(), new VersionCheck(), new WorldEnvironments(), new ChatFormat(),
