@@ -114,6 +114,3 @@ buildNumber.properties
 
 # Common working directory
 run/
-!/src/main/resources/ChangeLog.txt
-!/src/main/resources/ChangeLog.txt
-src/main/resources/ChangeLog.txt
