@@ -174,7 +174,7 @@ public class PowerTools
 
         getServer().getConsoleSender().sendMessage("");
         getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("   @color_dark_red___  @color_red__________   "));
-        getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("  @color_dark_red/ _ \\@color_red/_  __/ __/ @color_dark_gray Disabling PowerToolS v" + PlInfo.VERSION));
+        getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("  @color_dark_red/ _ \\@color_red/_  __/ __/ @color_dark_gray Disabled PowerToolS v" + PlInfo.VERSION));
         getServer().getConsoleSender().sendMessage(ColorFormat.formatColor(" @color_dark_red/ ___/ @color_red/ / _\\ \\   @color_dark_gray "));
         getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("@color_dark_red/_/    @color_red/_/ /___/  @color_dark_gray  by ItzOver"));
         getServer().getConsoleSender().sendMessage("");
