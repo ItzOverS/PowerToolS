@@ -1,6 +1,7 @@
 package me.overlight.powertools.discordlink;
 
 import io.github.retrooper.packetevents.PacketEvents;
+import me.overlight.powertools.Libraries.PluginYaml;
 import me.overlight.powertools.Plugin.PlInfo;
 import me.overlight.powertools.PowerModules.ExtensionManager;
 import me.overlight.powertools.PowerModules.PowerModule;
@@ -16,6 +17,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
 import java.util.HashMap;
 public final class PowerExt
         extends JavaPlugin
@@ -29,6 +31,14 @@ public final class PowerExt
     public void onEnable() {
         // Plugin startup logic
         if(ExtensionManager.getByName(getConfigName()) == null) return;
+        try {
+            YamlConfiguration yml = new PluginYaml("discordLinks").getYaml();
+            for(String key: yml.getKeys(false)){
+                discordIDsUser.put(key, yml.getString(key));
+            }
+        } catch (IOException ignored) {
+            getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.RED + "Failed to create discordLinks file");
+        }
         module = this;
         try {
             //((Logger) LogManager.getRootLogger()).addFilter((Filter)new JDAMessageDeny());

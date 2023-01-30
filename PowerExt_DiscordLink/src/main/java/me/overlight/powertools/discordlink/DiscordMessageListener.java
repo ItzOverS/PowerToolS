@@ -1,5 +1,6 @@
 package me.overlight.powertools.discordlink;
 
+import me.overlight.powertools.Libraries.PluginYaml;
 import me.overlight.powertools.Plugin.PlInfo;
 import me.overlight.powertools.PowerTools;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -8,6 +9,7 @@ import net.dv8tion.jda.api.requests.restaction.AuditableRestAction;
 import net.dv8tion.jda.internal.requests.restaction.AuditableRestActionImpl;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -36,6 +38,9 @@ public class DiscordMessageListener
             AuditableRestAction<Void> result = event.getMessage().delete();
             PowerExt.discordIDsUser.put(mcUsername, author);
             Bukkit.getPlayer(mcUsername).sendMessage(PlInfo.PREFIX + ChatColor.GREEN + "You has been simplify verified");
+            YamlConfiguration yml = new PluginYaml("discordLinks").getYaml();
+            yml.set(mcUsername, author);
+            new PluginYaml("discordLinks").setYaml(yml).saveYaml();
         } catch(Exception ignored) { }
     }
 

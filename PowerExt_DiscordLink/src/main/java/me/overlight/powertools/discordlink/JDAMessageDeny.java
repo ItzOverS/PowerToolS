@@ -28,8 +28,8 @@ public class JDAMessageDeny
 
     @Override
     public Result filter(Logger logger, Level level, Marker marker, String s, Object... objects) {
-        if(s.contains("JDA")) return getOnMatch();
-        return getOnMismatch();
+        if(s.contains("JDA")) return getOnMismatch();
+        return getOnMatch();
     }
 
     @Override
