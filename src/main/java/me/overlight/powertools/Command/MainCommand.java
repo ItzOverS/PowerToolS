@@ -1,5 +1,6 @@
 package me.overlight.powertools.Command;
 
+import me.overlight.powertools.Libraries.RepItem;
 import me.overlight.powertools.Modules.impls.Timer;
 import me.overlight.powertools.Modules.mods.*;
 import me.overlight.powertools.Modules.mods.Freeze;
@@ -157,6 +158,24 @@ public class MainCommand
                     }
                 }
                 break;
+            case "toggle":
+                if (!PlPerms.hasPerm(sender, PlPerms.Perms.ToggleCommand.get())) {
+                    sender.sendMessage(PlMessages.NoPermission.get());
+                    return false;
+                }
+                if(args.length == 3){
+                    if(isPlayerValid(args[1])){
+                        String item = "";
+                        switch(args[2].toLowerCase()){
+                            case "cps": Toggle.toggledItem.put(sender.getName(), Toggle.ToggleItems.CPS); item = "CPS"; break;
+                            default:
+                                sender.sendMessage(PlMessages.Toggle_TargetItemNotFind.get());
+                                return false;
+                        }
+                        Toggle.toggledPlayers.put(sender.getName(), Bukkit.getPlayer(args[1]).getName());
+                        sender.sendMessage(PlMessages.Toggle_SimplifySet.get(new RepItem("%TARGET_PLAYER%", args[1]), new RepItem("%TARGET_ITEM%", item)));
+                    }
+                }
         }
 
         return true;
