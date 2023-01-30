@@ -30,7 +30,7 @@ public enum PlMessages {
     CpsCheck_KickedForMaxCps("@color_gold%PLAYER_NAME% @color_red has kicked for max %TYPE% cps. cps: %CPS%"),
     CpsCheck_UsingAutoClicker("@color_gold%PLAYER_NAME% @color_red using auto clicker"),
     CpsCheck_KickedForAutoClicker("@color_gold%PLAYER_NAME% @color_red kicked for using auto clicker"),
-    CpsCheck_PlayersCpsGet("@color_gold%PLAYER_NAME% @color_green's @color_gold%CPS_TYPE%@color_green cps is %CPS%"),
+    CpsCheck_PlayersCpsGet("@color_gold%PLAYER_NAME% @color_green's @color_gold%CPS_TYPE%@color_green cps is @color_gold%CPS%"),
     NetworkChecker_PlayerJoinedUsing("@color_gold%PLAYER_NAME% @color_green's IP is %IP%"),
     NetworkChecker_PlayerTempBannedForInvalidCountry("@color_gold%PLAYER_NAME%@color_green has temp banned for invalid country"),
     Toggle_TargetItemNotFind("@color_redTarget type not find!"),
