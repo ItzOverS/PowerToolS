@@ -23,10 +23,8 @@ public class Rotate
 
     public static void testRotate(Player executor, Player player){
         Random rand = new Random();
-        float cYaw = player.getLocation().getYaw(),
-             cPitch = player.getLocation().getPitch();
-        int yaw = rand.nextInt(180) - 90,
-                pitch = rand.nextInt(360);
+        int yaw = rand.nextInt(360),
+                pitch = rand.nextInt(180) - 90;
         player.teleport(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), yaw, pitch));
         Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
             if(player.getLocation().getYaw() == yaw && player.getLocation().getPitch() == pitch) {
@@ -34,7 +32,7 @@ public class Rotate
             } else{
                 executor.sendMessage(PlMessages.Rotate_FailedToRotate.get().replace("%PLAYER_NAME%", player.getName()));
             }
-        }, 1);
+        }, 5);
     }
 
 
