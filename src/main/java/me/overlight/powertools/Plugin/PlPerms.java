@@ -20,7 +20,7 @@ public class PlPerms {
         RotateStick("modules.rotate.stick"),
         PlayTimeCommand("modules.playtime.command"),
         VanishCommand("modules.vanish.command"),
-
+        ToggleCommand("modules.toggle.command"),
         ;
         private final String perm;
         Perms(String perm){

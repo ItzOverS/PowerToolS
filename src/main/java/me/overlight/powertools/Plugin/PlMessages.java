@@ -31,6 +31,8 @@ public enum PlMessages {
     CpsCheck_KickedForAutoClicker(ColorFormat.formatColor("@color_gold%PLAYER_NAME% @color_red kicked for using auto clicker")),
     NetworkChecker_PlayerJoinedUsing(ColorFormat.formatColor("@color_gold%PLAYER_NAME% @color_green's IP is %IP%")),
     NetworkChecker_PlayerTempBannedForInvalidCountry(ColorFormat.formatColor("@color_gold%PLAYER_NAME%@color_green has temp banned for invalid country")),
+    Toggle_TargetItemNotFind(ColorFormat.formatColor("@color_redTarget type not find!")),
+    Toggle_SimplifySet(ColorFormat.formatColor("@color_greenSimplify toggled @color_gold%TARGET_PLAYER%@color_green's @color_gold%TARGET_ITEM%@color_green for You")),
     NoPermission(ColorFormat.formatColor("@color_redYou don't have enough permission to do this!"))
 
     ;
