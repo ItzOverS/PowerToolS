@@ -26,6 +26,7 @@ public class TabComplete
                 "pts prot {TARGET}",
                 "pts protect {TARGET}",
                 "pts vanish {TARGET}",
+                "pts toggle {TARGET} {TOGGLE_TYPES}",
         };
         List<String> currentIndexCommands = new ArrayList<>();
         for(int i = 0; i < commands.length; i++){
@@ -46,6 +47,8 @@ public class TabComplete
     public List<String> replaceVars(String text){
         if(text.equals("{TARGET}"))
             return ImplementedVariables.getOnlinePlayers();
+        else if(text.equals("{TOGGLE_TYPES}"))
+            return Arrays.asList("cps");
         return new ArrayList<>(Collections.singletonList(text));
     }
 
