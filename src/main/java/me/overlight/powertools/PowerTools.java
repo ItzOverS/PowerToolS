@@ -66,92 +66,95 @@ public class PowerTools
 
     @Override
     public void onEnable() {
-        INSTANCE = this;
-        saveDefaultConfig();
-        PowerTools.config = getConfig();
+        try {
+            INSTANCE = this;
+            saveDefaultConfig();
+            PowerTools.config = getConfig();
 
-        getServer().getPluginCommand("powertools").setExecutor(new MainCommand());
-        getServer().getPluginCommand("powertools").setTabCompleter(new TabComplete());
+            getServer().getPluginCommand("powertools").setExecutor(new MainCommand());
+            getServer().getPluginCommand("powertools").setTabCompleter(new TabComplete());
 
-        discordWebhookConnection:
-        {
-            if (PowerTools.config.getBoolean("discordWebhook.enabled")) {
-                String url = PowerTools.config.getString("discordWebhook.url");
-                if (url == null || url.equals(""))
-                    break discordWebhookConnection;
-                getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.GOLD + "Connecting to discord webhook");
-                try {
-                    DiscordWebhook discordWebhook = new DiscordWebhook(url);
-                    discordWebhook.setUsername("PowerToolS");
-                    discordWebhook.setAvatarUrl("https://s6.uupload.ir/files/icon_zbxl.png");
-                    discordWebhook.setContent(":white_check_mark: **Simplify connected to DiscordWebHook**");
-                    discordWebhook.execute();
-                    getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.GREEN + "Simplify connected to webhook");
-                    DiscordAPI.DiscordWebHookURL = url;
-                } catch(Exception ex){
-                    getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.RED + "Something went wrong: " + ex.getMessage());
-                    DiscordAPI.DiscordWebHookURL = null;
+            discordWebhookConnection:
+            {
+                if (PowerTools.config.getBoolean("discordWebhook.enabled")) {
+                    String url = PowerTools.config.getString("discordWebhook.url");
+                    if (url == null || url.equals(""))
+                        break discordWebhookConnection;
+                    getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.GOLD + "Connecting to discord webhook");
+                    try {
+                        DiscordWebhook discordWebhook = new DiscordWebhook(url);
+                        discordWebhook.setUsername("PowerToolS");
+                        discordWebhook.setAvatarUrl("https://s6.uupload.ir/files/icon_zbxl.png");
+                        discordWebhook.setContent(":white_check_mark: **Simplify connected to DiscordWebHook**");
+                        discordWebhook.execute();
+                        getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.GREEN + "Simplify connected to webhook");
+                        DiscordAPI.DiscordWebHookURL = url;
+                    } catch (Exception ex) {
+                        getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.RED + "Something went wrong: " + ex.getMessage());
+                        DiscordAPI.DiscordWebHookURL = null;
+                    }
                 }
             }
-        }
 
-        ModuleManager.registerModule(new Knockback(), new Freeze(), new Channel(), new MemoryUsage(), new Protect(), new Rotate(), new PlayTime(), new Vanish(), new Toggle());
-        ModuleManager.loadModulesData();
+            ModuleManager.registerModule(new Knockback(), new Freeze(), new Channel(), new MemoryUsage(), new Protect(), new Rotate(), new PlayTime(), new Vanish(), new Toggle(), new CpsMap());
+            ModuleManager.loadModulesData();
 
+            AddOnManager.registerAddOn(new AfkCheck(), new AntiWorldDownLoader(), new CpsCheck(), new PingCheck(), new ChatManager(), new ForceSpawn(), new JoinMessage(), new CommandRedirect(),
+                    new QuitMessage(), new UserNameManager(), new CommandDeny(), new PvpManager(), new PvpRegisterer(), new VersionCheck(), new WorldEnvironments(), new ChatFormat(),
+                    new SlashServer(), new Captcha(), new NetworkChecker(), new AntiBot());
 
-        getServer().getConsoleSender().sendMessage("");
-        getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("   @color_dark_green___  @color_aqua__________   "));
-        getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("  @color_dark_green/ _ \\@color_aqua/_  __/ __/ @color_dark_gray Welcome to PowerToolS v" + PlInfo.VERSION));
-        getServer().getConsoleSender().sendMessage(ColorFormat.formatColor(" @color_dark_green/ ___/ @color_aqua/ / _\\ \\   @color_dark_gray Running on Spigot/Bukkit"));
-        getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("@color_dark_green/_/    @color_aqua/_/ /___/  @color_dark_gray  by ItzOver"));
-        getServer().getConsoleSender().sendMessage("");
-        getServer().getConsoleSender().sendMessage(""); 
+            if (config.getBoolean("BedwarsAddOns.enabled"))
+                AddOnManager.registerAddOn(new AntiTeamUp(), new TntKnockback(), new FireBallKnockback());
+            if (config.getBoolean("HubAddOns.enabled"))
+                AddOnManager.registerAddOn(new KnockbackPlate(), new VoidTP());
+            if (config.getBoolean("SurvivalAddOns.enabled"))
+                AddOnManager.registerAddOn(new ChatManager(), new NoRespawn(), new RandomSpawn(), new FallingBlocks());
+            if (config.getBoolean("ServerAddOns.enabled"))
+                AddOnManager.registerAddOn(new RandomMOTD(), new BanMOTD(), new AntiRejoin(), new ForcePing());
+            if (config.getBoolean("RenderAddOns.enabled"))
+                AddOnManager.registerAddOn(new ScoreBoards(), new TabList());
+            AddOnManager.loadAddons();
 
-        AddOnManager.registerAddOn(new AfkCheck(), new AntiWorldDownLoader(), new CpsCheck(), new PingCheck(), new ChatManager(), new ForceSpawn(), new JoinMessage(), new CommandRedirect(),
-                new QuitMessage(), new UserNameManager(), new CommandDeny(), new PvpManager(), new PvpRegisterer(), new VersionCheck(), new WorldEnvironments(), new ChatFormat(),
-                new SlashServer(), new Captcha(), new NetworkChecker(), new AntiBot());
+            getServer().getPluginManager().registerEvents(new PluginEnabledEvent(), this);
 
-        if(config.getBoolean("BedwarsAddOns.enabled"))
-            AddOnManager.registerAddOn(new AntiTeamUp(), new TntKnockback(), new FireBallKnockback());
-        if(config.getBoolean("HubAddOns.enabled"))
-            AddOnManager.registerAddOn(new KnockbackPlate(), new VoidTP());
-        if(config.getBoolean("SurvivalAddOns.enabled"))
-            AddOnManager.registerAddOn(new ChatManager(), new NoRespawn(), new RandomSpawn(), new FallingBlocks());
-        if(config.getBoolean("ServerAddOns.enabled"))
-            AddOnManager.registerAddOn(new RandomMOTD(), new BanMOTD(), new AntiRejoin(), new ForcePing());
-        if(config.getBoolean("RenderAddOns.enabled"))
-            AddOnManager.registerAddOn(new ScoreBoards(), new TabList());
-        AddOnManager.loadAddons();
+            try { ExtensionManager.hookInto("DiscordLink"); } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | IllegalAccessException e) { e.printStackTrace(); }
+            try { ExtensionManager.hookInto("CommandPanel"); } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | IllegalAccessException e) { e.printStackTrace(); }
+            try { ExtensionManager.hookInto("Profiles"); } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | IllegalAccessException e) { e.printStackTrace(); }
 
-        getServer().getPluginManager().registerEvents(new PluginEnabledEvent(), this);
-
-        try { ExtensionManager.hookInto("PowerExt_DiscordLink"); } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | IllegalAccessException e) { e.printStackTrace(); }
-        try { ExtensionManager.hookInto("PowerExt_CommandPanel"); } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | IllegalAccessException e) { e.printStackTrace(); }
-        try { ExtensionManager.hookInto("PowerExt_Profiles"); } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | IllegalAccessException e) { e.printStackTrace(); }
-
-        try{
-            getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_goldChecking for updates"));
-            if(UpdateChecker.canCheckForUpdate()) {
-                if (!UpdateChecker.isUpToDate()) {
-                    getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_greenThere is a newer version available"));
-                    getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_greenDownload it from: " + UpdateChecker.getDownloadLink()));
+            try {
+                getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_goldChecking for updates"));
+                if (UpdateChecker.canCheckForUpdate()) {
+                    if (!UpdateChecker.isUpToDate()) {
+                        getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_greenThere is a newer version available"));
+                        getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_greenDownload it from: " + UpdateChecker.getDownloadLink()));
+                    } else {
+                        getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_greenPlugin is up to date"));
+                    }
                 } else {
-                    getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_greenPlugin is up to date"));
+                    getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_redFailed to check for updates | check your network connection"));
                 }
-            } else{
+            } catch (IOException | ParseException e) {
                 getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_redFailed to check for updates | check your network connection"));
             }
-        } catch (IOException | ParseException e) {
-            getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_redFailed to check for updates | check your network connection"));
-        }
 
-        if(!new PlaceHolders().isRegistered()) {
-            new PlaceHolders().register();
-            getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_greenSuccess registered placeholders"));
-        }
+            if (!new PlaceHolders().isRegistered()) {
+                new PlaceHolders().register();
+                getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_greenSuccess registered placeholders"));
+            }
 
-        if(!PacketEvents.get().isInitialized() && !PacketEvents.get().isInitializing()){
-            PacketEvents.get().init();
+            if (!PacketEvents.get().isInitialized() && !PacketEvents.get().isInitializing()) {
+                PacketEvents.get().init();
+            }
+
+            getServer().getConsoleSender().sendMessage("");
+            getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("   @color_dark_green___  @color_aqua__________   "));
+            getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("  @color_dark_green/ _ \\@color_aqua/_  __/ __/ @color_dark_gray Welcome to PowerToolS v" + PlInfo.VERSION));
+            getServer().getConsoleSender().sendMessage(ColorFormat.formatColor(" @color_dark_green/ ___/ @color_aqua/ / _\\ \\   @color_dark_gray Running on Spigot/Bukkit"));
+            getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("@color_dark_green/_/    @color_aqua/_/ /___/  @color_dark_gray  by ItzOver"));
+            getServer().getConsoleSender().sendMessage("");
+            getServer().getConsoleSender().sendMessage("");
+        } catch(Exception e){
+            getServer().getPluginManager().disablePlugin(this);
         }
     }
 

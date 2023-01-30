@@ -45,6 +45,7 @@ public class ExtensionManager {
 
     public static boolean hookInto(String plName) throws IOException, ClassNotFoundException, NoSuchMethodException, NoSuchFieldException, IllegalAccessException {
         try {
+            plName = "PowerExt_" + plName;
             Plugin pl = Bukkit.getPluginManager().getPlugin(plName);
             if (pl == null) return false;
             if (!pl.isEnabled()) Bukkit.getPluginManager().enablePlugin(pl);

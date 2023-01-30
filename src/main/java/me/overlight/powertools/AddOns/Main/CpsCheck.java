@@ -38,17 +38,7 @@ public class CpsCheck
     
     public CpsCheck() {
         super("CpsCheck", "1.1", "check players cps", "NONE", PowerTools.config.getBoolean("CpsCheck.enabled"));
-
-        cpsHistory cpsHis = new cpsHistory();
-        for(int i = 0; i < 20; i++){
-            cpsHis.addCps(cpsHistory.cpsType.LMB, 0);
-            cpsHis.addCps(cpsHistory.cpsType.RMB, 0);
-        }
-        for(Player player: Bukkit.getOnlinePlayers()){
-            AutoClickerVL.put(player.getName(), 0);
-            PlayerCpsHistory.put(player.getName(), cpsHis);
-            checkPlayer(player);
-        }
+        if(this.isEnabled()) onEnable();
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -62,6 +52,19 @@ public class CpsCheck
         AutoClickerVL.put(player.getName(), 0);
         PlayerCpsHistory.put(player.getName(), cpsHis);
         checkPlayer(player);
+    }
+
+    public void onEnable(){
+        cpsHistory cpsHis = new cpsHistory();
+        for(int i = 0; i < 20; i++){
+            cpsHis.addCps(cpsHistory.cpsType.LMB, 0);
+            cpsHis.addCps(cpsHistory.cpsType.RMB, 0);
+        }
+        for(Player player: Bukkit.getOnlinePlayers()){
+            AutoClickerVL.put(player.getName(), 0);
+            PlayerCpsHistory.put(player.getName(), cpsHis);
+            checkPlayer(player);
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
