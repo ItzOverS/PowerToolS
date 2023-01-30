@@ -4,6 +4,7 @@ import me.overlight.powertools.AddOns.AddOn;
 import me.overlight.powertools.AddOns.impls.cpsHistory;
 import me.overlight.powertools.Libraries.RepItem;
 import me.overlight.powertools.Libraries.WebHooks.DiscordAPI;
+import me.overlight.powertools.Modules.mods.CpsMap;
 import me.overlight.powertools.Plugin.PlInfo;
 import me.overlight.powertools.Plugin.PlMessages;
 import me.overlight.powertools.PowerTools;
@@ -50,24 +51,6 @@ public class CpsCheck
         }
     }
 
-    public static HashMap<String, Integer> InteractsRMB = new HashMap<>();
-    public static HashMap<String, Integer> InteractsLMB = new HashMap<>();
-
-    @EventHandler
-    public void playerInteract(PlayerInteractEvent e) {
-        if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
-            InteractsLMB.put(e.getPlayer().getName(), InteractsLMB.get(e.getPlayer().getName()) + 1);
-            Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
-                InteractsLMB.put(e.getPlayer().getName(), InteractsLMB.get(e.getPlayer().getName()) - 1);
-            }, 20);
-        } else if (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) {
-            InteractsRMB.put(e.getPlayer().getName(), InteractsRMB.get(e.getPlayer().getName()) + 1);
-            Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
-                InteractsRMB.put(e.getPlayer().getName(), InteractsRMB.get(e.getPlayer().getName()) - 1);
-            }, 20);
-        }
-    }
-
     @EventHandler(priority = EventPriority.HIGHEST)
     public void playerJoin(PlayerJoinEvent e){
         Player player = e.getPlayer();
@@ -92,19 +75,14 @@ public class CpsCheck
     }
 
     private void checkPlayer(Player player) {
-        InteractsLMB.put(player.getName(), 0);
-        InteractsRMB.put(player.getName(), 0);
         PlayerCpsTaskID.put(player.getName(), Bukkit.getScheduler().scheduleSyncRepeatingTask(PowerTools.INSTANCE, () -> {
             if(!player.isOnline()){
                 Bukkit.getScheduler().cancelTask(PlayerCpsTaskID.get(player.getName()));
                 PlayerCpsHistory.remove(player.getName());
                 PlayerCpsTaskID.remove(player.getName());
             }
-            int lmb = 0, rmb = 0;
-            if (InteractsRMB.containsKey(player.getName()))
-                rmb = InteractsRMB.get(player.getName());
-            if (InteractsLMB.containsKey(player.getName()))
-                lmb = InteractsLMB.get(player.getName());
+            int lmb = CpsMap.LMB.getOrDefault(player.getName(), 0),
+                    rmb = CpsMap.RMB.getOrDefault(player.getName(), 0);
             if (!PlayerCpsHistory.containsKey(player.getName())) {
                 PlayerCpsHistory.put(player.getName(), new cpsHistory());
             }

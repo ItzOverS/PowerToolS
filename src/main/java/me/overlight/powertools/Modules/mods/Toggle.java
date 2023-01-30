@@ -22,9 +22,6 @@ public class Toggle
         onEnable();
     }
 
-    HashMap<String, Integer> RMB = new HashMap<>();
-    HashMap<String, Integer> LMB = new HashMap<>();
-
     public static HashMap<String, String> toggledPlayers = new HashMap<>();
     public static HashMap<String, ToggleItems> toggledItem = new HashMap<>();
     public void onEnable(){
@@ -40,7 +37,7 @@ public class Toggle
 
                 if (toggledItem.get(userName) == ToggleItems.CPS) {
                     try {
-                        AlertUtils.sendActionBar(player, "" + ChatColor.RED + LMB.getOrDefault(target.getName(), 0) + " LMB " + ChatColor.DARK_GRAY + "|" + ChatColor.RED + " RMB " + RMB.getOrDefault(target.getName(), 0));
+                        AlertUtils.sendActionBar(player, "" + ChatColor.RED + CpsMap.LMB.getOrDefault(target.getName(), 0) + " LMB " + ChatColor.DARK_GRAY + "|" + ChatColor.RED + " RMB " + CpsMap.RMB.getOrDefault(target.getName(), 0));
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -51,16 +48,5 @@ public class Toggle
 
     public enum ToggleItems{
         CPS,
-    }
-
-    @EventHandler
-    public void event(PlayerInteractEvent e){
-        if(Arrays.asList(Action.LEFT_CLICK_AIR, Action.LEFT_CLICK_BLOCK).contains(e.getAction())){
-            LMB.put(e.getPlayer().getName(), LMB.getOrDefault(e.getPlayer().getName(), 0) + 1);
-            Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> LMB.put(e.getPlayer().getName(), LMB.get(e.getPlayer().getName()) - 1), 20);
-        } else {
-            RMB.put(e.getPlayer().getName(), RMB.getOrDefault(e.getPlayer().getName(), 0) + 1);
-            Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> RMB.put(e.getPlayer().getName(), RMB.get(e.getPlayer().getName()) - 1), 20);
-        }
     }
 }
