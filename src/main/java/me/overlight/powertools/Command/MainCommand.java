@@ -8,6 +8,7 @@ import me.overlight.powertools.Plugin.PlInfo;
 import me.overlight.powertools.Plugin.PlMessages;
 import me.overlight.powertools.Plugin.PlPerms;
 import me.overlight.powertools.Plugin.PlSticks;
+import me.overlight.powertools.PowerTools;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -60,6 +61,20 @@ public class MainCommand
                         getPlayer(args[1]).getInventory().addItem(PlSticks.FreezeStick);
                         sender.sendMessage(PlMessages.Freeze_StickSimplifyGiven.get().replace("%PLAYER_NAME%", getPlayer(args[1]).getName()));
                     } else {
+                        sender.sendMessage(PlMessages.PlayerNotFind.get());
+                    }
+                }
+                break;
+            case "cps":
+                if (!PlPerms.hasPerm(sender, PlPerms.Perms.CpsCheckCommand.get())) {
+                    sender.sendMessage(PlMessages.NoPermission.get());
+                    return false;
+                }
+                if(args.length == 2){
+                    if(isPlayerValid(args[1])){
+                        sender.sendMessage(PlMessages.CpsCheck_PlayersCpsGet.get(new RepItem("%PLAYER_NAME%", args[1]), new RepItem("%CPS_TYPE%", "LMB"), new RepItem("%CPS%", CpsMap.LMB.get(args[1]) + "")));
+                        sender.sendMessage(PlMessages.CpsCheck_PlayersCpsGet.get(new RepItem("%PLAYER_NAME%", args[1]), new RepItem("%CPS_TYPE%", "RMB"), new RepItem("%CPS%", CpsMap.RMB.get(args[1]) + "")));
+                    } else{
                         sender.sendMessage(PlMessages.PlayerNotFind.get());
                     }
                 }

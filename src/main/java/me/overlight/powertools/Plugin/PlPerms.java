@@ -21,6 +21,7 @@ public class PlPerms {
         PlayTimeCommand("modules.playtime.command"),
         VanishCommand("modules.vanish.command"),
         ToggleCommand("modules.toggle.command"),
+        CpsCheckCommand("modules.cpscheck.command")
         ;
         private final String perm;
         Perms(String perm){

@@ -15,18 +15,14 @@ public class TabComplete
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String s, String[] args) {
         String[] commands = {
-                "pts kb {TARGET}",
                 "pts knockback {TARGET}",
-                "pts fr {TARGET}",
                 "pts freeze {TARGET}",
-                "pts rot {TARGET}",
                 "pts rotate {TARGET}",
-                "pts pt {TARGET}",
                 "pts playtime {TARGET}",
-                "pts prot {TARGET}",
                 "pts protect {TARGET}",
                 "pts vanish {TARGET}",
                 "pts toggle {TARGET} {TOGGLE_TYPES}",
+                "pts cps {TARGET}"
         };
         List<String> currentIndexCommands = new ArrayList<>();
         for(int i = 0; i < commands.length; i++){
