@@ -1,17 +1,13 @@
 package me.overlight.powertools.Modules.mods;
 
 import me.overlight.powertools.Modules.Module;
-import me.overlight.powertools.Modules.impls.AlertUtils;
+import me.overlight.powertools.Libraries.AlertUtils;
 import me.overlight.powertools.PowerTools;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEvent;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class Toggle
