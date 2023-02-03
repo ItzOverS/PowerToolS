@@ -69,6 +69,9 @@ public class PowerTools
         try {
             INSTANCE = this;
             saveDefaultConfig();
+            if(!new File("plugins\\PowerToolS\\types.yml").exists())
+                saveResource("types.yml", false);
+
             PowerTools.config = getConfig();
 
             getServer().getPluginCommand("powertools").setExecutor(new MainCommand());

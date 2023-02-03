@@ -35,7 +35,12 @@ public enum PlMessages {
     NetworkChecker_PlayerTempBannedForInvalidCountry("@color_gold%PLAYER_NAME%@color_green has temp banned for invalid country"),
     Toggle_TargetItemNotFind("@color_redTarget type not find!"),
     Toggle_SimplifySet("@color_greenSimplify toggled @color_gold%TARGET_PLAYER%@color_green's @color_gold%TARGET_ITEM%@color_green for You"),
-    NoPermission("@color_redYou don't have enough permission to do this!")
+    NoPermission("@color_redYou don't have enough permission to do this!"),
+    ReloadSuccess("@color_greenSimplify reloaded config.yml"),
+    HelpCMD_CommandNotFind("@color_redYour target command not find!"),
+    CommandNotFind("@color_redCommand not found... Use /pts help"),
+    Settings_InvalidPath("@color_redInvalid path"),
+    Settings_SuccessSetValue("@color_greenSimplify set @color_gold%PATH%@color_red to @color_gold%VALUE%"),
 
     ;
     private final String desc;
