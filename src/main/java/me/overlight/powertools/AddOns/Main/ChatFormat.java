@@ -12,7 +12,7 @@ public class ChatFormat
         extends AddOn
         implements Listener {
     public ChatFormat() {
-        super("ChatFormat", "1.0", "Create custom chat message", "NONE", PowerTools.config.getBoolean("ChatFormat.enabled"));
+        super("ChatFormat", "1.0", "Create custom chat message", PowerTools.config.getBoolean("ChatFormat.enabled"));
     }
 
     @EventHandler

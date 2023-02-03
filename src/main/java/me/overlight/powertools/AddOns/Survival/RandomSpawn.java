@@ -20,7 +20,7 @@ public class RandomSpawn
         extends AddOn
         implements Listener {
     public RandomSpawn() {
-        super("SurvivalAddOns.RandomSpawn", "1.0", "Random spawn player when join server for first time", "NONE", PowerTools.config.getBoolean("SurvivalAddOns.RandomSpawn.enabled"));
+        super("SurvivalAddOns.RandomSpawn", "1.0", "Random spawn player when join server for first time", PowerTools.config.getBoolean("SurvivalAddOns.RandomSpawn.enabled"));
     }
 
     @EventHandler(priority = EventPriority.HIGH)

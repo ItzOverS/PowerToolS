@@ -15,7 +15,7 @@ public class PingCheck
 extends AddOn
 implements Runnable {
     public PingCheck() {
-        super("PingCheck", "1.0", "check players ping & kick high pinged players", "NONE", PowerTools.config.getBoolean("PingCheck.enabled"));
+        super("PingCheck", "1.0", "check players ping & kick high pinged players", PowerTools.config.getBoolean("PingCheck.enabled"));
     }
 
     @Override

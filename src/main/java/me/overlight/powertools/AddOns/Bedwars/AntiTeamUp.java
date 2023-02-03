@@ -22,7 +22,7 @@ public class AntiTeamUp
         extends AddOn
         implements Listener {
     public AntiTeamUp() {
-        super("BedwarsAddOns.AntiTeamup", "1.0", "prevent players from team up *only* in bedwars", "NONE", PowerTools.config.getBoolean("BedwarsAddOns.AntiTeamup.enabled"));
+        super("BedwarsAddOns.AntiTeamup", "1.0", "prevent players from team up *only* in bedwars", PowerTools.config.getBoolean("BedwarsAddOns.AntiTeamup.enabled"));
         Bukkit.getScheduler().scheduleSyncRepeatingTask(PowerTools.INSTANCE, this::CheckTeamUps, 10, 10);
     }
     HashMap<String, Integer> VLplayers = new HashMap<>();

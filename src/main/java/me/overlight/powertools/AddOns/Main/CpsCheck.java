@@ -37,8 +37,7 @@ public class CpsCheck
     
     
     public CpsCheck() {
-        super("CpsCheck", "1.1", "check players cps", "NONE", PowerTools.config.getBoolean("CpsCheck.enabled"));
-        if(this.isEnabled()) onEnable();
+        super("CpsCheck", "1.1", "check players cps", PowerTools.config.getBoolean("CpsCheck.enabled"));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -54,7 +53,8 @@ public class CpsCheck
         checkPlayer(player);
     }
 
-    public void onEnable(){
+    @Override
+    public void onEnabled() {
         cpsHistory cpsHis = new cpsHistory();
         for(int i = 0; i < 20; i++){
             cpsHis.addCps(cpsHistory.cpsType.LMB, 0);

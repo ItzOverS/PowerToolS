@@ -18,7 +18,7 @@ public class FireBallKnockback
         extends AddOn
         implements Listener {
     public FireBallKnockback() {
-        super("BedwarsAddOns.FireballKnockback", "1.0", "control Fireball's knockback in bedwars", "NONE", PowerTools.config.getBoolean("BedwarsAddOns.FireballKnockback.enabled"));
+        super("BedwarsAddOns.FireballKnockback", "1.0", "control Fireball's knockback in bedwars", PowerTools.config.getBoolean("BedwarsAddOns.FireballKnockback.enabled"));
     }
     HashMap<Player, ItemStack> handItems = new HashMap<>();
 

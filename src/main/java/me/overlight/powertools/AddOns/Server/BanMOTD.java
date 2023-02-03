@@ -14,7 +14,7 @@ public class BanMOTD
         extends AddOn
         implements Listener {
     public BanMOTD() {
-        super("ServerAddOns.BanMOTD", "1.0", "Costume MOTD for banned players", "NONE", PowerTools.config.getBoolean("ServerAddOns.BanMOTD.enabled"));
+        super("ServerAddOns.BanMOTD", "1.0", "Costume MOTD for banned players", PowerTools.config.getBoolean("ServerAddOns.BanMOTD.enabled"));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

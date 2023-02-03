@@ -20,7 +20,7 @@ public class NoRespawn
         extends AddOn
         implements Listener {
     public NoRespawn() {
-        super("SurvivalAddOns.NoRespawn", "1.0", "When player kill by another player a head will drop from dead! If that head place player will respawn... else they're spectator", "NONE", false);
+        super("SurvivalAddOns.NoRespawn", "1.0", "When player kill by another player a head will drop from dead! If that head place player will respawn... else they're spectator", false);
     }
 
     @EventHandler

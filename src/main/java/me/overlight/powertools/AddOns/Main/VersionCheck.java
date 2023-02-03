@@ -17,7 +17,7 @@ public class VersionCheck
         implements PluginMessageListener {
     public static HashMap<String, String> playersClientBrand = new HashMap<>();
     public VersionCheck() {
-        super("VersionCheck", "1.0", "check players version", "NONE", PowerTools.config.getBoolean("VersionCheck.enabled"), (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12))?"mc:brand":"MC|BRAND");
+        super("VersionCheck", "1.0", "check players version", PowerTools.config.getBoolean("VersionCheck.enabled"), (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12))?"mc:brand":"MC|BRAND");
     }
     @Override
     public void onPluginMessageReceived(String channel, Player player, byte[] message) {

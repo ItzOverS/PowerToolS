@@ -10,7 +10,7 @@ public class CommandRedirect
         extends AddOn
         implements Listener {
     public CommandRedirect() {
-        super("CommandRedirect", "1.0", "Redirect commands", "NONE", PowerTools.config.getBoolean("CommandRedirect.enabled"));
+        super("CommandRedirect", "1.0", "Redirect commands", PowerTools.config.getBoolean("CommandRedirect.enabled"));
     }
 
     @EventHandler

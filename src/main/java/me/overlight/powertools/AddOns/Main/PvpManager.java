@@ -16,7 +16,7 @@ public class PvpManager
         extends AddOn
         implements Listener {
     public PvpManager() {
-        super("PvpManager", "1.0", "manage players pvp", "NONE", PowerTools.config.getBoolean("PvpManager.enabled"));
+        super("PvpManager", "1.0", "manage players pvp", PowerTools.config.getBoolean("PvpManager.enabled"));
     }
 
     public static HashMap<String, Boolean> PlayersPvpStats = new HashMap<>();

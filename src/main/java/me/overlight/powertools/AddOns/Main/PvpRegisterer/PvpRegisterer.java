@@ -28,7 +28,7 @@ public class PvpRegisterer
         extends AddOn {
     public static HashMap<String, Integer> combo = new HashMap<>();
     public PvpRegisterer() {
-        super("pvpRegisterer", "1.0", "register player's unregistered clicks", "NONE", PowerTools.config.getBoolean("pvpRegisterer.enabled"));
+        super("pvpRegisterer", "1.0", "register player's unregistered clicks", PowerTools.config.getBoolean("pvpRegisterer.enabled"));
         PacketEvents.get().getEventManager().registerListener(new AttackPacketListener());
     }
 }

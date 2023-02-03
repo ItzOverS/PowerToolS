@@ -16,7 +16,7 @@ public class CommandDeny
         extends AddOn
         implements Listener {
     public CommandDeny() {
-        super("CommandDeny", "1.0", "deny commands", "NONE", PowerTools.config.getBoolean("CommandDeny.enabled"));
+        super("CommandDeny", "1.0", "deny commands", PowerTools.config.getBoolean("CommandDeny.enabled"));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

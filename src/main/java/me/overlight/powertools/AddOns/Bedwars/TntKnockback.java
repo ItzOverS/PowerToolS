@@ -19,7 +19,7 @@ public class TntKnockback
         extends AddOn
         implements Listener {
     public TntKnockback() {
-        super("BedwarsAddOns.TntKnockback", "1.0", "control Tnt's knockback in bedwars", "NONE", PowerTools.config.getBoolean("BedwarsAddOns.TntKnockback.enabled"));
+        super("BedwarsAddOns.TntKnockback", "1.0", "control Tnt's knockback in bedwars", PowerTools.config.getBoolean("BedwarsAddOns.TntKnockback.enabled"));
     }
     HashMap<Player, ItemStack> handItems = new HashMap<>();
 

@@ -11,7 +11,7 @@ public class VoidTP
         extends AddOn
         implements Listener {
     public VoidTP() {
-        super("HubAddOns.VoidTP", "1.0", "Teleport back to spawn when get into void", "NONE", PowerTools.config.getBoolean("HubAddOns.VoidTP.enabled"));
+        super("HubAddOns.VoidTP", "1.0", "Teleport back to spawn when get into void", PowerTools.config.getBoolean("HubAddOns.VoidTP.enabled"));
     }
 
     @EventHandler

@@ -16,7 +16,7 @@ public class AntiBot
         extends AddOn
         implements Listener {
     public AntiBot() {
-        super("AntiBot", "1.0", "Prevent server from bots", "NONE", PowerTools.config.getBoolean("AntiBot.enabled"));
+        super("AntiBot", "1.0", "Prevent server from bots", PowerTools.config.getBoolean("AntiBot.enabled"));
         new BukkitRunnable(){
             @Override
             public void run() {

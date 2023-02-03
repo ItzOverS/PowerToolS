@@ -14,7 +14,7 @@ public class FallingBlocks
         extends AddOn
         implements Listener {
     public FallingBlocks() {
-        super("SurvivalAddOns.FallingBlocks", "1.0", "Calculate minecraft's gravity physics", "NONE", PowerTools.config.getBoolean("SurvivalAddOns.FallingBlocks.enabled"));
+        super("SurvivalAddOns.FallingBlocks", "1.0", "Calculate minecraft's gravity physics", PowerTools.config.getBoolean("SurvivalAddOns.FallingBlocks.enabled"));
     }
 
     @EventHandler

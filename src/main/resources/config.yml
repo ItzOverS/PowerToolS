@@ -15,7 +15,7 @@ ChatManager:
       msg: "&6SPAM is not allowed on this server" # Use '\n' for nextLine
   WordBlock:
     enabled: true
-    Words: ["fuck", "bitch", "fvck", "rid", "kir"]
+    Words: ["fuck", "bitch", "fvck"]
     Modes:
       UniCodes: true
       Splitters: true

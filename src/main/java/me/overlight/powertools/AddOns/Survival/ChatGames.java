@@ -28,7 +28,7 @@ public class ChatGames
 
 
     public ChatGames() {
-        super("SurvivalAddOns.ChatGame", "1.0", "Create a little math game with costume rewards in chat", "NONE", PowerTools.config.getBoolean("SurvivalAddOns.ChatGame.enabled"));
+        super("SurvivalAddOns.ChatGame", "1.0", "Create a little math game with costume rewards in chat", PowerTools.config.getBoolean("SurvivalAddOns.ChatGame.enabled"));
         runTimer();
     }
 

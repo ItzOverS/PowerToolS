@@ -15,7 +15,7 @@ public class RandomMOTD
         implements Listener {
 
     public RandomMOTD() {
-        super("ServerAddOns.randomMOTD", "1.1", "show random MOTDs when plugin ping", "NONE", PowerTools.config.getBoolean("ServerAddOns.randomMOTD.enabled"));
+        super("ServerAddOns.randomMOTD", "1.1", "show random MOTDs when plugin ping", PowerTools.config.getBoolean("ServerAddOns.randomMOTD.enabled"));
     }
 
     @EventHandler

@@ -18,7 +18,7 @@ public class UserNameManager
         implements Listener {
 
     public UserNameManager() {
-        super("UsernameManager", "1.0", "Manager players usernames", "NONE", PowerTools.config.getBoolean("UsernameManager.enabled"));
+        super("UsernameManager", "1.0", "Manager players usernames", PowerTools.config.getBoolean("UsernameManager.enabled"));
     }
     
     @EventHandler(priority = EventPriority.MONITOR)

@@ -1,0 +1,276 @@
+discordWebhook:
+  enabled: boolean
+  url: string
+
+ChatManager:
+  enabled: boolean
+  AntiSpam:
+    enabled: boolean
+    maxSpam: integer
+    filterSplitters: boolean
+    Kick:
+      enabled: boolean
+      msg: string
+  WordBlock:
+    enabled: boolean
+    Words: stringList
+    Modes:
+      UniCodes: boolean
+      Splitters: boolean
+      MultiLetter: boolean
+    msg: string
+  AntiDuplicate:
+    enabled: boolean
+    maxDuplicate: integer
+    msg: string
+  MessageDelay:
+    enabled: boolean
+    delay: integer
+    msg: string
+  PlayerMentions:
+    enabled: boolean
+    Mode: string
+  CommandCooldown:
+    enabled: boolean
+    delay: integer
+
+NetworkChecker:
+  enabled: boolean
+  CountriesList:
+    type: stringList(blacklist,whitelist)
+    list: stringList
+  blackListedIPs: stringList
+
+AntiBot:
+  enabled: boolean
+
+UsernameManager:
+  enabled: boolean
+  alert-on-discord: boolean
+  WordBlock:
+    enabled: boolean
+    Words: stringList
+    Modes:
+      Splitters: boolean
+      MultiLetter: boolean
+    Action: stringList(BAN,KICK)
+    msg: string
+
+Captcha:
+  enabled: boolean
+  AI: stringList(GUI,GUI-AB)
+
+CpsCheck:
+  enabled: boolean
+  maxCps:
+    RMB:
+      enabled: boolean
+      alert-on-discord: boolean
+      max: integer
+    LMB:
+      enabled: boolean
+      alert-on-discord: boolean
+      max: integer
+  AutoClickerCheck:
+    enabled: boolean
+    clickerRange: integer
+    alert-on-discord: boolean
+    startCheck:
+      RMB: integer
+      LMB: integer
+
+ForceSpawn:
+  enabled: boolean
+  world: string
+  location:
+    x: integer
+    y: integer
+    z: integer
+  head:
+    yaw: integer
+    pitch: integer
+
+Kits:
+  enabled: boolean
+
+JoinMessage:
+  enabled: boolean
+  messages:
+    FirstJoin: string
+    NotFirstJoin: string
+
+QuitMessage:
+  enabled: boolean
+  message: string
+
+afkCheck:
+  enabled: boolean
+  kickOnAFK: boolean
+  maxDelayNoAction: integer
+  alert-on-discord: boolean
+  Actions:
+    Chat: boolean
+    CommandExecute: boolean
+    Interact: boolean
+    Move: boolean
+    ChangeHeadVictor: boolean
+  notification:
+    chat:
+      enabled: boolean
+      AFKmessage: string
+      NotAFKmessage: string
+    tab:
+      enabled: boolean
+      tag: string
+
+CommandDeny:
+  enabled: boolean
+  commands: stringList
+  alert-on-discord: boolean
+  denyPluginNameOnStart: boolean
+  ignoreOps: boolean
+
+AntiWorldDownLoader:
+  enabled: boolean
+  continueOperators: boolean
+  alert-on-discord: boolean
+
+PingCheck:
+  enabled: boolean
+  maxPing: integer
+  alert-on-discord: boolean
+
+pvpManager:
+  enabled: boolean
+
+ChatFormat:
+  enabled: boolean
+  format: string
+
+pvpRegisterer:
+  enabled: boolean
+  registerDamages: boolean
+  registerKnockback: boolean
+  chance: integer(1,100)
+
+CommandRedirect:
+  enabled: boolean
+  commands: configSection(string,string)
+
+Report:
+  enabled: boolean
+  delayBetweenReports: integer
+  reportTheySelf: boolean
+
+SlashServer:
+  enabled: boolean
+  servers: configSection(string,string)
+
+
+SurvivalAddOns:
+  enabled: boolean
+  NoRespawn:
+    enabled: boolean
+
+  ChatGame:
+    enabled: boolean
+    delay: integer
+    rewardsPerGame: integer
+    answerTime: integer
+    rewards: configSection(material,integer)
+
+  RandomSpawn:
+    enabled: boolean
+
+  FallingBlocks:
+    enabled: boolean
+    doNotApplyOn: materialList
+    nullBlocks: materialList
+
+BedwarsAddOns:
+  enabled: boolean
+  AntiTeamup:
+    enabled: boolean
+    distance: integer
+    maxVL: integer
+
+  TntKnockback:
+    enabled: boolean
+    multiply: double
+
+  FireballKnockback:
+    enabled: boolean
+    multiply: double
+
+HubAddOns:
+  enabled: boolean
+  KnockbackPlates:
+    enabled: boolean
+    locations:
+      001:
+        world: string
+        location: integerList(2)
+        mode: stringList(FORCE,HEAD)
+        knockback: integerList(3)
+        multiply: integer
+        verticalNormal: integer
+  VoidTP:
+    enabled: boolean
+    respawnLocation:
+      x: integer
+      y: integer
+      z: integer
+    teleportY: integer
+
+ServerAddOns:
+  enabled: boolean
+  randomMOTD:
+    enabled: boolean
+    MOTDs: stringList
+
+  ForcePing:
+    enabled: boolean
+    maxDelay: integer
+
+  AntiRejoin:
+    enabled: boolean
+    wait: integer
+
+  BanMOTD:
+    enabled: boolean
+    MOTD: string
+
+WorldEnvironments:
+  enabled: boolean
+  allowHunger: boolean
+  allowDamage: boolean
+  allowPvp: boolean
+  allowTp: boolean
+  allowFly: boolean
+  allowBlockBreak: boolean
+  allowBlockPlace: boolean
+  allowInteract: boolean
+  disableNether: boolean
+  disableEnd: boolean
+
+RenderAddOns:
+  enabled: boolean
+  ScoreBoards:
+    enabled: boolean
+    switchDelay: integer
+    name: string
+    boards:
+      index01: stringList
+      index02: stringList
+  TabList:
+    enabled: boolean
+    switchDelay: integer
+    lists:
+      index01:
+        header: stringList
+        footer: stringList
+        per-player: string
+      index02:
+        header: stringList
+        footer: stringList
+        per-player: string

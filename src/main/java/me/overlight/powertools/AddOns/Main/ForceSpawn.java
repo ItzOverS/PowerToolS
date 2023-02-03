@@ -15,7 +15,7 @@ public class ForceSpawn
         extends AddOn
         implements Listener {
     public ForceSpawn() {
-        super("ForceSpawn", "1.0", "Manager players spawn location", "NONE", PowerTools.config.getBoolean("ForceSpawn.enabled"));
+        super("ForceSpawn", "1.0", "Manager players spawn location", PowerTools.config.getBoolean("ForceSpawn.enabled"));
     }
 
     @EventHandler

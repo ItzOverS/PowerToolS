@@ -28,7 +28,7 @@ public class Captcha
     PluginYaml verifiedPlayers;
     CaptchaMode mode;
     public Captcha() {
-        super("Captcha", "1.0", "Filter bots from humans", "NONE", PowerTools.config.getBoolean("Captcha.enabled"));
+        super("Captcha", "1.0", "Filter bots from humans", PowerTools.config.getBoolean("Captcha.enabled"));
         try{
             verifiedPlayers = new PluginYaml("verifiedPlayers");
         } catch(Exception ex) {}

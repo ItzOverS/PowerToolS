@@ -16,7 +16,7 @@ public class AntiWorldDownLoader
         extends AddOn
         implements Listener, PluginMessageListener {
     public AntiWorldDownLoader() {
-        super("AntiWorldDownLoader", "1.0", "prevent players from download server's maps using map downloaders", "NONE", PowerTools.config.getBoolean("AntiWorldDownLoader.enabled"));
+        super("AntiWorldDownLoader", "1.0", "prevent players from download server's maps using map downloaders", PowerTools.config.getBoolean("AntiWorldDownLoader.enabled"));
         if(this.enabled()) {
             if(PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12)){
                 PowerTools.INSTANCE.getServer().getMessenger().registerIncomingPluginChannel(PowerTools.INSTANCE, "wdl:init", this);

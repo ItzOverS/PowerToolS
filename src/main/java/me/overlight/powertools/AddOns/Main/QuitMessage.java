@@ -13,7 +13,7 @@ public class QuitMessage
         extends AddOn
         implements Listener {
     public QuitMessage() {
-        super("QuitMessage", "1.0", "show quit message when player left", "NONE", PowerTools.config.getBoolean("QuitMessage.enabled"));
+        super("QuitMessage", "1.0", "show quit message when player left", PowerTools.config.getBoolean("QuitMessage.enabled"));
     }
 
     @EventHandler

@@ -11,14 +11,8 @@ commands:
   powertools:
     description: Use PowerToolS options
     permission: powertools
-    permission-message: "You don't have enough permission to execute this command"
-    usage: ""
-    aliases: [ "pts"]
+    usage: "/pts help"
+    aliases: ["pts"]
   report:
     description: report player, bug & other
     usage: ""
-
-
-permissions:
-  powertools:
-    default: op

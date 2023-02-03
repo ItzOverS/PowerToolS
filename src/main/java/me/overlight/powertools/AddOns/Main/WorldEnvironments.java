@@ -23,7 +23,7 @@ public class WorldEnvironments
         implements Listener {
 
     public WorldEnvironments() {
-        super("WorldEnvironments", "1.0", "Control World Environments", "NONE", PowerTools.config.getBoolean("WorldEnvironments.enabled"));
+        super("WorldEnvironments", "1.0", "Control World Environments", PowerTools.config.getBoolean("WorldEnvironments.enabled"));
     }
 
     @EventHandler

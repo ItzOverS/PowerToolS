@@ -19,7 +19,7 @@ public class ForcePing
         extends AddOn
         implements Listener {
     public ForcePing() {
-        super("ServerAddOns.ForcePing", "1.0", "AntiBot: Force to players ping your server before connect", "NONE", PowerTools.config.getBoolean("ServerAddOns.ForcePing.enabled"));
+        super("ServerAddOns.ForcePing", "1.0", "AntiBot: Force to players ping your server before connect", PowerTools.config.getBoolean("ServerAddOns.ForcePing.enabled"));
     }
     private final HashMap<InetAddress, Long> getLastPing = new HashMap<>();
     @EventHandler

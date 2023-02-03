@@ -1,6 +1,7 @@
 package me.overlight.powertools.AddOns.Main;
 
 import me.clip.placeholderapi.PlaceholderAPI;
+import me.overlight.powertools.APIs.Infinite;
 import me.overlight.powertools.AddOns.AddOn;
 import me.overlight.powertools.PowerTools;
 import org.bukkit.Bukkit;
@@ -20,11 +21,13 @@ public class ChatManager
         extends AddOn 
         implements Listener {
     public ChatManager() {
-        super("ChatManager", "2.0", "Manager players chat", "NONE", PowerTools.config.getBoolean("ChatManager.enabled"));
+        super("ChatManager", "2.0", "Manager players chat", PowerTools.config.getBoolean("ChatManager.enabled"));
     }
 
     public static List<String> DelayMessagePlayers = new ArrayList<>();
     public static HashMap<String, String> LastMSG = new HashMap<>();
+    public static HashMap<String, Infinite<Long>> LastMSGMs = new HashMap<>();
+
     public static HashMap<String, Integer> SpamAmount = new HashMap<>();
     public static List<String> PlayersCommandCooldown = new ArrayList<>();
     @EventHandler(priority = EventPriority.MONITOR)
@@ -45,11 +48,12 @@ public class ChatManager
                 }
             }
             if (PowerTools.config.getBoolean(this.getName() + ".AntiSpam.enabled")) {
-                if (getDuplicates(message, LastMSG.get(e.getPlayer().getName())) > new HashSet<>(Arrays.asList(removeSymbols(message.toLowerCase(), new String[]{",", "|", "!", "@", "#", "$", "%", "^", "&", "(", ")", "[", "]", "{", "}", "`", "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"}).split(" "))).size() / 2) {
+                if (LastMSGMs.get(sender.getName()).isFullEquals() || getDuplicates(message, LastMSG.get(e.getPlayer().getName())) > new HashSet<>(Arrays.asList(removeSymbols(message.toLowerCase(), new String[]{",", "|", "!", "@", "#", "$", "%", "^", "&", "(", ")", "[", "]", "{", "}", "`", "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"}).split(" "))).size() / 2) {
                     SpamAmount.put(sender.getName(), SpamAmount.containsKey(sender.getName()) ? SpamAmount.get(sender.getName()) + 1 : 1);
                 } else {
                     SpamAmount.put(sender.getName(), 0);
                     LastMSG.put(sender.getName(), message);
+                    LastMSGMs.put(sender.getName(), new Infinite<Long>(4, LastMSGMs.get(sender.getName()), Arrays.asList(System.currentTimeMillis())));
                 }
                 if (SpamAmount.get(sender.getName()) >= PowerTools.config.getInt(this.getName() + ".AntiSpam.maxSpam")) {
                     if (PowerTools.config.getBoolean(this.getName() + ".AntiSpam.Kick.enabled")) {
@@ -134,12 +138,12 @@ public class ChatManager
                     assert mentionedPlayers != null;
                     for (String name : mentionedPlayers) {
                         if (Objects.equals(mode, "title"))
-                            Bukkit.getPlayer(name).sendTitle(ChatColor.GOLD + sender.getName(), ChatColor.RED + "Has mention you");
+                            Bukkit.getPlayer(name).sendTitle(ChatColor.GOLD + sender.getName(), ChatColor.RED + "Has mentioned you");
                         if (Objects.equals(mode, "chat"))
-                            Bukkit.getPlayer(name).sendMessage(ChatColor.GOLD + sender.getName() + ChatColor.RED + " has mention you");
+                            Bukkit.getPlayer(name).sendMessage(ChatColor.GOLD + sender.getName() + ChatColor.RED + " has mentioned you");
                         if (Objects.equals(mode, "both")) {
-                            Bukkit.getPlayer(name).sendTitle(ChatColor.GOLD + sender.getName(), ChatColor.RED + "Has mention you");
-                            Bukkit.getPlayer(name).sendMessage(ChatColor.GOLD + sender.getName() + ChatColor.RED + " has mention you");
+                            Bukkit.getPlayer(name).sendTitle(ChatColor.GOLD + sender.getName(), ChatColor.RED + "Has mentioned you");
+                            Bukkit.getPlayer(name).sendMessage(ChatColor.GOLD + sender.getName() + ChatColor.RED + " has mentioned you");
                         }
                     }
                 }
@@ -177,7 +181,7 @@ public class ChatManager
             if (text.contains(player.getName()))
                 mentionedPlayers.add(player.getName());
         }
-        if (mentionedPlayers.size() == 0)
+        if (mentionedPlayers.isEmpty())
             return null;
         return mentionedPlayers;
     }

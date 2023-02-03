@@ -16,7 +16,7 @@ public class AntiRejoin
         extends AddOn
         implements Listener {
     public AntiRejoin() {
-        super("ServerAddOns.AntiRejoin", "1.0", "Prevent player from fast rejoin players", "NONE", PowerTools.config.getBoolean("ServerAddOns.AntiRejoin.enabled"));
+        super("ServerAddOns.AntiRejoin", "1.0", "Prevent player from fast rejoin players", PowerTools.config.getBoolean("ServerAddOns.AntiRejoin.enabled"));
     }
 
     public static HashMap<String, Long> lastDisconnect = new HashMap<>();

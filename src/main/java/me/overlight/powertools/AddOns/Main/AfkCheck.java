@@ -13,7 +13,7 @@ public class AfkCheck
         implements Listener, Runnable {
 
     public AfkCheck() {
-        super("AfkCheck", "1.0", "manager players afk stats", "NONE", PowerTools.config.getBoolean("AfkCheck.enabled"));
+        super("AfkCheck", "1.0", "manager players afk stats", PowerTools.config.getBoolean("AfkCheck.enabled"));
     }
 
     public static AFKManager afkManager = new AFKManager();

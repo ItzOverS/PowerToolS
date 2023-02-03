@@ -15,7 +15,7 @@ public class SlashServer
         implements Listener {
 
     public SlashServer() {
-        super("SlashSever", "1.0", "use /{servername} to switch", "NONE", PowerTools.config.getBoolean("SlashServer.enabled"));
+        super("SlashSever", "1.0", "use /{servername} to switch", PowerTools.config.getBoolean("SlashServer.enabled"));
     }
 
     @EventHandler

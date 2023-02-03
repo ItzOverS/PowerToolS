@@ -19,7 +19,7 @@ public class KnockbackPlate
         implements Listener {
     private final List<VelcPlate> plates = new ArrayList<>();
     public KnockbackPlate() {
-        super("HubAddOns.KnockbackPlates", "1.0", "Just create some knockback plates", "NONE", PowerTools.config.getBoolean("HubAddOns.KnockbackPlates.enabled"));
+        super("HubAddOns.KnockbackPlates", "1.0", "Just create some knockback plates", PowerTools.config.getBoolean("HubAddOns.KnockbackPlates.enabled"));
         for(String key: PowerTools.config.getConfigurationSection(this.getName() + ".locations").getKeys(false)){
             plates.add(
                     new VelcPlate(

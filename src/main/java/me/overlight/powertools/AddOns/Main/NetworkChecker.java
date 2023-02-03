@@ -19,7 +19,7 @@ public class NetworkChecker
         extends AddOn
         implements Listener {
     public NetworkChecker() {
-        super("NetworkChecker", "1.0", "Check players ip", "NONE", PowerTools.config.getBoolean("NetworkChecker.enabled"));
+        super("NetworkChecker", "1.0", "Check players ip", PowerTools.config.getBoolean("NetworkChecker.enabled"));
         me.overlight.powertools.APIs.NetworkChecker.runRequestChecks();
     }
 

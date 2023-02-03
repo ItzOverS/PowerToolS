@@ -16,7 +16,7 @@ public class ScoreBoards
         extends AddOn
         implements Listener {
     public ScoreBoards() {
-        super("RenderAddOns.ScoreBoards", "1.0", "Show costume scoreboard in your servers", "NONE", PowerTools.config.getBoolean("RenderAddOns.ScoreBoards.enabled"));
+        super("RenderAddOns.ScoreBoards", "1.0", "Show costume scoreboard in your servers", PowerTools.config.getBoolean("RenderAddOns.ScoreBoards.enabled"));
     }
 
     public int index = 0;

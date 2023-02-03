@@ -17,7 +17,7 @@ public class JoinMessage
         extends AddOn
         implements Listener {
     public JoinMessage() {
-        super("JoinMessage", "1.0", "show join message", "NONE", PowerTools.config.getBoolean("JoinMessage.enabled"));
+        super("JoinMessage", "1.0", "show join message", PowerTools.config.getBoolean("JoinMessage.enabled"));
     }
 
     @EventHandler

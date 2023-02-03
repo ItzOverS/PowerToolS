@@ -21,7 +21,7 @@ import java.util.Objects;
 public class TabList
         extends AddOn {
     public TabList() {
-        super("RenderAddOns.TabList", "1.0", "Make your tab costume", "NONE", PowerTools.config.getBoolean("RenderAddOns.TabList.enabled"));
+        super("RenderAddOns.TabList", "1.0", "Make your tab costume", PowerTools.config.getBoolean("RenderAddOns.TabList.enabled"));
     }
 
     private static int index = 0;
