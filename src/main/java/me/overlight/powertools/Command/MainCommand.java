@@ -220,20 +220,37 @@ public class MainCommand
                         return false;
                     }
                     if (args.length == 3) {
-                        if (isPlayerValid(args[1])) {
+                        if (isPlayerValid(args[2])) {
                             String item = "";
-                            switch (args[2].toLowerCase()) {
+                            switch (args[1].toLowerCase()) {
                                 case "cps":
                                     Toggle.toggledItem.put(sender.getName(), Toggle.ToggleItems.CPS);
                                     item = "CPS";
+                                    break;
+                                case "ping":
+                                    Toggle.toggledItem.put(sender.getName(), Toggle.ToggleItems.PING);
+                                    item = "PING";
                                     break;
                                 default:
                                     sender.sendMessage(PlMessages.Toggle_TargetItemNotFind.get());
                                     return false;
                             }
-                            Toggle.toggledPlayers.put(sender.getName(), getPlayer(args[1]).getName());
-                            sender.sendMessage(PlMessages.Toggle_SimplifySet.get(new RepItem("%TARGET_PLAYER%", getPlayer(args[1]).getName()), new RepItem("%TARGET_ITEM%", item)));
+                            Toggle.toggledPlayers.put(sender.getName(), getPlayer(args[2]).getName());
+                            sender.sendMessage(PlMessages.Toggle_SimplifySet.get(new RepItem("%TARGET_PLAYER%", getPlayer(args[2]).getName()), new RepItem("%TARGET_ITEM%", item)));
                         }
+                    } else if(args.length == 2){
+                        String item = "";
+                        switch (args[1].toLowerCase()) {
+                            case "tps":
+                                Toggle.toggledItem.put(sender.getName(), Toggle.ToggleItems.TPS);
+                                item = "TPS";
+                                break;
+                            default:
+                                sender.sendMessage(PlMessages.Toggle_TargetItemNotFind.get());
+                                return false;
+                        }
+                        Toggle.toggledPlayers.put(sender.getName(), "Server");
+                        sender.sendMessage(PlMessages.Toggle_SimplifySet.get(new RepItem("%TARGET_PLAYER%", "Server"), new RepItem("%TARGET_ITEM%", item)));
                     }
                     break;
                 case "settings":
