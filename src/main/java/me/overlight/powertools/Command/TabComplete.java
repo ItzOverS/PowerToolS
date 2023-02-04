@@ -42,44 +42,42 @@ public class TabComplete
             } else {
                 String[] commands = {
                         "pts knockback {TARGET}",
-                        "pts kb {TARGET}",
+                        "pts hide:kb {TARGET}",
                         "pts freeze {TARGET}",
-                        "pts fr {TARGET}",
+                        "pts hide:fr {TARGET}",
                         "pts rotate {TARGET}",
-                        "pts rot {TARGET}",
+                        "pts hide:rot {TARGET}",
                         "pts playtime {TARGET}",
-                        "pts pt {TARGET}",
+                        "pts hide:pt {TARGET}",
                         "pts protect {TARGET}",
-                        "pts prot {TARGET}",
+                        "pts hide:prot {TARGET}",
                         "pts vanish {TARGET}",
-                        "-",
-                        "pts toggle {TARGET} {TOGGLE_TYPES}",
-                        "-",
+                        "pts toggle {TOGGLE_TYPES} {TARGET}",
+                        "pts toggle tps",
                         "pts cps {TARGET}",
-                        "-",
                         "pts help {COMMANDS}",
-                        "-",
                 };
-                List<String> currentIndexCommands = new ArrayList<>();
-                for (int i = 0; i < commands.length; i++) {
-                    if (commands[i].split(" ").length <= args.length) continue;
+                Set<String> currentIndexCommands = new HashSet<>();
+                for (String value : commands) {
+                    if (value.split(" ").length <= args.length) continue;
                     boolean skipCommand = false;
-                    for(int m = 0; m < args.length; m++) {
-                        for(String r: replaceVars(commands[i].split(" ")[m+1])) {
-                            if (!r.startsWith(args[m])) {
-                                skipCommand = true;
+                    for (int m = 0; m < args.length; m++) {
+                        boolean itemContains = false;
+                        for (String r : replaceVars(value.replace("hide:", "").split(" ")[m + 1])) {
+                            if (r.startsWith(args[m])) {
+                                itemContains = true;
                                 break;
                             }
                         }
-                        if(skipCommand)
-                            break;
+                        if(!itemContains)
+                            skipCommand = true;
                     }
-                    if(commands[i] == "-") skipCommand = true;
-                    if(args.length == 1 && i % 2 == 1) skipCommand = true;
-                    if(skipCommand) continue;
-                    currentIndexCommands.addAll(replaceVars(commands[i].split(" ")[args.length]));
+                    if (value.split(" ")[args.length].startsWith("hide:")) skipCommand = true;
+                    if (skipCommand) continue;
+                    currentIndexCommands.addAll(replaceVars(value.split(" ")[args.length]));
                 }
-                return currentIndexCommands;
+
+                return new ArrayList<>(currentIndexCommands);
             }
         }
         return null;
@@ -121,7 +119,7 @@ public class TabComplete
         if(text.equals("{TARGET}"))
             return ImplementedVariables.getOnlinePlayers();
         else if(text.equals("{TOGGLE_TYPES}"))
-            return new ArrayList<>(Arrays.asList("cps"));
+            return new ArrayList<>(Arrays.asList("cps", "ping"));
         else if(text.equals("{COMMANDS}"))
             return ImplementedVariables.getPluginCommands();
         return new ArrayList<>(Collections.singletonList(text));
