@@ -6,7 +6,9 @@ import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.useentity.WrappedPacketInUseEntity;
 import me.overlight.powertools.Modules.mods.Protect;
 import me.overlight.powertools.PowerTools;
+import org.bukkit.GameMode;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -33,6 +35,9 @@ public class AttackPacketListener
         }.runTaskLater(PowerTools.INSTANCE, 20);
         if(PvpRegisterer.combo.getOrDefault(event.getPlayer().getName(), 0) < 6) return;
         if(!(action.getEntity() instanceof LivingEntity)) return;
+        if(action.getEntity() instanceof Player)
+            if(((Player) action.getEntity()).getGameMode() == GameMode.CREATIVE || ((Player) action.getEntity()).getGameMode() == GameMode.ADVENTURE)
+                return;
         if (PowerTools.config.getBoolean("pvpRegisterer.registerDamages"))
             if(((LivingEntity) action.getEntity()).getHealth() - 1 > -1)
                 ((LivingEntity)action.getEntity()).setHealth(((LivingEntity) action.getEntity()).getHealth() - 1);
