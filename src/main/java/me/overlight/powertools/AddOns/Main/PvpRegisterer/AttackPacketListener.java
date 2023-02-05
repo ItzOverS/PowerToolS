@@ -34,7 +34,8 @@ public class AttackPacketListener
         if(PvpRegisterer.combo.getOrDefault(event.getPlayer().getName(), 0) < 6) return;
         if(!(action.getEntity() instanceof LivingEntity)) return;
         if (PowerTools.config.getBoolean("pvpRegisterer.registerDamages"))
-            ((LivingEntity)action.getEntity()).setHealth(((LivingEntity) action.getEntity()).getHealth() - 1);
+            if(((LivingEntity) action.getEntity()).getHealth() - 1 > -1)
+                ((LivingEntity)action.getEntity()).setHealth(((LivingEntity) action.getEntity()).getHealth() - 1);
         if (PowerTools.config.getBoolean("pvpRegisterer.registerKnockback")){
             Vector vec = action.getEntity().getVelocity().multiply(event.getPlayer().getLocation().getDirection()).multiply(0.5);
             if(vec.getY() < 0) vec.setY(-vec.getY());

@@ -29,6 +29,10 @@ public class PvpRegisterer
     public static HashMap<String, Integer> combo = new HashMap<>();
     public PvpRegisterer() {
         super("pvpRegisterer", "1.0", "register player's unregistered clicks", PowerTools.config.getBoolean("pvpRegisterer.enabled"));
+    }
+
+    @Override
+    public void onEnabled() {
         PacketEvents.get().getEventManager().registerListener(new AttackPacketListener());
     }
 }
