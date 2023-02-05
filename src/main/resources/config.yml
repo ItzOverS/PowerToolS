@@ -144,6 +144,9 @@ CommandDeny:
   denyPluginNameOnStart: true # like /help OR /bukkit:help
   ignoreOps: true
 
+VersionCheck:
+  enabled: false
+
 AntiWorldDownLoader: # Anti WDL
   enabled: false
   continueOperators: false
