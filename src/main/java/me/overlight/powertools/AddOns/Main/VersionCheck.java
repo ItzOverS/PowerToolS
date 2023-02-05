@@ -4,9 +4,17 @@ import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.utils.server.ServerVersion;
 import me.overlight.powertools.AddOns.AddOn;
 import me.overlight.powertools.Libraries.RepItem;
+import me.overlight.powertools.Plugin.PlInfo;
 import me.overlight.powertools.Plugin.PlMessages;
 import me.overlight.powertools.PowerTools;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import java.io.UnsupportedEncodingException;
@@ -14,7 +22,7 @@ import java.util.HashMap;
 
 public class VersionCheck
         extends AddOn
-        implements PluginMessageListener {
+        implements PluginMessageListener, Listener {
     public static HashMap<String, String> playersClientBrand = new HashMap<>();
     public VersionCheck() {
         super("VersionCheck", "1.0", "check players version", PowerTools.config.getBoolean("VersionCheck.enabled"), (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12))?"mc:brand":"MC|BRAND");
@@ -36,5 +44,18 @@ public class VersionCheck
             PowerTools.Alert(PowerTools.Target.STAFF, PlMessages.ClDetector_FailedToDetectClient.get(new RepItem("%PLAYER_NAME%", player.getName())));
             playersClientBrand.put(player.getName(), "INVALID");
         }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void event(PlayerJoinEvent e){
+        Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
+            if(!playersClientBrand.containsKey(e.getPlayer().getName()))
+                e.getPlayer().kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "No Client Brand Request");
+        }, 100);
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void event(PlayerQuitEvent e){
+        playersClientBrand.remove(e.getPlayer().getName());
     }
 }

@@ -7,7 +7,7 @@ public enum PlCommands {
     playtime("playtime", "get player's playtime", "playtime {target}", PlPerms.Perms.PlayTimeCommand.get()),
     protect("protect", "protect players from damage", "protect {target}", PlPerms.Perms.ProtectCommand.get()),
     vanish("vanish", "hide your self from other players", "vanish {target}", PlPerms.Perms.VanishCommand.get()),
-    toggle("toggle", "toggle something of a player to your self", "toggle {target} {toggleItem}", PlPerms.Perms.ToggleCommand.get()),
+    toggle("toggle", "toggle something of a player to your self", "toggle {toggleItem} [target]", PlPerms.Perms.ToggleCommand.get()),
     freeze("freeze", "freeze a player for SS", "freeze {target}", PlPerms.Perms.FreezeCommand.get()),
     cps("cps", "get player's 'client show' cps", "cps {target}", PlPerms.Perms.CpsCheckCommand.get()),
 

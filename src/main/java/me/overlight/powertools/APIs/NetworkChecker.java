@@ -53,7 +53,7 @@ public class NetworkChecker {
 
     public static PremiumField isPremium(Player player) {
         try {
-            HttpURLConnection client = (HttpURLConnection) new URL("https://api.mojang.com/users/" + player.getName()).openConnection();
+            HttpURLConnection client = (HttpURLConnection) new URL("https://api.mojang.com/users/profiles/minecraft/" + player.getName()).openConnection();
             client.setRequestMethod("GET");
             client.setRequestProperty("accept", "application/json");
             client.setRequestProperty("userAgent", "Mozilla/5.0");
