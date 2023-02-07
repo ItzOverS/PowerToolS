@@ -67,13 +67,6 @@ public class PlayerProfile {
         return isPremium;
     }
 
-    public int maxLMBCps() {
-        return maxLMBCps;
-    }
-    public int maxRMBCps() {
-        return maxRMBCps;
-    }
-
     public List<Entity> getNearestEntities(int radians){
         List<Entity> entities = new ArrayList<Entity>();
         for(Entity entity : player.getWorld().getEntities()){

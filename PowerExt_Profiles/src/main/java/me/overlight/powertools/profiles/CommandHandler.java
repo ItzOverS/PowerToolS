@@ -3,6 +3,7 @@ package me.overlight.powertools.profiles;
 import me.overlight.powertools.APIs.NetworkChecker;
 import me.overlight.powertools.AddOns.Main.CpsCheck;
 import me.overlight.powertools.Libraries.ColorFormat;
+import me.overlight.powertools.Modules.mods.CpsMap;
 import me.overlight.powertools.Plugin.PlInfo;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -12,9 +13,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import static me.overlight.powertools.profiles.JoinListener.InteractsLMB;
-import static me.overlight.powertools.profiles.JoinListener.InteractsRMB;
 
 public class CommandHandler
         implements CommandExecutor {
@@ -56,8 +54,8 @@ public class CommandHandler
         return str.replace("%USER_NAME%", pl.name())
                 .replace("%USER_DISPLAY_NAME%", pl.displayName())
                 .replace("%USER_UUID%", pl.uniqueID().toString())
-                .replace("%USER_MAX_CPS%", pl.maxLMBCps() + "@color_gray | @color_red" + pl.maxRMBCps())
-                .replace("%USER_CURRENT_CPS%", InteractsLMB.getOrDefault(player.getName(), 0) + "@color_gray | @color_red" + InteractsRMB.getOrDefault(player.getName(), 0))
+                .replace("%USER_MAX_CPS%", CpsMap.MaxLMB.getOrDefault(player.getName(), 0) + "@color_gray | @color_red" + CpsMap.MaxRMB.getOrDefault(player.getName(), 0))
+                .replace("%USER_CURRENT_CPS%", CpsMap.LMB.getOrDefault(player.getName(), 0) + "@color_gray | @color_red" + CpsMap.RMB.getOrDefault(player.getName(), 0))
                 .replace("%USER_IP%",  NetworkChecker.getPlayerIPv4(player) == ""? "N/A": NetworkChecker.getPlayerIPv4(player))
                 .replace("%USER_CITY%", NetworkChecker.getPlayerCity(player) == null? "N/A": NetworkChecker.getPlayerCity(player))
                 .replace("%USER_COUNTRY%", NetworkChecker.getPlayerCountry(player) == null? "N/A": NetworkChecker.getPlayerCountry(player));
