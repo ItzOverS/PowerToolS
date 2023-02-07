@@ -149,8 +149,10 @@ public class PowerTools
             }
 
             if (!new PlaceHolders().isRegistered()) {
-                new PlaceHolders().register();
-                getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_greenSuccess registered placeholders"));
+                if(new PlaceHolders().register())
+                    getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_greenSuccess registered placeholders"));
+                else
+                    getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_redFailed to register placeholders"));
             }
 
             if (!PacketEvents.get().isInitialized() && !PacketEvents.get().isInitializing()) {
