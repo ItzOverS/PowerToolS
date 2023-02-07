@@ -36,6 +36,8 @@ import me.overlight.powertools.Plugin.PlInfo;
 import me.overlight.powertools.PowerModules.ExtensionManager;
 import me.overlight.powertools.PowerModules.PluginEnabledEvent;
 import me.overlight.powertools.PowerModules.PowerModule;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -57,6 +59,7 @@ public class PowerTools
 
     @Override
     public void onLoad() {
+        ((Logger) LogManager.getRootLogger()).addFilter(new ConsoleMessageFilter());
         PacketEvents.create(this);
         PacketEvents.get().getSettings()
                 .checkForUpdates(false)
