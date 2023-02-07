@@ -1,6 +1,5 @@
 package me.overlight.powertools.AddOns.Render;
 
-import me.clip.placeholderapi.PlaceholderAPI;
 import me.overlight.powertools.AddOns.AddOn;
 import me.overlight.powertools.PowerTools;
 import org.bukkit.Bukkit;
@@ -32,7 +31,10 @@ public class ScoreBoards
                 List<String> items = PowerTools.config.getStringList(this.getName() + ".boards." + new ArrayList<>(PowerTools.config.getConfigurationSection(this.getName() + ".boards").getKeys(true)).get(index));
                 int reverseIndex = 0;
                 for(int i = items.size(); i > 0; i--){
-                    createScore(i, obj, ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(player, items.get(reverseIndex))));
+                    if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+                        createScore(i, obj, ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, items.get(reverseIndex))));
+                    else
+                        createScore(i, obj, ChatColor.translateAlternateColorCodes('&', items.get(reverseIndex)));
                     reverseIndex++;
                 }
                 player.setScoreboard(scoreboard);

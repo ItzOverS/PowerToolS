@@ -1,8 +1,8 @@
 package me.overlight.powertools.AddOns.Main;
 
-import me.clip.placeholderapi.PlaceholderAPI;
 import me.overlight.powertools.AddOns.AddOn;
 import me.overlight.powertools.PowerTools;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,6 +17,9 @@ public class ChatFormat
 
     @EventHandler
     public void playerSendChat(AsyncPlayerChatEvent e){
-        e.setFormat(ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString("ChatFormat.format"))));
+        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+            e.setFormat(ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString("ChatFormat.format"))));
+        else
+            e.setFormat(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("ChatFormat.format")));
     }
 }

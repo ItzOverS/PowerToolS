@@ -2,7 +2,6 @@ package me.overlight.powertools.AddOns.Render;
 
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.utils.server.ServerVersion;
-import me.clip.placeholderapi.PlaceholderAPI;
 import me.overlight.powertools.AddOns.AddOn;
 import me.overlight.powertools.NMSSupport;
 import me.overlight.powertools.PowerTools;
@@ -34,11 +33,14 @@ public class TabList
             String headerString = ChatColor.translateAlternateColorCodes('&', mixArray(sec.getStringList("header"), "\n")),
                     footerString = ChatColor.translateAlternateColorCodes('&', mixArray(sec.getStringList("footer"), "\n"));
             for(Player player: Bukkit.getOnlinePlayers()) {
-                player.setPlayerListName(PlaceholderAPI.setPlaceholders(player, ChatColor.translateAlternateColorCodes('&', sec.getString("per-player"))));
+                if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+                    player.setPlayerListName(me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, ChatColor.translateAlternateColorCodes('&', sec.getString("per-player"))));
+                else
+                    player.setPlayerListName(ChatColor.translateAlternateColorCodes('&', sec.getString("per-player")));
                 try {
                     Object packet = Objects.requireNonNull(NMSSupport.getClass("PacketPlayOutPlayerListHeaderFooter")).getConstructor().newInstance();
-                    Object header = Objects.requireNonNull(NMSSupport.getClass("ChatComponentText")).getConstructor(String.class).newInstance(PlaceholderAPI.setPlaceholders(player, headerString)),
-                            footer = Objects.requireNonNull(NMSSupport.getClass("ChatComponentText")).getConstructor(String.class).newInstance(PlaceholderAPI.setPlaceholders(player, footerString));
+                    Object header = Objects.requireNonNull(NMSSupport.getClass("ChatComponentText")).getConstructor(String.class).newInstance((Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)? me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, headerString): headerString),
+                            footer = Objects.requireNonNull(NMSSupport.getClass("ChatComponentText")).getConstructor(String.class).newInstance((Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)? me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, footerString): footerString);
                     Field a = packet.getClass().getDeclaredField((PacketEvents.get().getServerUtils().getVersion().isOlderThan(ServerVersion.v_1_13))? "a": "header"),
                             b = packet.getClass().getDeclaredField((PacketEvents.get().getServerUtils().getVersion().isOlderThan(ServerVersion.v_1_13))? "b": "footer");
                     a.setAccessible(true);

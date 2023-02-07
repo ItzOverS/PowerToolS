@@ -1,6 +1,5 @@
 package me.overlight.powertools.AddOns.Main;
 
-import me.clip.placeholderapi.PlaceholderAPI;
 import me.overlight.powertools.AddOns.AddOn;
 import me.overlight.powertools.PowerTools;
 import org.bukkit.Bukkit;
@@ -31,7 +30,10 @@ public class JoinMessage
             message = message.replace("%NAME%", e.getPlayer().getName());
             message = message.replace("%NUM%", String.valueOf(YamlConfiguration.loadConfiguration(new File("plugins\\PowerToolS\\JoinedPlayers.yml")).getKeys(false).size()+1));
             message = message.replace("%ONLINE%", String.valueOf(Bukkit.getOnlinePlayers().size()));
-            e.setJoinMessage(ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(e.getPlayer(), message)));
+            if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+                e.setJoinMessage(ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), message)));
+            else
+                e.setJoinMessage(ChatColor.translateAlternateColorCodes('&', message));
         }
 
         {
