@@ -3,6 +3,7 @@ package me.overlight.powertools;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.utils.server.ServerVersion;
 import me.overlight.powertools.APIs.UpdateChecker;
+import me.overlight.powertools.APIs.Vault;
 import me.overlight.powertools.AddOns.AddOnManager;
 import me.overlight.powertools.AddOns.Bedwars.AntiTeamUp;
 import me.overlight.powertools.AddOns.Bedwars.FireBallKnockback;
@@ -73,6 +74,10 @@ public class PowerTools
                 saveResource("types.yml", false);
 
             PowerTools.config = getConfig();
+
+            if(Vault.implementAPI()){
+                getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.GREEN + "simplify connected to vault options");
+            }
 
             getServer().getPluginCommand("powertools").setExecutor(new MainCommand());
             getServer().getPluginCommand("powertools").setTabCompleter(new TabComplete());

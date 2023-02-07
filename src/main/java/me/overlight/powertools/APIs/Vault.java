@@ -3,16 +3,14 @@ package me.overlight.powertools.APIs;
 import me.overlight.powertools.PowerTools;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.permission.Permission;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 public class Vault {
     private static Economy econ;
     private static Chat chat;
     private static Permission perms;
-    private boolean implementAPI(){
+    public static boolean implementAPI(){
         if(VaultContains()){
             if(!VaultEnabled())
                 enabledVault();
@@ -24,16 +22,16 @@ public class Vault {
         }
         return false;
     }
-    public void enabledVault(){
+    public static void enabledVault(){
         PowerTools.INSTANCE.getServer().getPluginManager().enablePlugin(PowerTools.INSTANCE.getServer().getPluginManager().getPlugin("Vault"));
     }
-    public boolean VaultContains(){
+    public static boolean VaultContains(){
         return PowerTools.INSTANCE.getServer().getPluginManager().getPlugin("Vault") != null;
     }
-    public boolean VaultEnabled(){
+    public static boolean VaultEnabled(){
         return PowerTools.INSTANCE.getServer().getPluginManager().isPluginEnabled("Vault");
     }
-    private boolean setupEconomy() {
+    private static boolean setupEconomy() {
         RegisteredServiceProvider<Economy> rsp = PowerTools.INSTANCE.getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) {
             return false;
@@ -42,13 +40,13 @@ public class Vault {
         return econ != null;
     }
 
-    private boolean setupChat() {
+    private static boolean setupChat() {
         RegisteredServiceProvider<Chat> rsp = PowerTools.INSTANCE.getServer().getServicesManager().getRegistration(Chat.class);
         chat = rsp.getProvider();
         return chat != null;
     }
 
-    private boolean setupPermissions() {
+    private static boolean setupPermissions() {
         RegisteredServiceProvider<Permission> rsp = PowerTools.INSTANCE.getServer().getServicesManager().getRegistration(Permission.class);
         perms = rsp.getProvider();
         return perms != null;

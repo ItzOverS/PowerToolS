@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerChatEvent;
 
 import java.util.ArrayList;
@@ -56,7 +57,13 @@ public class ChatGames
                 case 4: ans = num1 / num2; oper = "÷"; break;
             }
             for(int i = 0; i < PowerTools.config.getInt(this.getName() + ".rewardsPerGame"); i++){
-                rewardsIndexes.add(genRand(PowerTools.config.getConfigurationSection(this.getName() + ".rewards").getKeys(false).size()));
+                int randNum = genRand(PowerTools.config.getConfigurationSection(this.getName() + ".rewards").getKeys(false).size());
+                String rewardKey = this.getName() + ".rewards." + new ArrayList<>(PowerTools.config.getConfigurationSection(this.getName() + ".rewards").getKeys(false)).get(randNum);
+                while(rewardKey.equals("Money")){
+                    randNum = genRand(PowerTools.config.getConfigurationSection(this.getName() + ".rewards").getKeys(false).size());
+                    rewardKey = this.getName() + ".rewards." + new ArrayList<>(PowerTools.config.getConfigurationSection(this.getName() + ".rewards").getKeys(false)).get(randNum);
+                }
+                rewardsIndexes.add(randNum);
             }
             String rewardsInText = "";
             for(int m: rewardsIndexes){
@@ -90,7 +97,7 @@ public class ChatGames
     }
 
     @EventHandler
-    public void playerChat(PlayerChatEvent e){
+    public void playerChat(AsyncPlayerChatEvent e){
         if(!this.isComplete) {
             try {
                 if (Integer.parseInt(e.getMessage()) == this.ANS) {
@@ -107,8 +114,9 @@ public class ChatGames
                         String mat = new ArrayList<>(PowerTools.config.getConfigurationSection(this.getName() + ".rewards").getKeys(false)).get(m);
                         if (!mat.equals("Money"))
                             e.getPlayer().getInventory().addItem(InvGen.generateItem(Material.valueOf(mat), PowerTools.config.getInt(rewardKey), mat, null));
-                        else
+                        else {
                             Vault.econ().depositPlayer(Bukkit.getOfflinePlayer(e.getPlayer().getUniqueId()), PowerTools.config.getInt(rewardKey));
+                        }
                     }
                     e.getPlayer().sendMessage(PlInfo.PREFIX + PlInfo.ADDONS.SurvivalPrefix + ChatColor.GREEN + "You recived your reward" + (this.rewards.size() > 1?"s":""));
                 }
