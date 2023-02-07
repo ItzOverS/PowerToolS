@@ -10,7 +10,7 @@ public class PlPerms {
     }
 
     public enum Perms{
-
+        Alerts("alerts"),
         KnockBackCommand("modules.knockback.command"),
         KnockBackStick("modules.knockback.stick"),
         FreezeCommand("modules.freeze.command"),
