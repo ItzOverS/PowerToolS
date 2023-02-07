@@ -1,14 +1,14 @@
 package me.overlight.powertools.PowerModules;
 
+import me.overlight.powertools.Libraries.ColorFormat;
 import me.overlight.powertools.Plugin.PlInfo;
+import me.overlight.powertools.Plugin.PlPerms;
 import me.overlight.powertools.PowerTools;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.yaml.snakeyaml.Yaml;
 
-import javax.sound.sampled.Line;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -25,6 +25,7 @@ public class ExtensionManager {
         extensions.add((PowerModule) pl);
     }
     public static void removeExtension(Plugin pl){
+        PowerTools.INSTANCE.getServer().getPluginManager().disablePlugin(pl);
         extensions.remove((PowerModule) pl);
     }
     public static void removeAllExtensions(){
@@ -43,12 +44,32 @@ public class ExtensionManager {
         return null;
     }
 
+    public static void extensionAlert(PowerModule module, String message, PowerTools.Target target){
+        String msg = PlInfo.PREFIX.substring(0, PlInfo.PREFIX.length() - 1) + ChatColor.GOLD + "[" + module.getExtensionPrefix() + ChatColor.GOLD + "]" + ChatColor.RESET + " " + ((Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)? me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(null, ColorFormat.formatColor(message)): ColorFormat.formatColor(message));
+        if(target == PowerTools.Target.CONSOLE){
+            PowerTools.INSTANCE.getServer().getConsoleSender().sendMessage(msg);
+        } else{
+            for(Player player: Bukkit.getOnlinePlayers()){
+                if(target == PowerTools.Target.STAFF){
+                    if(player.hasPermission(PlPerms.Perms.Alerts.get())){
+                        player.sendMessage(msg);
+                    }
+                } else{
+                    player.sendMessage(msg);
+                }
+            }
+        }
+    }
+
     public static boolean hookInto(String plName) throws IOException, ClassNotFoundException, NoSuchMethodException, NoSuchFieldException, IllegalAccessException {
         try {
             plName = "PowerExt_" + plName;
             Plugin pl = Bukkit.getPluginManager().getPlugin(plName);
             if (pl == null) return false;
-            if (!pl.isEnabled()) Bukkit.getPluginManager().enablePlugin(pl);
+            try {
+                if (!pl.isEnabled())
+                    Bukkit.getPluginManager().enablePlugin(pl);
+            } catch(Exception ignored){ }
             Method obj = Class.forName("me.overlight.powertools." + plName.toLowerCase().substring(9) + ".PowerExt").getMethod("getPowerModule");
             PowerModule module = (PowerModule) obj.getDeclaringClass().getField("module").get(obj);
             loadConfig(module);
