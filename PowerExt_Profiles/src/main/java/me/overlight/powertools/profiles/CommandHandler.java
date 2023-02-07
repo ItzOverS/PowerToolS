@@ -1,9 +1,9 @@
 package me.overlight.powertools.profiles;
 
-import me.overlight.powertools.APIs.NetworkChecker;
-import me.overlight.powertools.Libraries.ColorFormat;
-import me.overlight.powertools.Modules.mods.CpsMap;
-import me.overlight.powertools.Plugin.PlInfo;
+import me.overlight.powertools.spigot.APIs.NetworkChecker;
+import me.overlight.powertools.spigot.Libraries.ColorFormat;
+import me.overlight.powertools.spigot.Modules.mods.CpsMap;
+import me.overlight.powertools.spigot.Plugin.PlInfo;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;

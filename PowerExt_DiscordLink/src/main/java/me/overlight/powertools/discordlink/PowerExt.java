@@ -1,9 +1,9 @@
 package me.overlight.powertools.discordlink;
 
-import me.overlight.powertools.Libraries.PluginYaml;
-import me.overlight.powertools.Plugin.PlInfo;
-import me.overlight.powertools.PowerModules.PowerModule;
-import me.overlight.powertools.PowerTools;
+import me.overlight.powertools.spigot.Libraries.PluginYaml;
+import me.overlight.powertools.spigot.Plugin.PlInfo;
+import me.overlight.powertools.spigot.PowerModules.PowerModule;
+import me.overlight.powertools.spigot.PowerTools;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;

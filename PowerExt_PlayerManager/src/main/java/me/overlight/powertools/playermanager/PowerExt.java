@@ -1,9 +1,9 @@
 package me.overlight.powertools.playermanager;
 
-import me.overlight.powertools.PowerModules.ExtensionManager;
-import me.overlight.powertools.PowerModules.PowerModule;
-import me.overlight.powertools.PowerTools;
-import me.overlight.powertools.SQL.MySqlConnection;
+import me.overlight.powertools.spigot.PowerModules.ExtensionManager;
+import me.overlight.powertools.spigot.PowerModules.PowerModule;
+import me.overlight.powertools.spigot.PowerTools;
+import me.overlight.powertools.spigot.SQL.MySqlConnection;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 

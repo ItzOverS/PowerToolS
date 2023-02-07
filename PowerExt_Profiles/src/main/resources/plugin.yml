@@ -7,3 +7,5 @@ description: PowerToolS Extension - Spec player's profile
 commands:
   profile:
     description: Main Profile extension command
+  spy:
+    description: Spy players
