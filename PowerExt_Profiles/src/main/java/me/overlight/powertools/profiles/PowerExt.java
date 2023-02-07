@@ -34,6 +34,11 @@ public final class PowerExt
     }
 
     @Override
+    public String getExtensionPrefix() {
+        return ChatColor.GREEN + "Profiles";
+    }
+
+    @Override
     public PowerModule getPowerModule() {
         return this;
     }

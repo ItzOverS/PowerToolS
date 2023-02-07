@@ -13,6 +13,7 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Filter;
 import org.apache.logging.log4j.core.Logger;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,7 +31,6 @@ public final class PowerExt
     @Override
     public void onEnable() {
         // Plugin startup logic
-        if(ExtensionManager.getByName(getConfigName()) == null) return;
         try {
             YamlConfiguration yml = new PluginYaml("discordLinks").getYaml();
             for(String key: yml.getKeys(false)){
@@ -67,6 +67,11 @@ public final class PowerExt
     @Override
     public String getConfigName(){
         return "DiscordLink";
+    }
+
+    @Override
+    public String getExtensionPrefix() {
+        return ChatColor.RED + "Discord" + ChatColor.AQUA + "Link";
     }
 
     @Override

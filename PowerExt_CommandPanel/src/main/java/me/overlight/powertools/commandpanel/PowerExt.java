@@ -3,6 +3,7 @@ package me.overlight.powertools.commandpanel;
 import me.overlight.powertools.PowerModules.ExtensionManager;
 import me.overlight.powertools.PowerModules.PowerModule;
 import me.overlight.powertools.PowerTools;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class PowerExt
@@ -51,6 +52,11 @@ public final class PowerExt
     @Override
     public String getConfigName() {
         return "CommandPanel";
+    }
+
+    @Override
+    public String getExtensionPrefix() {
+        return ChatColor.RED + "Command" + ChatColor.AQUA + "Panels";
     }
 
     @Override
