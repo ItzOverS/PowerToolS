@@ -78,7 +78,7 @@
         <dependency>
             <groupId>me.overlight</groupId>
             <artifactId>PowerToolS</artifactId>
-            <version>1.3</version>
+            <version>1.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

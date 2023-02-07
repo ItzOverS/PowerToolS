@@ -1,6 +1,5 @@
 package me.overlight.powertools.commandpanel;
 
-import me.clip.placeholderapi.PlaceholderAPI;
 import me.overlight.powertools.Libraries.InvGen;
 import me.overlight.powertools.PowerTools;
 import org.bukkit.Bukkit;
@@ -51,15 +50,29 @@ public class CommandExecutor
     }
 
     private Inventory generatePanel(String name, Player player){
-        Inventory inv = InvGen.fillInv(
-                Bukkit.createInventory(null, PowerTools.config.getInt("CommandPanel.panels." + name + ".rows") * 9, PlaceholderAPI.setPlaceholders(player, ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("CommandPanel.panels." + name + ".title")))),
-                InvGen.generateItem(Material.valueOf(PowerTools.config.getString("CommandPanel.panels." + name + ".items.fill.material")), 1, PlaceholderAPI.setPlaceholders(player, ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("CommandPanel.panels." + name + ".items.fill.name"))), null),
-                true
-        );
-        for(String InvIndex: PowerTools.config.getConfigurationSection("CommandPanel.panels." + name + ".items").getKeys(false)){
-            if(InvIndex.equals("fill")) continue;
-            int index = Integer.parseInt(InvIndex);
-            inv.setItem(index, InvGen.generateItem(Material.valueOf(PowerTools.config.getString("panels." + name + ".panel.items." + InvIndex + ".material")), 1, PlaceholderAPI.setPlaceholders(player, ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("panels." + name + ".panel.items." + InvIndex + ".name"))), null));
+        Inventory inv = null;
+        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            inv = InvGen.fillInv(
+                    Bukkit.createInventory(null, PowerTools.config.getInt("CommandPanel.panels." + name + ".rows") * 9, me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("CommandPanel.panels." + name + ".title")))),
+                    InvGen.generateItem(Material.valueOf(PowerTools.config.getString("CommandPanel.panels." + name + ".items.fill.material")), 1, me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("CommandPanel.panels." + name + ".items.fill.name"))), null),
+                    true
+            );
+            for (String InvIndex : PowerTools.config.getConfigurationSection("CommandPanel.panels." + name + ".items").getKeys(false)) {
+                if (InvIndex.equals("fill")) continue;
+                int index = Integer.parseInt(InvIndex);
+                inv.setItem(index, InvGen.generateItem(Material.valueOf(PowerTools.config.getString("panels." + name + ".panel.items." + InvIndex + ".material")), 1, me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("panels." + name + ".panel.items." + InvIndex + ".name"))), null));
+            }
+        } else{
+            inv = InvGen.fillInv(
+                    Bukkit.createInventory(null, PowerTools.config.getInt("CommandPanel.panels." + name + ".rows") * 9, ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("CommandPanel.panels." + name + ".title"))),
+                    InvGen.generateItem(Material.valueOf(PowerTools.config.getString("CommandPanel.panels." + name + ".items.fill.material")), 1, ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("CommandPanel.panels." + name + ".items.fill.name")), null),
+                    true
+            );
+            for (String InvIndex : PowerTools.config.getConfigurationSection("CommandPanel.panels." + name + ".items").getKeys(false)) {
+                if (InvIndex.equals("fill")) continue;
+                int index = Integer.parseInt(InvIndex);
+                inv.setItem(index, InvGen.generateItem(Material.valueOf(PowerTools.config.getString("panels." + name + ".panel.items." + InvIndex + ".material")), 1, ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("panels." + name + ".panel.items." + InvIndex + ".name")), null));
+            }
         }
         return inv;
     }
