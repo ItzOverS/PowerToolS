@@ -199,17 +199,20 @@ public class PowerTools
 
     public enum Target{
         STAFF,
-        MEMBERS
+        MEMBERS,
+        CONSOLE
     }
     public static void Alert(Target targ, String msg){
+        String s = (!msg.startsWith(PlInfo.PREFIX) ? PlInfo.PREFIX : "") + msg;
+        if(targ == Target.CONSOLE){
+            PowerTools.INSTANCE.getServer().getConsoleSender().sendMessage(s);
+        }
         for(Player player: Bukkit.getOnlinePlayers()){
-            String message = (!msg.startsWith(PlInfo.PREFIX) ? PlInfo.PREFIX : "") + msg;
             if(targ == Target.STAFF) {
                 if (player.isOp())
-                    player.sendMessage(message);
+                    player.sendMessage(s);
             } else {
-                player.sendMessage(message);
-
+                player.sendMessage(s);
             }
         }
     }
