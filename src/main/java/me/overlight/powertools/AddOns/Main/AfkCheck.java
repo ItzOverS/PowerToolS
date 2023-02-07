@@ -17,16 +17,16 @@ public class AfkCheck
     }
 
     public static AFKManager afkManager = new AFKManager();
-    
+
     @EventHandler(priority = EventPriority.HIGH)
-    public void playerJoin(PlayerJoinEvent e){
-        if(this.isEnabled())
+    public void playerJoin(PlayerJoinEvent e) {
+        if (this.isEnabled())
             afkManager.playerJoined(e.getPlayer());
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void playerLeft(PlayerQuitEvent e){
-        if(this.isEnabled())
+    public void playerLeft(PlayerQuitEvent e) {
+        if (this.isEnabled())
             afkManager.playerJoined(e.getPlayer());
     }
 
@@ -36,28 +36,31 @@ public class AfkCheck
     }
 
     @EventHandler(priority = EventPriority.LOW)
-    public void playerMove(PlayerMoveEvent e){
-        if(e.getFrom().distance(e.getTo()) == 0){
-            if(PowerTools.config.getBoolean(this.getName() + ".Actions.ChangeHeadVictor"))
+    public void playerMove(PlayerMoveEvent e) {
+        if (e.getFrom().distance(e.getTo()) == 0) {
+            if (PowerTools.config.getBoolean(this.getName() + ".Actions.ChangeHeadVictor"))
                 afkManager.playerReacted(e.getPlayer());
             return;
         }
-        if(PowerTools.config.getBoolean(this.getName() + ".Actions.Move"))
+        if (PowerTools.config.getBoolean(this.getName() + ".Actions.Move"))
             afkManager.playerReacted(e.getPlayer());
     }
+
     @EventHandler(priority = EventPriority.LOW)
-    public void playerChat(AsyncPlayerChatEvent e){
-        if(PowerTools.config.getBoolean(this.getName() + ".Actions.Chat"))
+    public void playerChat(AsyncPlayerChatEvent e) {
+        if (PowerTools.config.getBoolean(this.getName() + ".Actions.Chat"))
             afkManager.playerReacted(e.getPlayer());
     }
+
     @EventHandler(priority = EventPriority.LOW)
-    public void playerExecuteComamnd(PlayerCommandPreprocessEvent e){
-        if(PowerTools.config.getBoolean(this.getName() + ".Actions.CommandExecute"))
+    public void playerExecuteComamnd(PlayerCommandPreprocessEvent e) {
+        if (PowerTools.config.getBoolean(this.getName() + ".Actions.CommandExecute"))
             afkManager.playerReacted(e.getPlayer());
     }
+
     @EventHandler(priority = EventPriority.LOW)
-    public void playerInteract(PlayerInteractEvent e){
-        if(PowerTools.config.getBoolean(this.getName() + ".Actions.Interact"))
+    public void playerInteract(PlayerInteractEvent e) {
+        if (PowerTools.config.getBoolean(this.getName() + ".Actions.Interact"))
             afkManager.playerReacted(e.getPlayer());
     }
 }

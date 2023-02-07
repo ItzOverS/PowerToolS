@@ -22,14 +22,14 @@ public class AntiRejoin
     public static HashMap<String, Long> lastDisconnect = new HashMap<>();
 
     @EventHandler
-    public void playerQuit(PlayerQuitEvent e){
+    public void playerQuit(PlayerQuitEvent e) {
         lastDisconnect.put(e.getPlayer().getName(), System.currentTimeMillis());
     }
 
     @EventHandler
-    public void playerJoin(PlayerJoinEvent e){
-        if(lastDisconnect.containsKey(e.getPlayer().getName())){
-            if(System.currentTimeMillis() - lastDisconnect.get(e.getPlayer().getName()) <= PowerTools.config.getLong(this.getName() + ".wait")){
+    public void playerJoin(PlayerJoinEvent e) {
+        if (lastDisconnect.containsKey(e.getPlayer().getName())) {
+            if (System.currentTimeMillis() - lastDisconnect.get(e.getPlayer().getName()) <= PowerTools.config.getLong(this.getName() + ".wait")) {
                 Bukkit.getScheduler().runTask(PowerTools.INSTANCE, () -> {
                     e.getPlayer().kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "Please wait before reconnect");
                 });

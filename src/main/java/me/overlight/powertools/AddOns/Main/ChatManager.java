@@ -10,14 +10,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.*;
 
-public class ChatManager 
-        extends AddOn 
+public class ChatManager
+        extends AddOn
         implements Listener {
     public ChatManager() {
         super("ChatManager", "2.0", "Manager players chat", PowerTools.config.getBoolean("ChatManager.enabled"));
@@ -29,6 +28,7 @@ public class ChatManager
 
     public static HashMap<String, Integer> SpamAmount = new HashMap<>();
     public static List<String> PlayersCommandCooldown = new ArrayList<>();
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void playerChat(AsyncPlayerChatEvent e) {
         if (this.isEnabled()) {
@@ -41,7 +41,7 @@ public class ChatManager
                         DelayMessagePlayers.remove(sender.getName());
                     }, PowerTools.config.getInt(this.getName() + ".MessageDelay.delay") * 20L);
                 } else {
-                    if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+                    if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".MessageDelay.msg"))));
                     else
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".MessageDelay.msg")));
@@ -55,18 +55,18 @@ public class ChatManager
                 } else {
                     SpamAmount.put(sender.getName(), 0);
                     LastMSG.put(sender.getName(), message);
-                    LastMSGMs.put(sender.getName(), new Infinite<Long>(4, LastMSGMs.get(sender.getName()), Arrays.asList(System.currentTimeMillis())));
+                    LastMSGMs.put(sender.getName(), new Infinite<Long>(4, LastMSGMs.get(sender.getName()), Collections.singletonList(System.currentTimeMillis())));
                 }
                 if (SpamAmount.get(sender.getName()) >= PowerTools.config.getInt(this.getName() + ".AntiSpam.maxSpam")) {
                     if (PowerTools.config.getBoolean(this.getName() + ".AntiSpam.Kick.enabled")) {
                         e.setCancelled(true);
-                        Bukkit.getScheduler().runTask(PowerTools.INSTANCE, () ->  {
-                            if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+                        Bukkit.getScheduler().runTask(PowerTools.INSTANCE, () -> {
+                            if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
                                 Bukkit.getPlayer(sender.getName()).kickPlayer(ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".AntiSpam.Kick.msg"))));
                             else
                                 Bukkit.getPlayer(sender.getName()).kickPlayer(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".AntiSpam.Kick.msg")));
                         });
-                    return;
+                        return;
                     }
                 }
             }
@@ -75,24 +75,24 @@ public class ChatManager
                 //------------------------------------>  AI 01:    Random char, splitter
                 if (PowerTools.config.getBoolean(this.getName() + ".WordBlock.Modes.Splitters") || PowerTools.config.getBoolean(this.getName() + ".WordBlock.Modes.MultiLetter")) {
                     String msg = removeSymbols(message.toLowerCase(), new String[]{",", "|", "!", "@", "#", "$", "%", "^", "&", "(", ")", "[", "]", "{", "}", "`", "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"});
-                    for(String text: msg.split(" ")){
+                    for (String text : msg.split(" ")) {
                         String tex = "";
                         int index = 0;
-                        for(char ch: text.toCharArray()){
-                            if(ch == text.charAt(index)) {
+                        for (char ch : text.toCharArray()) {
+                            if (ch == text.charAt(index)) {
                                 tex += ch;
                                 index++;
                             }
-                            if(PowerTools.config.getStringList(this.getName() + ".WordBlock.Words").contains(tex)){
+                            if (PowerTools.config.getStringList(this.getName() + ".WordBlock.Words").contains(tex)) {
                                 messageFlagged = true;
                                 break;
                             }
                         }
                     }
-                    if(!messageFlagged){
+                    if (!messageFlagged) {
                         msg = msg.replace(" ", "");
-                        for(String str: PowerTools.config.getStringList(this.getName() + ".WordBlock.Words")){
-                            if(msg.contains(str)){
+                        for (String str : PowerTools.config.getStringList(this.getName() + ".WordBlock.Words")) {
+                            if (msg.contains(str)) {
                                 messageFlagged = true;
                                 break;
                             }
@@ -119,7 +119,7 @@ public class ChatManager
                     }
                 }
                 if (messageFlagged) {
-                    if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+                    if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".WordBlock.msg"))));
                     else
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".WordBlock.msg")));
@@ -134,7 +134,7 @@ public class ChatManager
                 for (String str : words) {
                     if (Count(newMSG, str) > PowerTools.config.getLong(this.getName() + ".AntiDuplicate.maxDuplicate")) {
                         e.setCancelled(true);
-                        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+                        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".AntiDuplicate.msg"))));
                         else
                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".AntiDuplicate.msg")));
@@ -163,13 +163,13 @@ public class ChatManager
     }
 
     @EventHandler
-    public void playerCommandExecute(PlayerCommandPreprocessEvent e){
-        if(this.isEnabled()){
-            if(PowerTools.config.getBoolean("ChatManager.CommandCooldown.enabled")){
-                if(PlayersCommandCooldown.contains(e.getPlayer().getName())){
+    public void playerCommandExecute(PlayerCommandPreprocessEvent e) {
+        if (this.isEnabled()) {
+            if (PowerTools.config.getBoolean("ChatManager.CommandCooldown.enabled")) {
+                if (PlayersCommandCooldown.contains(e.getPlayer().getName())) {
                     e.setCancelled(true);
                     e.getPlayer().sendMessage(ChatColor.RED + "Please wait before send another command!");
-                } else{
+                } else {
                     e.setCancelled(false);
                     PlayersCommandCooldown.add(e.getPlayer().getName());
                     Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
@@ -181,7 +181,7 @@ public class ChatManager
     }
 
     @EventHandler
-    public void playerLeave(PlayerQuitEvent e){
+    public void playerLeave(PlayerQuitEvent e) {
         SpamAmount.remove(e.getPlayer().getName());
         LastMSG.remove(e.getPlayer().getName());
     }
@@ -221,17 +221,20 @@ public class ChatManager
         return targ;
     }
 
-    private static int getDuplicates(String message, String lastMessage){
-        if(message == null || message.equals("")) return 0;
-        if(lastMessage == null || lastMessage.equals("")) return 0;
+    private static int getDuplicates(String message, String lastMessage) {
+        if (message == null || message.equals("")) return 0;
+        if (lastMessage == null || lastMessage.equals("")) return 0;
         Set<String> Message = new HashSet<>(Arrays.asList(removeSymbols(message.toLowerCase(), new String[]{",", "|", "!", "@", "#", "$", "%", "^", "&", "(", ")", "[", "]", "{", "}", "`", "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"}).split(" ")));
         Set<String> LastMessage = new HashSet<>(Arrays.asList(removeSymbols(lastMessage.toLowerCase(), new String[]{",", "|", "!", "@", "#", "$", "%", "^", "&", "(", ")", "[", "]", "{", "}", "`", "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"}).split(" ")));
         List<String> duplicatesList = new ArrayList<>();
         int duplicates = 0;
-        for(String msg: Message){
-            for(String lastMsg: LastMessage){
-                if(duplicatesList.contains(msg + " - " + lastMsg)) continue;
-                if(lastMsg.equals(msg)) { duplicates++; duplicatesList.add(msg + " - " + lastMessage); }
+        for (String msg : Message) {
+            for (String lastMsg : LastMessage) {
+                if (duplicatesList.contains(msg + " - " + lastMsg)) continue;
+                if (lastMsg.equals(msg)) {
+                    duplicates++;
+                    duplicatesList.add(msg + " - " + lastMessage);
+                }
             }
         }
         return duplicates;

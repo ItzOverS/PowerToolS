@@ -14,7 +14,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 public class NoRespawn
         extends AddOn
@@ -24,11 +27,11 @@ public class NoRespawn
     }
 
     @EventHandler
-    public void playerKillByPlayer(EntityDamageByEntityEvent e){
-        if(!(e.getEntity() instanceof Player && e.getDamager() instanceof Player))
+    public void playerKillByPlayer(EntityDamageByEntityEvent e) {
+        if (!(e.getEntity() instanceof Player && e.getDamager() instanceof Player))
             return;
 
-        if(((Player) e.getEntity()).getHealth() - e.getDamage() <= 0){
+        if (((Player) e.getEntity()).getHealth() - e.getDamage() <= 0) {
             ItemStack stack = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
             SkullMeta meta = (SkullMeta) stack.getItemMeta();
             meta.setOwner(e.getEntity().getName());
@@ -40,10 +43,10 @@ public class NoRespawn
     }
 
     @EventHandler
-    public void playerPlaceBlock(BlockPlaceEvent e){
-        if(e.getBlockPlaced().getType() == Material.SKULL){
+    public void playerPlaceBlock(BlockPlaceEvent e) {
+        if (e.getBlockPlaced().getType() == Material.SKULL) {
             Skull skull = (Skull) e.getBlockPlaced().getState();
-             if(checkPlayerHead(skull) != null){
+            if (checkPlayerHead(skull) != null) {
                 try {
                     e.getPlayer().sendMessage("TRUE");
                     Player player = Bukkit.getPlayer(checkPlayerHead(skull));
@@ -55,7 +58,7 @@ public class NoRespawn
                     player.setGameMode(GameMode.SURVIVAL);
                     player.sendMessage(PlInfo.PREFIX + PlInfo.ADDONS.SurvivalPrefix + ChatColor.RED + "You has respawned by " + e.getPlayer().getName());
                     e.setCancelled(false);
-                } catch(Exception ex){
+                } catch (Exception ex) {
                     e.getPlayer().sendMessage(PlInfo.PREFIX + PlInfo.ADDONS.SurvivalPrefix + ChatColor.RED + "Not online to respawn");
                     e.setCancelled(true);
                 }
@@ -63,24 +66,24 @@ public class NoRespawn
         }
     }
 
-    private boolean searchDown(List<String> list, String string){
-        for(String item: list){
-            if(Objects.equals(item, string))
+    private boolean searchDown(List<String> list, String string) {
+        for (String item : list) {
+            if (Objects.equals(item, string))
                 return true;
         }
         return false;
     }
 
-    public String checkPlayerHead(Skull skull){
-        for(String str: SetToList(YamlConfiguration.loadConfiguration(new File("plugins\\PowerTools\\JoinedPlayers.yml")).getKeys(true))){
-            if(skull.getOwner().equals(str)){
+    public String checkPlayerHead(Skull skull) {
+        for (String str : SetToList(YamlConfiguration.loadConfiguration(new File("plugins\\PowerTools\\JoinedPlayers.yml")).getKeys(true))) {
+            if (skull.getOwner().equals(str)) {
                 return str;
             }
         }
         return null;
     }
 
-    private List<String> SetToList(Set<String> set){
+    private List<String> SetToList(Set<String> set) {
         return new ArrayList<>(set);
     }
 }

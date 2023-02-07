@@ -12,7 +12,6 @@ import me.overlight.powertools.AddOns.Hub.KnockbackPlate;
 import me.overlight.powertools.AddOns.Hub.VoidTP;
 import me.overlight.powertools.AddOns.Main.*;
 import me.overlight.powertools.AddOns.Main.Captcha.Captcha;
-import me.overlight.powertools.AddOns.Main.NetworkChecker;
 import me.overlight.powertools.AddOns.Main.PvpRegisterer.PvpRegisterer;
 import me.overlight.powertools.AddOns.Render.ScoreBoards;
 import me.overlight.powertools.AddOns.Render.TabList;
@@ -31,17 +30,14 @@ import me.overlight.powertools.Libraries.WebHooks.DiscordAPI;
 import me.overlight.powertools.Libraries.WebHooks.DiscordWebhook;
 import me.overlight.powertools.Modules.ModuleManager;
 import me.overlight.powertools.Modules.mods.*;
-import me.overlight.powertools.Modules.mods.Freeze;
 import me.overlight.powertools.Plugin.PlInfo;
 import me.overlight.powertools.PowerModules.ExtensionManager;
 import me.overlight.powertools.PowerModules.PluginEnabledEvent;
-import me.overlight.powertools.PowerModules.PowerModule;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.parser.ParseException;
@@ -73,12 +69,12 @@ public class PowerTools
         try {
             INSTANCE = this;
             saveDefaultConfig();
-            if(!new File("plugins\\PowerToolS\\types.yml").exists())
+            if (!new File("plugins\\PowerToolS\\types.yml").exists())
                 saveResource("types.yml", false);
 
             PowerTools.config = getConfig();
 
-            if(Vault.implementAPI()){
+            if (Vault.implementAPI()) {
                 getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.GREEN + "simplify connected to vault options");
             }
 
@@ -128,10 +124,30 @@ public class PowerTools
 
             getServer().getPluginManager().registerEvents(new PluginEnabledEvent(), this);
 
-            try { ExtensionManager.hookInto("DiscordLink"); } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | IllegalAccessException e) { e.printStackTrace(); }
-            try { ExtensionManager.hookInto("CommandPanel"); } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | IllegalAccessException e) { e.printStackTrace(); }
-            try { ExtensionManager.hookInto("Profiles"); } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | IllegalAccessException e) { e.printStackTrace(); }
-            try { ExtensionManager.hookInto("PlayerManager"); } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | IllegalAccessException e) { e.printStackTrace(); }
+            try {
+                ExtensionManager.hookInto("DiscordLink");
+            } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException |
+                     IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            try {
+                ExtensionManager.hookInto("CommandPanel");
+            } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException |
+                     IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            try {
+                ExtensionManager.hookInto("Profiles");
+            } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException |
+                     IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            try {
+                ExtensionManager.hookInto("PlayerManager");
+            } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException |
+                     IllegalAccessException e) {
+                e.printStackTrace();
+            }
 
             try {
                 getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_goldChecking for updates"));
@@ -150,7 +166,7 @@ public class PowerTools
             }
 
             if (!new PlaceHolders().isRegistered()) {
-                if(new PlaceHolders().register())
+                if (new PlaceHolders().register())
                     getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_greenSuccess registered placeholders"));
                 else
                     getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_redFailed to register placeholders"));
@@ -167,7 +183,7 @@ public class PowerTools
             getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("@color_dark_green/_/    @color_aqua/_/ /___/  @color_dark_gray  by ItzOver"));
             getServer().getConsoleSender().sendMessage("");
             getServer().getConsoleSender().sendMessage("");
-        } catch(Exception e){
+        } catch (Exception e) {
             getServer().getPluginManager().disablePlugin(this);
         }
     }
@@ -176,14 +192,14 @@ public class PowerTools
     public void onDisable() {
         PacketEvents.get().terminate();
 
-        if(PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12)){
+        if (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12)) {
             getServer().getMessenger().unregisterIncomingPluginChannel(this, "wdl:init");
             getServer().getMessenger().unregisterOutgoingPluginChannel(this, "wdl:control");
         } else {
             getServer().getMessenger().unregisterIncomingPluginChannel(this, "WDL|INIT");
             getServer().getMessenger().unregisterOutgoingPluginChannel(this, "WDL|CONTROL");
         }
-        getServer().getMessenger().unregisterIncomingPluginChannel(this, (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12))?"mc:brand":"MC|BRAND");
+        getServer().getMessenger().unregisterIncomingPluginChannel(this, (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12)) ? "mc:brand" : "MC|BRAND");
 
         AddOnManager.unRegisterAddOn();
 
@@ -198,18 +214,19 @@ public class PowerTools
         getServer().getConsoleSender().sendMessage("");
     }
 
-    public enum Target{
+    public enum Target {
         STAFF,
         MEMBERS,
         CONSOLE
     }
-    public static void Alert(Target targ, String msg){
+
+    public static void Alert(Target targ, String msg) {
         String s = (!msg.startsWith(PlInfo.PREFIX) ? PlInfo.PREFIX : "") + msg;
-        if(targ == Target.CONSOLE){
+        if (targ == Target.CONSOLE) {
             PowerTools.INSTANCE.getServer().getConsoleSender().sendMessage(s);
         }
-        for(Player player: Bukkit.getOnlinePlayers()){
-            if(targ == Target.STAFF) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (targ == Target.STAFF) {
                 if (player.isOp())
                     player.sendMessage(s);
             } else {
@@ -218,7 +235,7 @@ public class PowerTools
         }
     }
 
-    public enum PluginAddOns{
+    public enum PluginAddOns {
         Bedwars("  AntiTeamup:\n" +
                 "    enabled: false\n" +
                 "    distance: 5\n" +
@@ -298,14 +315,14 @@ public class PowerTools
         String config;
 
 
-        PluginAddOns(String config){
+        PluginAddOns(String config) {
             this.config = config;
         }
 
         void insert() throws FileNotFoundException, UnsupportedEncodingException {
             PrintWriter file = new PrintWriter("plugins\\PowerToolS\\config.yml", "UTF-8");
             file.println();
-            for(int line = 0; line < config.split("\n").length; line++)
+            for (int line = 0; line < config.split("\n").length; line++)
                 file.println(config.split("\n")[line]);
             file.close();
         }
@@ -322,7 +339,7 @@ public class PowerTools
         List<String> getConfigContent() throws FileNotFoundException {
             List<String> content = new ArrayList<>();
             Scanner sc = new Scanner(new File("plugins\\PowerToolS\\config.yml"));
-            while(sc.hasNextLine()) content.add(sc.nextLine());
+            while (sc.hasNextLine()) content.add(sc.nextLine());
             return content;
         }
     }

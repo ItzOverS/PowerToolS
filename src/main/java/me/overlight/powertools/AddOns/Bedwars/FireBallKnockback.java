@@ -20,13 +20,14 @@ public class FireBallKnockback
     public FireBallKnockback() {
         super("BedwarsAddOns.FireballKnockback", "1.0", "control Fireball's knockback in bedwars", PowerTools.config.getBoolean("BedwarsAddOns.FireballKnockback.enabled"));
     }
+
     HashMap<Player, ItemStack> handItems = new HashMap<>();
 
     @EventHandler
-    public void explosionEvent(EntityDamageEvent e){
-        if(!(e.getEntity() instanceof Player)) return;
-        if(e.getCause() != EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) return;
-        if(handItems.get((Player)e.getEntity()).getType() == Material.FIREBALL){
+    public void explosionEvent(EntityDamageEvent e) {
+        if (!(e.getEntity() instanceof Player)) return;
+        if (e.getCause() != EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) return;
+        if (handItems.get((Player) e.getEntity()).getType() == Material.FIREBALL) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
                 e.getEntity().setVelocity(e.getEntity().getVelocity().multiply(PowerTools.config.getDouble(this.getName() + ".multiply")));
             }, 1);
@@ -34,8 +35,8 @@ public class FireBallKnockback
     }
 
     @EventHandler
-    public void playerInteract(PlayerInteractEvent e){
-        if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
+    public void playerInteract(PlayerInteractEvent e) {
+        if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
             handItems.put(e.getPlayer(), e.getItem());
     }
 }

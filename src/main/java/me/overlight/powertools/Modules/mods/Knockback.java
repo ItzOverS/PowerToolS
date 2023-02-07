@@ -1,6 +1,5 @@
 package me.overlight.powertools.Modules.mods;
 
-import me.overlight.powertools.Libraries.ColorFormat;
 import me.overlight.powertools.Modules.Module;
 import me.overlight.powertools.Plugin.PlMessages;
 import me.overlight.powertools.Plugin.PlPerms;
@@ -13,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
 
 public class Knockback
@@ -23,18 +21,18 @@ public class Knockback
         super("KnockBack", "Knockback a player to detect velocity", "PowerToolS Knockback {player}", new String[]{"kb", "knockback"});
     }
 
-    public static void testKnockback(Player executor, Player player){
-        if(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY() + 2, player.getLocation().getZ()).getBlock() != null
-                && new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY() + 2, player.getLocation().getZ()).getBlock().getType() != Material.AIR){
+    public static void testKnockback(Player executor, Player player) {
+        if (new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY() + 2, player.getLocation().getZ()).getBlock() != null
+                && new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY() + 2, player.getLocation().getZ()).getBlock().getType() != Material.AIR) {
             executor.sendMessage(PlMessages.KnockBack_PlayerInBlock.get().replace("%PLAYER_NAME%", player.getName()));
             return;
         }
         Location loc = player.getLocation();
         player.setVelocity(new Vector(2, 3, 2));
         Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
-            if(player.getLocation().distance(loc) < 8){
+            if (player.getLocation().distance(loc) < 8) {
                 executor.sendMessage(PlMessages.KnockBack_FailedToApply.get().replace("%PLAYER_NAME%", player.getName()));
-            } else{
+            } else {
                 executor.sendMessage(PlMessages.KnockBack_SimplifyApplied.get().replace("%PLAYER_NAME%", player.getName()));
             }
             player.teleport(loc);
@@ -42,12 +40,12 @@ public class Knockback
     }
 
     @EventHandler
-    public void playerInteractEvent(PlayerInteractAtEntityEvent e){
-        if(!(e.getRightClicked() instanceof Player)) return;
-        if(e.getPlayer().getItemInHand() != PlSticks.KnockBackStick) return;
-        if(PlPerms.hasPerm(e.getPlayer(), PlPerms.Perms.KnockBackStick.get())){
-            testKnockback(e.getPlayer(), (Player)e.getRightClicked());
-        } else{
+    public void playerInteractEvent(PlayerInteractAtEntityEvent e) {
+        if (!(e.getRightClicked() instanceof Player)) return;
+        if (e.getPlayer().getItemInHand() != PlSticks.KnockBackStick) return;
+        if (PlPerms.hasPerm(e.getPlayer(), PlPerms.Perms.KnockBackStick.get())) {
+            testKnockback(e.getPlayer(), (Player) e.getRightClicked());
+        } else {
             e.getPlayer().sendMessage(PlMessages.NoPermission.get());
         }
     }

@@ -7,9 +7,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Module {
-    private String name, description, usage;
+    private final String name;
+    private final String description;
+    private final String usage;
     public int startDelay, delay;
-    private List<String> aliases;
+    private final List<String> aliases;
     public PowerTools INSTANCE;
 
     public Module(String name, String description, String usage, String[] aliases) {
@@ -19,6 +21,7 @@ public class Module {
         this.aliases = new ArrayList<>(Arrays.asList(aliases));
         this.INSTANCE = PowerTools.INSTANCE;
     }
+
     public Module(String name, String description, String usage, String[] aliases, int start, int delay) {
         this.name = name;
         this.description = description;
@@ -31,12 +34,15 @@ public class Module {
     public String name() {
         return name;
     }
+
     public String description() {
         return description;
     }
+
     public String usage() {
         return usage;
     }
+
     public List<String> aliases() {
         return aliases;
     }

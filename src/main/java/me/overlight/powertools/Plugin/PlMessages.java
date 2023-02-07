@@ -2,7 +2,6 @@ package me.overlight.powertools.Plugin;
 
 import me.overlight.powertools.Libraries.ColorFormat;
 import me.overlight.powertools.Libraries.RepItem;
-import org.bukkit.ChatColor;
 
 public enum PlMessages {
 
@@ -44,12 +43,14 @@ public enum PlMessages {
 
     ;
     private final String desc;
-    PlMessages(String desc){
+
+    PlMessages(String desc) {
         this.desc = desc;
     }
-    public String get(RepItem ... items){
+
+    public String get(RepItem... items) {
         String item = ColorFormat.formatColor(this.desc);
-        for(RepItem i : items) item = item.replace(i.key(), i.value());
+        for (RepItem i : items) item = item.replace(i.key(), i.value());
         return PlInfo.PREFIX + item;
     }
 }

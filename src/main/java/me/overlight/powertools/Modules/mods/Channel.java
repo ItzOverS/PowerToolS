@@ -17,28 +17,28 @@ import java.util.Objects;
 
 public class Channel
         extends Module
-        implements Listener{
-    
-    public static HashMap<String, String> ChatChannel = new HashMap<>(); 
+        implements Listener {
+
+    public static HashMap<String, String> ChatChannel = new HashMap<>();
     public static HashMap<String, List<String>> Channels = new HashMap<>();
 
     public Channel() {
-        super("Channel", "Manage players chat channels", "powertools channel {channelName}", new String[] {"channel"});
+        super("Channel", "Manage players chat channels", "powertools channel {channelName}", new String[]{"channel"});
     }
 
     @EventHandler
-    public void playerJoin(PlayerJoinEvent e){
+    public void playerJoin(PlayerJoinEvent e) {
         ChatChannel.put(e.getPlayer().getName(), "ALL");
     }
 
     @EventHandler
-    public void playerLeft(PlayerQuitEvent e){
+    public void playerLeft(PlayerQuitEvent e) {
         ChatChannel.remove(e.getPlayer().getName());
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void playerChat(AsyncPlayerChatEvent e){
-        if(Freeze.frozenPlayers.contains(e.getPlayer())){
+    public void playerChat(AsyncPlayerChatEvent e) {
+        if (Freeze.frozenPlayers.contains(e.getPlayer())) {
             if (!Objects.equals(ChatChannel.get(e.getPlayer().getName()), "ALL")) {
                 e.setCancelled(true);
                 for (Player player : Bukkit.getOnlinePlayers()) {

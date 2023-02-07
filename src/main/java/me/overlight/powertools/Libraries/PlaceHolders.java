@@ -3,9 +3,7 @@ package me.overlight.powertools.Libraries;
 import io.github.retrooper.packetevents.PacketEvents;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.overlight.powertools.AddOns.Main.VersionCheck;
-import me.overlight.powertools.Plugin.PlInfo;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 public class PlaceHolders
@@ -37,7 +35,7 @@ public class PlaceHolders
 
     @Override
     public String onPlaceholderRequest(Player p, String params) {
-        if(p == null) return "";
+        if (p == null) return "";
         switch (params.toLowerCase()) {
             case "cl-version":
                 return PacketEvents.get().getPlayerUtils().getClientVersion(p).toString().replace("v_", "").replace("_", ".");

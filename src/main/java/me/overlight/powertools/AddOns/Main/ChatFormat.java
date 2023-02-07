@@ -16,8 +16,8 @@ public class ChatFormat
     }
 
     @EventHandler
-    public void playerSendChat(AsyncPlayerChatEvent e){
-        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+    public void playerSendChat(AsyncPlayerChatEvent e) {
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
             e.setFormat(ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString("ChatFormat.format"))));
         else
             e.setFormat(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("ChatFormat.format")));

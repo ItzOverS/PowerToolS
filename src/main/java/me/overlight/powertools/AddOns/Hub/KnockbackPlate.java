@@ -18,9 +18,10 @@ public class KnockbackPlate
         extends AddOn
         implements Listener {
     private final List<VelcPlate> plates = new ArrayList<>();
+
     public KnockbackPlate() {
         super("HubAddOns.KnockbackPlates", "1.0", "Just create some knockback plates", PowerTools.config.getBoolean("HubAddOns.KnockbackPlates.enabled"));
-        for(String key: PowerTools.config.getConfigurationSection(this.getName() + ".locations").getKeys(false)){
+        for (String key : PowerTools.config.getConfigurationSection(this.getName() + ".locations").getKeys(false)) {
             plates.add(
                     new VelcPlate(
                             new Location(Bukkit.getWorld(PowerTools.config.getString(this.getName() + ".locations." + key + ".world")), PowerTools.config.getIntegerList(this.getName() + ".locations." + key + ".location").get(0), 0, PowerTools.config.getIntegerList(this.getName() + ".locations." + key + ".location").get(1)),
@@ -34,10 +35,10 @@ public class KnockbackPlate
     }
 
     @EventHandler
-    public void playerMove(PlayerMoveEvent e){
-        for(VelcPlate plate: plates){
-            if(opLoc(e.getPlayer().getLocation(), plate.getLoc())){
-                if(plate.getMode() ==  VelcPlate.Mode.Force)
+    public void playerMove(PlayerMoveEvent e) {
+        for (VelcPlate plate : plates) {
+            if (opLoc(e.getPlayer().getLocation(), plate.getLoc())) {
+                if (plate.getMode() == VelcPlate.Mode.Force)
                     e.getPlayer().setVelocity(plate.getKnockback());
                 else
                     e.getPlayer().setVelocity(new Vector(
@@ -49,9 +50,9 @@ public class KnockbackPlate
         }
     }
 
-    private boolean opLoc (Location loc, Location targ){
+    private boolean opLoc(Location loc, Location targ) {
         return
                 loc.getBlockX() == targ.getBlockX() &&
-                loc.getBlockZ() == targ.getBlockZ();
+                        loc.getBlockZ() == targ.getBlockZ();
     }
 }

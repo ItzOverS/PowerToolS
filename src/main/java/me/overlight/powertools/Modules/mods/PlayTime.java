@@ -14,44 +14,45 @@ import java.util.HashMap;
 
 public class PlayTime
         extends Module
-        implements Listener, Runnable{
+        implements Listener, Runnable {
     public PlayTime() {
-        super("PlayTime", "Manage players chat channels", "/powertools playtime {username}", new String[] {"playtime", "pt"}, 0, 500);
+        super("PlayTime", "Manage players chat channels", "/powertools playtime {username}", new String[]{"playtime", "pt"}, 0, 500);
     }
-    
+
     public static HashMap<String, Integer> PlayTimeTaskID = new HashMap<>();
     public static HashMap<String, Timer> PlayTime = new HashMap<>();
 
     @EventHandler
-    public void playerJoin(PlayerJoinEvent e){
+    public void playerJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
         PlayTimeTaskID.put(player.getName(), Bukkit.getScheduler().scheduleSyncRepeatingTask(PowerTools.INSTANCE, () -> {
-            if(PlayTime.containsKey(player.getName())){
+            if (PlayTime.containsKey(player.getName())) {
                 Timer playTime = PlayTime.get(player.getName());
                 playTime.add(0, 0, 1);
                 PlayTime.put(player.getName(), playTime);
-            } else{
+            } else {
                 PlayTime.put(player.getName(), new Timer(0, 0, 1));
             }
         }, 20, 20));
     }
 
     @EventHandler
-    public void playerLeft(PlayerQuitEvent e){
+    public void playerLeft(PlayerQuitEvent e) {
         try {
             Bukkit.getScheduler().cancelTask(PlayTimeTaskID.get(e.getPlayer().getName()));
             PlayTimeTaskID.remove(e.getPlayer().getName());
-        } catch(Exception ignored) { }
+        } catch (Exception ignored) {
+        }
     }
 
     @Override
-    public void run(){
-        if(System.currentTimeMillis() > 0 && System.currentTimeMillis() < 10000){
+    public void run() {
+        if (System.currentTimeMillis() > 0 && System.currentTimeMillis() < 10000) {
             ResetPlayersPlayTime();
         }
     }
 
-    public void ResetPlayersPlayTime(){
+    public void ResetPlayersPlayTime() {
         PlayTime.clear();
     }
 }

@@ -13,15 +13,27 @@ public enum PlCommands {
 
     ;
     final String name, hover, click, perm;
-    PlCommands(String name, String hover, String click, String permission){
+
+    PlCommands(String name, String hover, String click, String permission) {
         this.name = name;
         this.hover = hover;
         this.click = click;
         this.perm = permission;
     }
 
-    public String getName(){ return this.name; }
-    public String getDesc(){ return this.hover; }
-    public String getUsage(){ return "/pts " + this.click; }
-    public String getPermission(){ return this.perm; }
+    public String getName() {
+        return this.name;
+    }
+
+    public String getDesc() {
+        return this.hover;
+    }
+
+    public String getUsage() {
+        return "/pts " + this.click;
+    }
+
+    public String getPermission() {
+        return this.perm;
+    }
 }

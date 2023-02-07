@@ -131,15 +131,16 @@ public class AFKManager {
             }
         }
     }
-    public static void kick(String name){
+
+    public static void kick(String name) {
         Bukkit.getScheduler().runTaskAsynchronously(PowerTools.INSTANCE, new Runnable() {
             public void run() {
-                if(Bukkit.getPlayer(name) != null) {
-                    if(Bukkit.getPlayer(name).isOnline()) {
+                if (Bukkit.getPlayer(name) != null) {
+                    if (Bukkit.getPlayer(name).isOnline()) {
                         Alert(PowerTools.Target.STAFF, ChatColor.GOLD + name + ChatColor.RED + " has kicked for AFKing");
                         AfkCheck.afkManager.playerLeft(Bukkit.getPlayer(name));
                         Bukkit.getPlayer(name).kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "AFK");
-                        if(PowerTools.config.getBoolean("afkCheck.alert-on-discord")){
+                        if (PowerTools.config.getBoolean("afkCheck.alert-on-discord")) {
                             DiscordAPI.sendEmbedOnWebhook(name + " kicked - AFK", name + " has kicked for **afking**...");
                         }
                     }

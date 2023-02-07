@@ -1,7 +1,6 @@
 package me.overlight.powertools.profiles;
 
 import me.overlight.powertools.APIs.NetworkChecker;
-import me.overlight.powertools.AddOns.Main.CpsCheck;
 import me.overlight.powertools.Libraries.ColorFormat;
 import me.overlight.powertools.Modules.mods.CpsMap;
 import me.overlight.powertools.Plugin.PlInfo;
@@ -19,8 +18,8 @@ public class CommandHandler
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         // -> /profile {player}
-        if(args.length != 1) return false;
-        if(Bukkit.getPlayer(args[0]) == null) return false;
+        if (args.length != 1) return false;
+        if (Bukkit.getPlayer(args[0]) == null) return false;
         Player player = Bukkit.getPlayer(args[0]);
         String[] messages = {
                 PlInfo.INV_PREFIX + "@color_goldName@color_gray: @color_red%USER_NAME%",
@@ -41,23 +40,23 @@ public class CommandHandler
                 "  - @color_redIPv4@color_gray: @color_red%USER_IP% \n" +
                 "  - @color_redLocation@color_gray: @color_red%USER_COUNTRY% - %USER_CITY% \n";
 
-        for(String message: messages){
-            TextComponent compo = new TextComponent(replaceArgs((Player)sender, ColorFormat.formatColor(message)));
-            compo.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ColorFormat.formatColor(replaceArgs((Player)sender, hover))).create()));
+        for (String message : messages) {
+            TextComponent compo = new TextComponent(replaceArgs((Player) sender, ColorFormat.formatColor(message)));
+            compo.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ColorFormat.formatColor(replaceArgs((Player) sender, hover))).create()));
             player.spigot().sendMessage(compo);
         }
         return true;
     }
 
-    public String replaceArgs(Player player, String str){
+    public String replaceArgs(Player player, String str) {
         PlayerProfile pl = ProfileManager.getProfile(player);
         return str.replace("%USER_NAME%", pl.name())
                 .replace("%USER_DISPLAY_NAME%", pl.displayName())
                 .replace("%USER_UUID%", pl.uniqueID().toString())
                 .replace("%USER_MAX_CPS%", CpsMap.MaxLMB.getOrDefault(player.getName(), 0) + "@color_gray | @color_red" + CpsMap.MaxRMB.getOrDefault(player.getName(), 0))
                 .replace("%USER_CURRENT_CPS%", CpsMap.LMB.getOrDefault(player.getName(), 0) + "@color_gray | @color_red" + CpsMap.RMB.getOrDefault(player.getName(), 0))
-                .replace("%USER_IP%",  NetworkChecker.getPlayerIPv4(player) == ""? "N/A": NetworkChecker.getPlayerIPv4(player))
-                .replace("%USER_CITY%", NetworkChecker.getPlayerCity(player) == null? "N/A": NetworkChecker.getPlayerCity(player))
-                .replace("%USER_COUNTRY%", NetworkChecker.getPlayerCountry(player) == null? "N/A": NetworkChecker.getPlayerCountry(player));
+                .replace("%USER_IP%", NetworkChecker.getPlayerIPv4(player) == "" ? "N/A" : NetworkChecker.getPlayerIPv4(player))
+                .replace("%USER_CITY%", NetworkChecker.getPlayerCity(player) == null ? "N/A" : NetworkChecker.getPlayerCity(player))
+                .replace("%USER_COUNTRY%", NetworkChecker.getPlayerCountry(player) == null ? "N/A" : NetworkChecker.getPlayerCountry(player));
     }
 }

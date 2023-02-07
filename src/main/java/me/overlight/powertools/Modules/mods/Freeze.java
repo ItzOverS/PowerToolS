@@ -4,7 +4,6 @@ import me.overlight.powertools.Modules.Module;
 import me.overlight.powertools.Plugin.PlMessages;
 import me.overlight.powertools.Plugin.PlPerms;
 import me.overlight.powertools.Plugin.PlSticks;
-import me.overlight.powertools.PowerTools;
 import net.md_5.bungee.api.chat.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,16 +24,17 @@ public class Freeze
     public static List<String> frozenPlayers = new ArrayList<>();
     public static HashMap<String, Location> frozenLocation = new HashMap<>();
     public static HashMap<String, String> playerFrozenBy = new HashMap<>();
+
     public Freeze() {
-        super("Freeze", "Freeze player for ScreenShots", "PowerTools Freeze {player}", new String[] {"fr", "freeze"});
+        super("Freeze", "Freeze player for ScreenShots", "PowerTools Freeze {player}", new String[]{"fr", "freeze"});
     }
 
-    public static void freezePlayer(Player executor, Player player){
-        if(frozenPlayers.contains(player.getName())){
+    public static void freezePlayer(Player executor, Player player) {
+        if (frozenPlayers.contains(player.getName())) {
             executor.sendMessage(PlMessages.Freeze_TargetIsNoLongerFrozen.get().replace("%PLAYER_NAME%", player.getName()));
             playerFrozenBy.remove(player.getName());
             frozenPlayers.remove(player.getName());
-        } else{
+        } else {
             executor.sendMessage(PlMessages.Freeze_TargetIsNowFrozen.get().replace("%PLAYER_NAME%", player.getName()));
             playerFrozenBy.put(player.getName(), executor.getName());
             frozenPlayers.add(player.getName());
@@ -43,27 +43,27 @@ public class Freeze
     }
 
     @EventHandler
-    public void playerMoveEvent(PlayerMoveEvent e){
-        if(frozenPlayers.contains(e.getPlayer().getName())){
+    public void playerMoveEvent(PlayerMoveEvent e) {
+        if (frozenPlayers.contains(e.getPlayer().getName())) {
             e.getPlayer().teleport(frozenLocation.get(e.getPlayer().getName()));
         }
     }
 
     @EventHandler
-    public void playerInteractEvent(PlayerInteractAtEntityEvent e){
-        if(frozenPlayers.contains(e.getPlayer().getName())) e.setCancelled(true);
-        if(!(e.getRightClicked() instanceof Player)) return;
-        if(e.getPlayer().getItemInHand() != PlSticks.FreezeStick) return;
-        if(PlPerms.hasPerm(e.getPlayer(), PlPerms.Perms.FreezeStick.get())){
-            freezePlayer(e.getPlayer(), (Player)e.getRightClicked());
-        } else{
+    public void playerInteractEvent(PlayerInteractAtEntityEvent e) {
+        if (frozenPlayers.contains(e.getPlayer().getName())) e.setCancelled(true);
+        if (!(e.getRightClicked() instanceof Player)) return;
+        if (e.getPlayer().getItemInHand() != PlSticks.FreezeStick) return;
+        if (PlPerms.hasPerm(e.getPlayer(), PlPerms.Perms.FreezeStick.get())) {
+            freezePlayer(e.getPlayer(), (Player) e.getRightClicked());
+        } else {
             e.getPlayer().sendMessage(PlMessages.NoPermission.get());
         }
     }
 
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void playerChat(AsyncPlayerChatEvent e){
+    public void playerChat(AsyncPlayerChatEvent e) {
         if (frozenPlayers.contains(e.getPlayer().getName())) {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if (player.hasPermission("powertools.modules.freeze.chat")) {
@@ -76,11 +76,11 @@ public class Freeze
     }
 
     @EventHandler
-    public void playerLeft(PlayerQuitEvent e){
-        if(frozenPlayers.contains(e.getPlayer().getName())){
+    public void playerLeft(PlayerQuitEvent e) {
+        if (frozenPlayers.contains(e.getPlayer().getName())) {
             Player player = Bukkit.getPlayer(playerFrozenBy.get(e.getPlayer().getName()));
-            if(player == null) return;
-            if(!player.isOnline()) return;
+            if (player == null) return;
+            if (!player.isOnline()) return;
 
             String[] RanksSorted = {"Ignore", "Ban"};
             TextComponent[] Votes = new TextComponent[RanksSorted.length];
@@ -98,11 +98,11 @@ public class Freeze
             Votes[0].setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, ""));
             Votes[1].setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ban " + e.getPlayer().getName() + " 3d Refuse to SS"));
             player.sendMessage(ChatColor.RED + "Select an action");
-            BaseComponent[] base = new BaseComponent[RanksSorted.length*2];
+            BaseComponent[] base = new BaseComponent[RanksSorted.length * 2];
             int index = 0;
-            for(int i = 0; i < RanksSorted.length*2; i+=2){
+            for (int i = 0; i < RanksSorted.length * 2; i += 2) {
                 base[i] = Space;
-                base[i+1] = Votes[index];
+                base[i + 1] = Votes[index];
                 index++;
             }
             player.spigot().sendMessage(base);
@@ -110,7 +110,7 @@ public class Freeze
     }
 
     @EventHandler
-    public void playerInteract(PlayerInteractEvent e){
-        if(frozenPlayers.contains(e.getPlayer().getName())) e.setCancelled(true);
+    public void playerInteract(PlayerInteractEvent e) {
+        if (frozenPlayers.contains(e.getPlayer().getName())) e.setCancelled(true);
     }
 }

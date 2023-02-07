@@ -21,15 +21,15 @@ public class Rotate
         super("Rotate", "Rotate player to detect NoRot hack", "PowerToolS Rotate {player}", new String[]{"rotate", "rot"});
     }
 
-    public static void testRotate(Player executor, Player player){
+    public static void testRotate(Player executor, Player player) {
         Random rand = new Random();
         int yaw = rand.nextInt(360),
                 pitch = rand.nextInt(180) - 90;
         player.teleport(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), yaw, pitch));
         Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
-            if(player.getLocation().getYaw() == yaw && player.getLocation().getPitch() == pitch) {
+            if (player.getLocation().getYaw() == yaw && player.getLocation().getPitch() == pitch) {
                 executor.sendMessage(PlMessages.Rotate_SimplifyRotated.get().replace("%PLAYER_NAME%", player.getName()));
-            } else{
+            } else {
                 executor.sendMessage(PlMessages.Rotate_FailedToRotate.get().replace("%PLAYER_NAME%", player.getName()));
             }
         }, 5);
@@ -37,12 +37,12 @@ public class Rotate
 
 
     @EventHandler
-    public void playerInteractEvent(PlayerInteractAtEntityEvent e){
-        if(!(e.getRightClicked() instanceof Player)) return;
-        if(e.getPlayer().getItemInHand() != PlSticks.RotateStick) return;
-        if(PlPerms.hasPerm(e.getPlayer(), PlPerms.Perms.RotateStick.get())){
-            testRotate(e.getPlayer(), (Player)e.getRightClicked());
-        } else{
+    public void playerInteractEvent(PlayerInteractAtEntityEvent e) {
+        if (!(e.getRightClicked() instanceof Player)) return;
+        if (e.getPlayer().getItemInHand() != PlSticks.RotateStick) return;
+        if (PlPerms.hasPerm(e.getPlayer(), PlPerms.Perms.RotateStick.get())) {
+            testRotate(e.getPlayer(), (Player) e.getRightClicked());
+        } else {
             e.getPlayer().sendMessage(PlMessages.NoPermission.get());
         }
     }

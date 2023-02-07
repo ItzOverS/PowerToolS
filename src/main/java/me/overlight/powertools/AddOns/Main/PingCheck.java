@@ -12,8 +12,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 public class PingCheck
-extends AddOn
-implements Runnable {
+        extends AddOn
+        implements Runnable {
     public PingCheck() {
         super("PingCheck", "1.0", "check players ping & kick high pinged players", PowerTools.config.getBoolean("PingCheck.enabled"));
     }
@@ -21,12 +21,13 @@ implements Runnable {
     @Override
     public void run() {
         for (final Player player : Bukkit.getOnlinePlayers()) {
-            if (PacketEvents.get().getPlayerUtils().getPing(player) <= PowerTools.config.getInt(this.getName() + ".maxPing")) continue;
+            if (PacketEvents.get().getPlayerUtils().getPing(player) <= PowerTools.config.getInt(this.getName() + ".maxPing"))
+                continue;
             final String thisName = this.getName();
-            if (PlayTime.PlayTime.get((Object)player.getName()).minute > 5) {
+            if (PlayTime.PlayTime.get(player.getName()).minute > 5) {
                 return;
             }
-            Bukkit.getScheduler().runTaskAsynchronously((Plugin)PowerTools.INSTANCE, new Runnable(){
+            Bukkit.getScheduler().runTaskAsynchronously(PowerTools.INSTANCE, new Runnable() {
 
                 @Override
                 public void run() {

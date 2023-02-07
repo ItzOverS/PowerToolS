@@ -1,15 +1,14 @@
 package me.overlight.powertools.Modules.mods;
 
 import io.github.retrooper.packetevents.PacketEvents;
-import me.overlight.powertools.Modules.Module;
 import me.overlight.powertools.Libraries.AlertUtils;
+import me.overlight.powertools.Modules.Module;
 import me.overlight.powertools.PowerTools;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class Toggle
@@ -22,12 +21,13 @@ public class Toggle
 
     public static HashMap<String, String> toggledPlayers = new HashMap<>();
     public static HashMap<String, ToggleItems> toggledItem = new HashMap<>();
-    public void onEnable(){
+
+    public void onEnable() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(PowerTools.INSTANCE, () -> {
             for (String userName : toggledPlayers.keySet()) {
                 Player player = Bukkit.getPlayer(userName);
                 Player target = null;
-                if(!toggledPlayers.get(userName).equals("Server")) {
+                if (!toggledPlayers.get(userName).equals("Server")) {
                     target = Bukkit.getPlayer(toggledPlayers.get(userName));
                     if (target == null) {
                         toggledPlayers.remove(userName);
@@ -35,16 +35,22 @@ public class Toggle
                         continue;
                     }
                 }
-                if(player == null){
+                if (player == null) {
                     toggledPlayers.remove(userName);
                     toggledItem.remove(userName);
                     continue;
                 }
                 try {
-                    switch(toggledItem.get(userName)){
-                        case CPS: AlertUtils.sendActionBar(player, "" + ChatColor.RED + CpsMap.LMB.getOrDefault(target.getName(), 0) + " LMB " + ChatColor.DARK_GRAY + "|" + ChatColor.RED + " RMB " + CpsMap.RMB.getOrDefault(target.getName(), 0)); break;
-                        case TPS: AlertUtils.sendActionBar(player, "" + ChatColor.RED + " TPS " + ChatColor.DARK_GRAY + " | " + ChatColor.RED + PacketEvents.get().getServerUtils().getTPS()); break;
-                        case PING: AlertUtils.sendActionBar(player, "" + ChatColor.RED + " PING " + ChatColor.DARK_GRAY + " | " + ChatColor.RED + PacketEvents.get().getPlayerUtils().getPing(target)); break;
+                    switch (toggledItem.get(userName)) {
+                        case CPS:
+                            AlertUtils.sendActionBar(player, "" + ChatColor.RED + CpsMap.LMB.getOrDefault(target.getName(), 0) + " LMB " + ChatColor.DARK_GRAY + "|" + ChatColor.RED + " RMB " + CpsMap.RMB.getOrDefault(target.getName(), 0));
+                            break;
+                        case TPS:
+                            AlertUtils.sendActionBar(player, "" + ChatColor.RED + " TPS " + ChatColor.DARK_GRAY + " | " + ChatColor.RED + PacketEvents.get().getServerUtils().getTPS());
+                            break;
+                        case PING:
+                            AlertUtils.sendActionBar(player, "" + ChatColor.RED + " PING " + ChatColor.DARK_GRAY + " | " + ChatColor.RED + PacketEvents.get().getPlayerUtils().getPing(target));
+                            break;
                     }
                 } catch (Exception e) {
                     throw new RuntimeException(e);
@@ -53,7 +59,7 @@ public class Toggle
         }, 2, 2);
     }
 
-    public enum ToggleItems{
+    public enum ToggleItems {
         CPS,
         TPS,
         PING

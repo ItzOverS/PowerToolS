@@ -21,19 +21,26 @@ public class ForcePing
     public ForcePing() {
         super("ServerAddOns.ForcePing", "1.0", "AntiBot: Force to players ping your server before connect", PowerTools.config.getBoolean("ServerAddOns.ForcePing.enabled"));
     }
+
     private final HashMap<InetAddress, Long> getLastPing = new HashMap<>();
+
     @EventHandler
-    public void playerJoin(PlayerJoinEvent e){
-        if(!getLastPing.containsKey(e.getPlayer().getAddress().getAddress()))  { kickPlayer(e.getPlayer()); return; }
-        if(System.currentTimeMillis() - getLastPing.get(e.getPlayer().getAddress().getAddress()) > PowerTools.config.getLong(this.getName() + ".maxDelay")) { kickPlayer(e.getPlayer()); }
+    public void playerJoin(PlayerJoinEvent e) {
+        if (!getLastPing.containsKey(e.getPlayer().getAddress().getAddress())) {
+            kickPlayer(e.getPlayer());
+            return;
+        }
+        if (System.currentTimeMillis() - getLastPing.get(e.getPlayer().getAddress().getAddress()) > PowerTools.config.getLong(this.getName() + ".maxDelay")) {
+            kickPlayer(e.getPlayer());
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void serverPing(ServerListPingEvent e){
+    public void serverPing(ServerListPingEvent e) {
         getLastPing.put(e.getAddress(), System.currentTimeMillis());
     }
 
-    private void kickPlayer(Player player){
+    private void kickPlayer(Player player) {
         Bukkit.getScheduler().runTask(PowerTools.INSTANCE, new Runnable() {
             @Override
             public void run() {

@@ -3,7 +3,7 @@ package me.overlight.powertools.Libraries;
 import org.bukkit.ChatColor;
 
 public class ColorFormat {
-    public static String formatColor(String msg){
+    public static String formatColor(String msg) {
         String ms = msg;
         // Chat Colors
         ms = ms.replace("@color_black", "&0").replace("@color_dark_blue", "&1")

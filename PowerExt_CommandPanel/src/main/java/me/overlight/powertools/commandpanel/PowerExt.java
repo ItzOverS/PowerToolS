@@ -15,8 +15,8 @@ public final class PowerExt
     @Override
     public void onEnable() {
         module = this;
-        if(ExtensionManager.getByName(getConfigName()) == null) return;
-        for(String key: PowerTools.config.getConfigurationSection(getConfigName() + ".panels").getKeys(false)){
+        if (ExtensionManager.getByName(getConfigName()) == null) return;
+        for (String key : PowerTools.config.getConfigurationSection(getConfigName() + ".panels").getKeys(false)) {
             String command = PowerTools.config.getString(getConfigName() + ".panels." + key + ".command").split(" ")[0];
             getServer().getPluginCommand(command).setExecutor(new CommandExecutor());
         }

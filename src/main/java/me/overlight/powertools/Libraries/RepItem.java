@@ -1,8 +1,10 @@
 package me.overlight.powertools.Libraries;
 
 public class RepItem {
-    private String key, value;
-    public RepItem(String key, String value){
+    private final String key;
+    private final String value;
+
+    public RepItem(String key, String value) {
         this.key = key;
         this.value = value;
     }

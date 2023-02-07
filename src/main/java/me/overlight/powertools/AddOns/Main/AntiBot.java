@@ -1,10 +1,9 @@
 package me.overlight.powertools.AddOns.Main;
 
-import me.overlight.powertools.AddOns.AddOn;
 import me.overlight.powertools.APIs.NetworkChecker;
+import me.overlight.powertools.AddOns.AddOn;
 import me.overlight.powertools.Plugin.PlInfo;
 import me.overlight.powertools.PowerTools;
-import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -12,9 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import sun.nio.ch.Net;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,7 +20,7 @@ public class AntiBot
         implements Listener {
     public AntiBot() {
         super("AntiBot", "1.0", "Prevent server from bots", PowerTools.config.getBoolean("AntiBot.enabled"));
-        new BukkitRunnable(){
+        new BukkitRunnable() {
             @Override
             public void run() {
                 joinedUsers = 0;
@@ -35,13 +32,14 @@ public class AntiBot
     boolean antiBotMode = false;
     HashMap<String, Long> userJoinTime = new HashMap<>();
     HashMap<String, List<String>> duplicateNamesGroup = new HashMap<>();
+
     @EventHandler
-    public void event(PlayerJoinEvent e){
+    public void event(PlayerJoinEvent e) {
         userJoinTime.put(e.getPlayer().getName(), System.currentTimeMillis());
 
         // -> Fast Joins
-        if(PowerTools.config.getBoolean(this.getName() + ".FastJoin.enabled")) {
-            if(antiBotMode){
+        if (PowerTools.config.getBoolean(this.getName() + ".FastJoin.enabled")) {
+            if (antiBotMode) {
                 Bukkit.banIP(NetworkChecker.getPlayerIPv4(e.getPlayer()));
                 e.getPlayer().setBanned(true);
                 e.getPlayer().kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "\nYou temp banned from this server");
@@ -69,32 +67,32 @@ public class AntiBot
         }
 
         // -> Username Learning
-        if(PowerTools.config.getBoolean(this.getName() + ".UserNameLearning.enabled")){
+        if (PowerTools.config.getBoolean(this.getName() + ".UserNameLearning.enabled")) {
             String realName = ChatManager.removeSymbols(e.getPlayer().getName(), new String[]{",", "|", "!", "@", "#", "$", "%", "^", "&", "(", ")", "[", "]", "{", "}", "`", "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"});
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 String p = ChatManager.removeSymbols(onlinePlayer.getName(), new String[]{",", "|", "!", "@", "#", "$", "%", "^", "&", "(", ")", "[", "]", "{", "}", "`", "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"});
                 int startIndex = 0;
                 boolean isMulti = false;
-                for(char ch: realName.toCharArray()){
-                    if(p.indexOf(ch) != -1){
+                for (char ch : realName.toCharArray()) {
+                    if (p.indexOf(ch) != -1) {
                         int m = 0;
-                        for(int i = startIndex; i < p.length(); i++){
-                            if(m > PowerTools.config.getInt(this.getName() + ".UserNameLearning.maxMultiLetter")) {
+                        for (int i = startIndex; i < p.length(); i++) {
+                            if (m > PowerTools.config.getInt(this.getName() + ".UserNameLearning.maxMultiLetter")) {
                                 isMulti = true;
                                 break;
                             }
-                            if(ch == p.charAt(i)){
+                            if (ch == p.charAt(i)) {
                                 m++;
-                            } else{
+                            } else {
                                 break;
                             }
                         }
                     }
-                    if(isMulti)
+                    if (isMulti)
                         break;
                 }
-                if(isMulti){
-                    if(Math.max(userJoinTime.get(p), userJoinTime.get(realName)) - Math.min(userJoinTime.get(p), userJoinTime.get(realName)) < PowerTools.config.getLong(this.getName() + ".UserNameLearning.maxJoinDelay")){
+                if (isMulti) {
+                    if (Math.max(userJoinTime.get(p), userJoinTime.get(realName)) - Math.min(userJoinTime.get(p), userJoinTime.get(realName)) < PowerTools.config.getLong(this.getName() + ".UserNameLearning.maxJoinDelay")) {
                         e.getPlayer().kickPlayer(PlInfo.KICK_PREFIX + "AntiBot: Multi Letter by name");
                     }
                 }
@@ -102,9 +100,9 @@ public class AntiBot
         }
 
         // -> MultiIP
-        if(PowerTools.config.getBoolean(this.getName() + ".MultiIP.enabled")){
+        if (PowerTools.config.getBoolean(this.getName() + ".MultiIP.enabled")) {
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                if(NetworkChecker.getPlayerIPv4(e.getPlayer()).equals(NetworkChecker.getPlayerIPv4(onlinePlayer))){
+                if (NetworkChecker.getPlayerIPv4(e.getPlayer()).equals(NetworkChecker.getPlayerIPv4(onlinePlayer))) {
                     Bukkit.banIP(NetworkChecker.getPlayerIPv4(e.getPlayer()));
                     onlinePlayer.setBanned(true);
                     e.getPlayer().setBanned(true);

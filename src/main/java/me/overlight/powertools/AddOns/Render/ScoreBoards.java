@@ -23,15 +23,15 @@ public class ScoreBoards
     @Override
     public void onEnabled() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(PowerTools.INSTANCE, () -> {
-            for(Player player: Bukkit.getOnlinePlayers()) {
+            for (Player player : Bukkit.getOnlinePlayers()) {
                 ScoreboardManager manager = Bukkit.getScoreboardManager();
                 Scoreboard scoreboard = manager.getNewScoreboard();
                 Objective obj = scoreboard.registerNewObjective(PowerTools.config.getString(this.getName() + ".name"), PowerTools.config.getString(this.getName() + ".name"));
                 obj.setDisplaySlot(DisplaySlot.SIDEBAR);
                 List<String> items = PowerTools.config.getStringList(this.getName() + ".boards." + new ArrayList<>(PowerTools.config.getConfigurationSection(this.getName() + ".boards").getKeys(true)).get(index));
                 int reverseIndex = 0;
-                for(int i = items.size(); i > 0; i--){
-                    if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+                for (int i = items.size(); i > 0; i--) {
+                    if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
                         createScore(i, obj, ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, items.get(reverseIndex))));
                     else
                         createScore(i, obj, ChatColor.translateAlternateColorCodes('&', items.get(reverseIndex)));
@@ -40,11 +40,12 @@ public class ScoreBoards
                 player.setScoreboard(scoreboard);
             }
             index++;
-            if(index >= PowerTools.config.getConfigurationSection(this.getName() + ".boards").getKeys(true).size()) index = 0;
-        }, 0,  PowerTools.config.getInt(this.getName() + ".switchDelay"));
+            if (index >= PowerTools.config.getConfigurationSection(this.getName() + ".boards").getKeys(true).size())
+                index = 0;
+        }, 0, PowerTools.config.getInt(this.getName() + ".switchDelay"));
     }
 
-    public void createScore(int index, Objective obj, String message){
+    public void createScore(int index, Objective obj, String message) {
         Score s = obj.getScore(message);
         s.setScore(index);
     }

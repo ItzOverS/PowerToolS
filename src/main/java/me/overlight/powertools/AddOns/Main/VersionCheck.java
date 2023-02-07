@@ -18,44 +18,42 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class VersionCheck
         extends AddOn
         implements PluginMessageListener, Listener {
     public static HashMap<String, String> playersClientBrand = new HashMap<>();
+
     public VersionCheck() {
-        super("VersionCheck", "1.0", "check players version", PowerTools.config.getBoolean("VersionCheck.enabled"), (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12))?"mc:brand":"MC|BRAND");
+        super("VersionCheck", "1.0", "check players version", PowerTools.config.getBoolean("VersionCheck.enabled"), (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12)) ? "mc:brand" : "MC|BRAND");
     }
+
     @Override
     public void onPluginMessageReceived(String channel, Player player, byte[] message) {
-        try {
-            String client = new String(message, "UTF-8").substring(1);
-            client = client.equals("LMC")? "LabyMod": client.equals("vanilla")? "Vanilla": client.startsWith("LC")? "Pvp Lounge": client.equals("CB")? "CheatBreaker":
-                    client.equals("eyser")? "Geyser": client.equals("FML")? "Forge": client.equals("fabric")? "Fabric": client.startsWith("lunarclient")? "LunarClient":
-                    client.equals("Feather Forge")? "FeatherClient": client;
-            playersClientBrand.put(player.getName(), client);
-            PowerTools.Alert(PowerTools.Target.STAFF, PlMessages.ClDetector_PlayerJoinedUsing.get(
-                    new RepItem("%PLAYER_NAME%", player.getName()),
-                    new RepItem("%VERSION%", PacketEvents.get().getPlayerUtils().getClientVersion(player).toString().replace("v_", "").replace("_", ".")),
-                    new RepItem("%CLIENT%", client))
-            );
-        } catch (UnsupportedEncodingException e) {
-            PowerTools.Alert(PowerTools.Target.STAFF, PlMessages.ClDetector_FailedToDetectClient.get(new RepItem("%PLAYER_NAME%", player.getName())));
-            playersClientBrand.put(player.getName(), "INVALID");
-        }
+        String client = new String(message, StandardCharsets.UTF_8).substring(1);
+        client = client.equals("LMC") ? "LabyMod" : client.equals("vanilla") ? "Vanilla" : client.startsWith("LC") ? "Pvp Lounge" : client.equals("CB") ? "CheatBreaker" :
+                client.equals("eyser") ? "Geyser" : client.equals("FML") ? "Forge" : client.equals("fabric") ? "Fabric" : client.startsWith("lunarclient") ? "LunarClient" :
+                        client.equals("Feather Forge") ? "FeatherClient" : client;
+        playersClientBrand.put(player.getName(), client);
+        PowerTools.Alert(PowerTools.Target.STAFF, PlMessages.ClDetector_PlayerJoinedUsing.get(
+                new RepItem("%PLAYER_NAME%", player.getName()),
+                new RepItem("%VERSION%", PacketEvents.get().getPlayerUtils().getClientVersion(player).toString().replace("v_", "").replace("_", ".")),
+                new RepItem("%CLIENT%", client))
+        );
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void event(PlayerJoinEvent e){
+    public void event(PlayerJoinEvent e) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
-            if(!playersClientBrand.containsKey(e.getPlayer().getName()))
+            if (!playersClientBrand.containsKey(e.getPlayer().getName()))
                 e.getPlayer().kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "No Client Brand Request");
         }, 100);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void event(PlayerQuitEvent e){
+    public void event(PlayerQuitEvent e) {
         playersClientBrand.remove(e.getPlayer().getName());
     }
 }

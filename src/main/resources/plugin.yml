@@ -11,7 +11,7 @@ commands:
   powertools:
     description: Use PowerToolS options
     permission: powertools
-    aliases: ["pts"]
+    aliases: [ "pts" ]
   report:
     description: report player, bug & other
     usage: ""

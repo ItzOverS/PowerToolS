@@ -17,8 +17,8 @@ public class AntiWorldDownLoader
         implements Listener, PluginMessageListener {
     public AntiWorldDownLoader() {
         super("AntiWorldDownLoader", "1.0", "prevent players from download server's maps using map downloaders", PowerTools.config.getBoolean("AntiWorldDownLoader.enabled"));
-        if(this.enabled()) {
-            if(PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12)){
+        if (this.enabled()) {
+            if (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12)) {
                 PowerTools.INSTANCE.getServer().getMessenger().registerIncomingPluginChannel(PowerTools.INSTANCE, "wdl:init", this);
                 PowerTools.INSTANCE.getServer().getMessenger().registerOutgoingPluginChannel(PowerTools.INSTANCE, "wdl:control");
             } else {
@@ -30,9 +30,9 @@ public class AntiWorldDownLoader
     }
 
     @Override
-    public void onDisabled(){
-        if(this.isEnabled()) {
-            if(PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12)){
+    public void onDisabled() {
+        if (this.isEnabled()) {
+            if (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12)) {
                 PowerTools.INSTANCE.getServer().getMessenger().unregisterIncomingPluginChannel(PowerTools.INSTANCE, "wdl:init", this);
                 PowerTools.INSTANCE.getServer().getMessenger().unregisterOutgoingPluginChannel(PowerTools.INSTANCE, "wdl:control");
             } else {
@@ -48,14 +48,14 @@ public class AntiWorldDownLoader
             if (!player.isOp()) {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
                     Bukkit.getPlayer(player.getName()).kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "I think you're using WorldDownLoader");
-                    if(PowerTools.config.getBoolean(thisName + ".alert-on-discord"))
+                    if (PowerTools.config.getBoolean(thisName + ".alert-on-discord"))
                         DiscordAPI.sendEmbedOnWebhook(player.getName() + " kicked - Using **W**orld**D**own**L**oader", "I think " + player.getName() + " using **W**orld**D**own**L**oader");
                 }, 100);
             } else {
                 if (!PowerTools.config.getBoolean("AntiWorldDownLoader.continueOperators")) {
                     Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
                         Bukkit.getPlayer(player.getName()).kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "I think you're using WorldDownLoader");
-                        if(PowerTools.config.getBoolean(thisName + ".alert-on-discord"))
+                        if (PowerTools.config.getBoolean(thisName + ".alert-on-discord"))
                             DiscordAPI.sendEmbedOnWebhook("OP:" + player.getName() + " kicked - Using **W**orld**D**own**L**oader", "I think OP:" + player.getName() + " using **W**orld**D**own**L**oader");
                     }, 100);
                 }

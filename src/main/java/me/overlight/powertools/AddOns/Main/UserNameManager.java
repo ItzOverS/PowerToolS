@@ -13,18 +13,18 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.Objects;
 
-public class UserNameManager 
+public class UserNameManager
         extends AddOn
         implements Listener {
 
     public UserNameManager() {
         super("UsernameManager", "1.0", "Manager players usernames", PowerTools.config.getBoolean("UsernameManager.enabled"));
     }
-    
+
     @EventHandler(priority = EventPriority.MONITOR)
-    public void playerJoin(PlayerJoinEvent e){
-        if(this.isEnabled()) {
-            if (PowerTools.config.getBoolean( this.getName() + ".WordBlock.enabled")) {
+    public void playerJoin(PlayerJoinEvent e) {
+        if (this.isEnabled()) {
+            if (PowerTools.config.getBoolean(this.getName() + ".WordBlock.enabled")) {
                 String message = e.getPlayer().getName().toLowerCase();
                 boolean messageFlagged = false;
                 //------------------------------------>  AI 01:    Random char, splitter
@@ -47,14 +47,14 @@ public class UserNameManager
                     }
                 }
                 if (messageFlagged) {
-                    if(Objects.equals(PowerTools.config.getString(this.getName() + ".WordBlock.Action"), "BAN")){
-                        if(PowerTools.config.getBoolean(this.getName() + ".alert-on-discord"))
+                    if (Objects.equals(PowerTools.config.getString(this.getName() + ".WordBlock.Action"), "BAN")) {
+                        if (PowerTools.config.getBoolean(this.getName() + ".alert-on-discord"))
                             DiscordAPI.sendEmbedOnWebhook(e.getPlayer().getName() + " banned - BadName", e.getPlayer().getName() + " has banned for contains bad words");
                         Bukkit.getBanList(BanList.Type.NAME).addBan(e.getPlayer().getName(), ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(PowerTools.config.getString(this.getName() + ".WordBlock.msg"))), null, null);
                         e.getPlayer().kickPlayer(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(PowerTools.config.getString(this.getName() + ".WordBlock.msg"))));
-                    } else if(Objects.equals(PowerTools.config.getString(this.getName() + ".WordBlock.Action"), "KICK")){
+                    } else if (Objects.equals(PowerTools.config.getString(this.getName() + ".WordBlock.Action"), "KICK")) {
                         e.getPlayer().kickPlayer(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(PowerTools.config.getString(this.getName() + ".WordBlock.msg"))));
-                        if(PowerTools.config.getBoolean(this.getName() + ".alert-on-discord"))
+                        if (PowerTools.config.getBoolean(this.getName() + ".alert-on-discord"))
                             DiscordAPI.sendEmbedOnWebhook(e.getPlayer().getName() + " kicked - BadName", e.getPlayer().getName() + " has kicked for contains bad words");
                     }
                 }

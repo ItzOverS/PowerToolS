@@ -16,31 +16,32 @@ public class Vanish
         extends Module
         implements Listener {
     public static List<UUID> vanishedPlayers = new ArrayList<>();
+
     public Vanish() {
         super("Vanish", "Hide yourself from other players to see they action without they know you're there", "PowerToolS Vanish [player]", new String[]{"vanish"});
     }
 
     @EventHandler
-    public void playerJoinEvent(PlayerJoinEvent e){
-        for(Player player: Bukkit.getOnlinePlayers()){
+    public void playerJoinEvent(PlayerJoinEvent e) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
             e.getPlayer().showPlayer(player);
         }
-        for(UUID player: vanishedPlayers){
+        for (UUID player : vanishedPlayers) {
             e.getPlayer().hidePlayer(Bukkit.getPlayer(player));
         }
     }
 
     @EventHandler
-    public void playerQuitEvent(PlayerQuitEvent e){
-        for(Player player: Bukkit.getOnlinePlayers()){
+    public void playerQuitEvent(PlayerQuitEvent e) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
             e.getPlayer().showPlayer(player);
         }
     }
 
-    public static void vanishPlayer(Player player){
-        if(vanishedPlayers.contains(player.getUniqueId())){
+    public static void vanishPlayer(Player player) {
+        if (vanishedPlayers.contains(player.getUniqueId())) {
             vanishedPlayers.remove(player.getUniqueId());
-        } else{
+        } else {
             vanishedPlayers.add(player.getUniqueId());
         }
     }

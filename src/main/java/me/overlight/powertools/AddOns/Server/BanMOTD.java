@@ -18,8 +18,8 @@ public class BanMOTD
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void event(ServerListPingEvent e){
-        if(Bukkit.getBanList(BanList.Type.IP).isBanned(e.getAddress().toString())){
+    public void event(ServerListPingEvent e) {
+        if (Bukkit.getBanList(BanList.Type.IP).isBanned(e.getAddress().toString())) {
             e.setMotd(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".MOTD")));
         }
     }

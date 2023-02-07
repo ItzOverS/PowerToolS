@@ -20,16 +20,17 @@ public class PvpManager
     }
 
     public static HashMap<String, Boolean> PlayersPvpStats = new HashMap<>();
+
     @EventHandler(priority = EventPriority.MONITOR)
-    public void playerDamageByPlayer(EntityDamageByEntityEvent e){
-        if(!(e.getEntity() instanceof Player && e.getDamager() instanceof Player))
+    public void playerDamageByPlayer(EntityDamageByEntityEvent e) {
+        if (!(e.getEntity() instanceof Player && e.getDamager() instanceof Player))
             return;
-        if(PlayersPvpStats.containsKey(e.getEntity().getName()) && PlayersPvpStats.containsKey(e.getDamager().getName())){
-            if(!PlayersPvpStats.get(e.getEntity().getName()) || !PlayersPvpStats.get(e.getDamager().getName())){
+        if (PlayersPvpStats.containsKey(e.getEntity().getName()) && PlayersPvpStats.containsKey(e.getDamager().getName())) {
+            if (!PlayersPvpStats.get(e.getEntity().getName()) || !PlayersPvpStats.get(e.getDamager().getName())) {
                 e.setCancelled(true);
-                if(!PlayersPvpStats.get(e.getDamager().getName()))
+                if (!PlayersPvpStats.get(e.getDamager().getName()))
                     e.getDamager().sendMessage(PlInfo.PREFIX + ChatColor.RED + "Your pvp is disabled");
-                else if(!PlayersPvpStats.get(e.getEntity().getName()))
+                else if (!PlayersPvpStats.get(e.getEntity().getName()))
                     e.getDamager().sendMessage(PlInfo.PREFIX + ChatColor.RED + e.getEntity().getName() + "'s pvp is disabled");
             }
         }

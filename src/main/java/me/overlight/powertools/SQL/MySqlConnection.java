@@ -1,14 +1,12 @@
 package me.overlight.powertools.SQL;
 
-import me.overlight.powertools.PowerTools;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MySqlConnection {
 
-    public MySqlConnection(String username, String password, String host, String port, String database){
+    public MySqlConnection(String username, String password, String host, String port, String database) {
         this.username = username;
         this.password = password;
         this.host = host;
@@ -16,19 +14,24 @@ public class MySqlConnection {
         this.db = database;
     }
 
-    private String host, port, db, username, password;
+    private final String host;
+    private final String port;
+    private final String db;
+    private final String username;
+    private final String password;
 
     private Connection conn = null;
+
     public boolean isConnected() {
         return conn != null;
     }
 
     public boolean connect() {
-        if(!isConnected()) {
+        if (!isConnected()) {
             try {
                 conn = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + db + "?useSSL=false", username, password);
                 return true;
-            } catch(Exception e){
+            } catch (Exception e) {
                 return false;
             }
         }
@@ -36,7 +39,7 @@ public class MySqlConnection {
     }
 
     public boolean disconnect() {
-        if(isConnected()) {
+        if (isConnected()) {
             try {
                 conn.close();
                 return true;
@@ -47,7 +50,7 @@ public class MySqlConnection {
         return false;
     }
 
-    public Connection getConnection(){
+    public Connection getConnection() {
         return this.conn;
     }
 }

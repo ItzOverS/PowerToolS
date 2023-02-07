@@ -20,7 +20,7 @@ public class RandomMOTD
 
     @EventHandler
     public void serverPing(ServerListPingEvent e) {
-        if(this.isEnabled()){
+        if (this.isEnabled()) {
             Random random = new Random();
             List<String> motds = PowerTools.config.getStringList(this.getName() + ".MOTDs");
             e.setMotd(ChatColor.translateAlternateColorCodes('&', motds.get(random.nextInt(motds.size()))));

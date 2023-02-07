@@ -108,7 +108,7 @@ public class DiscordWebhook {
             json.put("embeds", embedObjects.toArray());
         }
         URL url = new URL(this.url);
-        HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
+        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
         connection.addRequestProperty("Content-Type", "application/json");
         connection.addRequestProperty("User-Agent", "Java-DiscordWebhook-BY-Gelox_");
         connection.setDoOutput(true);

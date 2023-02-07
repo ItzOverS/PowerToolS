@@ -20,41 +20,43 @@ public class JoinMessage
     }
 
     @EventHandler
-    public void playerJoin(PlayerJoinEvent e){
-        if(this.isEnabled()) {
+    public void playerJoin(PlayerJoinEvent e) {
+        if (this.isEnabled()) {
             String message = PowerTools.config.getString(this.getName() + ".messages.FirstJoin");
-            if(contains("plugins\\PowerToolS\\JoinedPlayers.yml", e.getPlayer().getName())){
+            if (contains("plugins\\PowerToolS\\JoinedPlayers.yml", e.getPlayer().getName())) {
                 message = PowerTools.config.getString(this.getName() + ".messages.NotFirstJoin");
             }
             assert message != null;
             message = message.replace("%NAME%", e.getPlayer().getName());
-            message = message.replace("%NUM%", String.valueOf(YamlConfiguration.loadConfiguration(new File("plugins\\PowerToolS\\JoinedPlayers.yml")).getKeys(false).size()+1));
+            message = message.replace("%NUM%", String.valueOf(YamlConfiguration.loadConfiguration(new File("plugins\\PowerToolS\\JoinedPlayers.yml")).getKeys(false).size() + 1));
             message = message.replace("%ONLINE%", String.valueOf(Bukkit.getOnlinePlayers().size()));
-            if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+            if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
                 e.setJoinMessage(ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), message)));
             else
                 e.setJoinMessage(ChatColor.translateAlternateColorCodes('&', message));
         }
 
         {
-            if(!new File("plugins\\PowerToolS\\JoinedPlayers.yml").exists()){
+            if (!new File("plugins\\PowerToolS\\JoinedPlayers.yml").exists()) {
                 YamlConfiguration config = new YamlConfiguration();
                 try {
                     PowerTools.config.save(new File("plugins\\PowerToolS\\JoinedPlayers.yml"));
-                } catch(Exception ignored) { }
+                } catch (Exception ignored) {
+                }
             }
             YamlConfiguration yml = YamlConfiguration.loadConfiguration(new File("plugins\\PowerToolS\\JoinedPlayers.yml"));
             yml.set(e.getPlayer().getName(), yml.getKeys(false).size() + 1);
             try {
                 yml.save(new File("plugins\\PowerToolS\\JoinedPlayers.yml"));
-            } catch(Exception ignored) { }
+            } catch (Exception ignored) {
+            }
         }
     }
 
-    private boolean contains(String path, String text){
+    private boolean contains(String path, String text) {
         YamlConfiguration yml = YamlConfiguration.loadConfiguration(new File(path));
-        for(String key: yml.getKeys(false)){
-            if(Objects.equals(key, text))
+        for (String key : yml.getKeys(false)) {
+            if (Objects.equals(key, text))
                 return true;
         }
         return false;

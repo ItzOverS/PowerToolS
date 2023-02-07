@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerChatEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ import java.util.Random;
 
 public class ChatGames
         extends AddOn
-        implements Listener{
+        implements Listener {
 
     public int ANS, num1, num2;
     public List<Integer> rewards = new ArrayList<>();
@@ -33,60 +32,74 @@ public class ChatGames
         runTimer();
     }
 
-    private void runTimer(){
+    private void runTimer() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(PowerTools.INSTANCE, () -> {
             isComplete = false;
-            int operator = genRand(4)+1;
+            int operator = genRand(4) + 1;
             int num1 = 0, num2 = 0, ans = 0;
             List<Integer> rewardsIndexes = new ArrayList<>();
             String oper = null;
-            switch(operator){
-                case 1: case 2:
+            switch (operator) {
+                case 1:
+                case 2:
                     num1 = genRand(100);
                     num2 = genRand(100);
                     break;
-                case 3: case 4:
+                case 3:
+                case 4:
                     num1 = genRand(10);
                     num2 = genRand(10);
                     break;
             }
-            switch(operator){
-                case 1: ans = num1 + num2; oper = "+"; break;
-                case 2: ans = num1 - num2; oper = "-"; break;
-                case 3: ans = num1 * num2; oper = "×"; break;
-                case 4: ans = num1 / num2; oper = "÷"; break;
+            switch (operator) {
+                case 1:
+                    ans = num1 + num2;
+                    oper = "+";
+                    break;
+                case 2:
+                    ans = num1 - num2;
+                    oper = "-";
+                    break;
+                case 3:
+                    ans = num1 * num2;
+                    oper = "×";
+                    break;
+                case 4:
+                    ans = num1 / num2;
+                    oper = "÷";
+                    break;
             }
-            for(int i = 0; i < PowerTools.config.getInt(this.getName() + ".rewardsPerGame"); i++){
+            for (int i = 0; i < PowerTools.config.getInt(this.getName() + ".rewardsPerGame"); i++) {
                 int randNum = genRand(PowerTools.config.getConfigurationSection(this.getName() + ".rewards").getKeys(false).size());
                 String rewardKey = this.getName() + ".rewards." + new ArrayList<>(PowerTools.config.getConfigurationSection(this.getName() + ".rewards").getKeys(false)).get(randNum);
-                while(rewardKey.equals("Money")){
+                while (rewardKey.equals("Money")) {
                     randNum = genRand(PowerTools.config.getConfigurationSection(this.getName() + ".rewards").getKeys(false).size());
                     rewardKey = this.getName() + ".rewards." + new ArrayList<>(PowerTools.config.getConfigurationSection(this.getName() + ".rewards").getKeys(false)).get(randNum);
                 }
                 rewardsIndexes.add(randNum);
             }
             String rewardsInText = "";
-            for(int m: rewardsIndexes){
+            for (int m : rewardsIndexes) {
                 String rewardKey = this.getName() + ".rewards." + new ArrayList<>(PowerTools.config.getConfigurationSection(this.getName() + ".rewards").getKeys(false)).get(m);
-                rewardsInText += ChatColor.GOLD + String.valueOf(new ArrayList<>(PowerTools.config.getConfigurationSection(this.getName() + ".rewards").getKeys(false)).get(m)) + ChatColor.RED + (new ArrayList<>(PowerTools.config.getConfigurationSection(this.getName() + ".rewards").getKeys(false)).get(m).equals("Money")? " ": "x" ) + PowerTools.config.getInt(rewardKey) + (new ArrayList<>(PowerTools.config.getConfigurationSection(this.getName() + ".rewards").getKeys(false)).get(m).equals("Money")? "$": "") + ChatColor.BLUE + ", ";
+                rewardsInText += ChatColor.GOLD + String.valueOf(new ArrayList<>(PowerTools.config.getConfigurationSection(this.getName() + ".rewards").getKeys(false)).get(m)) + ChatColor.RED + (new ArrayList<>(PowerTools.config.getConfigurationSection(this.getName() + ".rewards").getKeys(false)).get(m).equals("Money") ? " " : "x") + PowerTools.config.getInt(rewardKey) + (new ArrayList<>(PowerTools.config.getConfigurationSection(this.getName() + ".rewards").getKeys(false)).get(m).equals("Money") ? "$" : "") + ChatColor.BLUE + ", ";
             }
             this.ANS = ans;
             this.rewards = rewardsIndexes;
             this.num1 = num1;
             this.num2 = num2;
             this.op = oper;
-            for(Player player: Bukkit.getOnlinePlayers()){
+            for (Player player : Bukkit.getOnlinePlayers()) {
                 player.sendMessage(ChatColor.GREEN + "------------ " + ChatColor.BLUE + "PowerToolS:SurvivalAddONs" + ChatColor.GREEN + " ------------");
                 player.sendMessage(ChatColor.GREEN + "Q: " + ChatColor.RED + num1 + " " + oper + " " + num2 + " = ?");
-                player.sendMessage(ChatColor.GREEN + "Reward" + (rewardsIndexes.size() > 1? "s":"") + " : " + rewardsInText.substring(0, rewardsInText.length() - 2));
+                player.sendMessage(ChatColor.GREEN + "Reward" + (rewardsIndexes.size() > 1 ? "s" : "") + " : " + rewardsInText.substring(0, rewardsInText.length() - 2));
                 player.sendMessage(ChatColor.GREEN + "------------------------------------------------");
             }
-            if(PowerTools.config.getInt(this.getName() + ".answerTime") != -1){
+            if (PowerTools.config.getInt(this.getName() + ".answerTime") != -1) {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
-                    if(this.isComplete)
+                    if (this.isComplete)
                         return;
                     this.isComplete = true;
-                    for(Player player: Bukkit.getOnlinePlayers()){
+                    for (Player player : Bukkit.getOnlinePlayers()) {
                         player.sendMessage(ChatColor.GREEN + "------------ " + ChatColor.BLUE + "PowerToolS:SurvivalAddONs" + ChatColor.GREEN + " ------------");
                         player.sendMessage(ChatColor.GREEN + "Complete! No one answered");
                         player.sendMessage(ChatColor.GREEN + "------------------------------------------------");
@@ -97,8 +110,8 @@ public class ChatGames
     }
 
     @EventHandler
-    public void playerChat(AsyncPlayerChatEvent e){
-        if(!this.isComplete) {
+    public void playerChat(AsyncPlayerChatEvent e) {
+        if (!this.isComplete) {
             try {
                 if (Integer.parseInt(e.getMessage()) == this.ANS) {
                     this.isComplete = true;
@@ -118,13 +131,14 @@ public class ChatGames
                             Vault.econ().depositPlayer(Bukkit.getOfflinePlayer(e.getPlayer().getUniqueId()), PowerTools.config.getInt(rewardKey));
                         }
                     }
-                    e.getPlayer().sendMessage(PlInfo.PREFIX + PlInfo.ADDONS.SurvivalPrefix + ChatColor.GREEN + "You recived your reward" + (this.rewards.size() > 1?"s":""));
+                    e.getPlayer().sendMessage(PlInfo.PREFIX + PlInfo.ADDONS.SurvivalPrefix + ChatColor.GREEN + "You recived your reward" + (this.rewards.size() > 1 ? "s" : ""));
                 }
-            } catch(Exception ignored) { }
+            } catch (Exception ignored) {
+            }
         }
     }
 
-    private static int genRand(int max){
+    private static int genRand(int max) {
         Random random = new Random();
         return random.nextInt(max);
     }

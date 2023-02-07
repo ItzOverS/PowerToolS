@@ -15,7 +15,7 @@ ChatManager:
       msg: "&6SPAM is not allowed on this server" # Use '\n' for nextLine
   WordBlock:
     enabled: true
-    Words: ["fuck", "bitch", "fvck"]
+    Words: [ "fuck", "bitch", "fvck" ]
     Modes:
       UniCodes: true
       Splitters: true
@@ -63,7 +63,7 @@ UsernameManager:
   alert-on-discord: false
   WordBlock:
     enabled: true
-    Words: ["fuck", "fvck", "bitch"]
+    Words: [ "fuck", "fvck", "bitch" ]
     Modes:
       Splitters: true
       MultiLetter: true
@@ -123,7 +123,7 @@ JoinMessage:
 QuitMessage:
   enabled: false
     # Insert %NAME% for player userName
-    # Insert %ONLINE% for amount of onlinePlayers on server
+  # Insert %ONLINE% for amount of onlinePlayers on server
   message: "&6[&c-&6]&a%NAME%"
 
 afkCheck:
@@ -148,7 +148,7 @@ afkCheck:
 
 CommandDeny:
   enabled: false
-  commands: ["?", "help", "pl", "plugins", "rl", "reload", "version", "timings", "about", "ver", "bukkit"]
+  commands: [ "?", "help", "pl", "plugins", "rl", "reload", "version", "timings", "about", "ver", "bukkit" ]
   alert-on-discord: false
   denyPluginNameOnStart: true # like /help OR /bukkit:help
   ignoreOps: true
@@ -196,9 +196,9 @@ SlashServer:
   enabled: false
   servers:
     #  ServerName - command
-    survival: ["survival"]
-    bedwars: ["bw"]
-    pvp: ["pvp"]
+    survival: [ "survival" ]
+    bedwars: [ "bw" ]
+    pvp: [ "pvp" ]
 
 
 SurvivalAddOns:
@@ -253,9 +253,9 @@ HubAddOns:
     locations:
       001:
         world: "World" # Insert world's NAME
-        location: [100, 100] #NOTE: [X, Z]
+        location: [ 100, 100 ] #NOTE: [X, Z]
         mode: "HEAD" # Insert "HEAD" to knockback to head direction or "FORCE" to knockback to a default location
-        knockback: [1, 2, 1] # this only work when on FORCE
+        knockback: [ 1, 2, 1 ] # this only work when on FORCE
         multiply: 2 # this only work when on HEAD
         verticalNormal: 2
   VoidTP:

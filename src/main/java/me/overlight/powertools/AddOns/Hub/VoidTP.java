@@ -16,7 +16,7 @@ public class VoidTP
 
     @EventHandler
     public void eventMove(PlayerMoveEvent e) {
-        if(e.getPlayer().getLocation().getY() <= PowerTools.config.getDouble("teleportY")){
+        if (e.getPlayer().getLocation().getY() <= PowerTools.config.getDouble("teleportY")) {
             e.getPlayer().teleport(new Location(e.getPlayer().getWorld(), PowerTools.config.getDouble("respawnLocation.x"), PowerTools.config.getDouble("respawnLocation.y"), PowerTools.config.getDouble("respawnLocation.z")));
         }
     }

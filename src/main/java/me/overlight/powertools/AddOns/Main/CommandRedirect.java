@@ -14,9 +14,9 @@ public class CommandRedirect
     }
 
     @EventHandler
-    public void commandProcess(PlayerCommandPreprocessEvent e){
-        for(String key: PowerTools.config.getConfigurationSection("CommandRedirect.commands").getKeys(false)){
-            if(e.getMessage().equals("/" + key)){
+    public void commandProcess(PlayerCommandPreprocessEvent e) {
+        for (String key : PowerTools.config.getConfigurationSection("CommandRedirect.commands").getKeys(false)) {
+            if (e.getMessage().equals("/" + key)) {
                 e.setMessage(PowerTools.config.getString("CommandRedirect.commands." + key));
             }
         }

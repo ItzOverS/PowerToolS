@@ -1,25 +1,19 @@
 package me.overlight.powertools.discordlink;
 
-import io.github.retrooper.packetevents.PacketEvents;
 import me.overlight.powertools.Libraries.PluginYaml;
 import me.overlight.powertools.Plugin.PlInfo;
-import me.overlight.powertools.PowerModules.ExtensionManager;
 import me.overlight.powertools.PowerModules.PowerModule;
 import me.overlight.powertools.PowerTools;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import net.dv8tion.jda.api.utils.cache.CacheFlag;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.core.Filter;
-import org.apache.logging.log4j.core.Logger;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 import java.util.HashMap;
+
 public final class PowerExt
         extends JavaPlugin
         implements PowerModule {
@@ -28,12 +22,13 @@ public final class PowerExt
     public static HashMap<String, String> playerCodes = new HashMap<>();
     public static HashMap<String, String> discordIDsUser = new HashMap<>();
     public static PowerModule module;
+
     @Override
     public void onEnable() {
         // Plugin startup logic
         try {
             YamlConfiguration yml = new PluginYaml("discordLinks").getYaml();
-            for(String key: yml.getKeys(false)){
+            for (String key : yml.getKeys(false)) {
                 discordIDsUser.put(key, yml.getString(key));
             }
         } catch (IOException ignored) {
@@ -45,7 +40,7 @@ public final class PowerExt
             bot = JDABuilder.createDefault(PowerTools.config.getString(getConfigName() + ".token"), GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MESSAGES).build();
             bot.addEventListener(new DiscordMessageListener(this));
             getServer().getPluginManager().registerEvents(new GameEventHandler(), this);
-        } catch(Exception ex){
+        } catch (Exception ex) {
             PowerTools.INSTANCE.getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.RED + "Failed to log-in to discord bot: " + ex.getMessage());
         }
     }
@@ -56,7 +51,7 @@ public final class PowerExt
     }
 
     @Override
-    public String[] getConfiguration(){
+    public String[] getConfiguration() {
         return new String[]{
                 "enabled:false:boolean",
                 "token:'YOUR_TOKEN':string",
@@ -65,7 +60,7 @@ public final class PowerExt
     }
 
     @Override
-    public String getConfigName(){
+    public String getConfigName() {
         return "DiscordLink";
     }
 
@@ -75,7 +70,7 @@ public final class PowerExt
     }
 
     @Override
-    public PowerModule getPowerModule(){
+    public PowerModule getPowerModule() {
         return this;
     }
 }

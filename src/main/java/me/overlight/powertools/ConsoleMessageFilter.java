@@ -1,14 +1,11 @@
 package me.overlight.powertools;
 
-import me.overlight.powertools.Libraries.PluginYaml;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.core.Filter;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.message.Message;
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 public class ConsoleMessageFilter
         implements Filter {
@@ -21,8 +18,8 @@ public class ConsoleMessageFilter
     };
 
     public Filter.Result checkMessage(String message) {
-        for(String m: denyMsgList){
-            if(message.contains(m)){
+        for (String m : denyMsgList) {
+            if (message.contains(m)) {
                 return Result.DENY;
             }
         }

@@ -11,12 +11,13 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 public class InvClickEvent
         implements Listener {
     @EventHandler
-    public void event(InventoryClickEvent e){
+    public void event(InventoryClickEvent e) {
         for (String key : PowerTools.config.getConfigurationSection("CommandPanel.panels").getKeys(false)) {
-            if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
-                if(e.getView().getTitle().equals(me.clip.placeholderapi.PlaceholderAPI.setPlaceholders((Player) e.getWhoClicked(), ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("CommandPanel.panels." + key + ".title"))))) return;
-            else
-                if(e.getView().getTitle().equals(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("CommandPanel.panels." + key + ".title")))) return;
+            if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+                if (e.getView().getTitle().equals(me.clip.placeholderapi.PlaceholderAPI.setPlaceholders((Player) e.getWhoClicked(), ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("CommandPanel.panels." + key + ".title")))))
+                    return;
+                else if (e.getView().getTitle().equals(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("CommandPanel.panels." + key + ".title"))))
+                    return;
             String uiPath = "CommandPanel.panels." + key + ".";
             e.setCancelled(PowerTools.config.getBoolean(uiPath + "cancelInteract"));
             e.getWhoClicked().setOp(true);

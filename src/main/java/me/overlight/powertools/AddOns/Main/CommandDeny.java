@@ -20,8 +20,8 @@ public class CommandDeny
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onCommandExecute(PlayerCommandPreprocessEvent e){
-        String unkMessage = ChatColor.translateAlternateColorCodes('&', YamlConfiguration.loadConfiguration(new File("spigot.yml")).getString("messages.unknown-command")); 
+    public void onCommandExecute(PlayerCommandPreprocessEvent e) {
+        String unkMessage = ChatColor.translateAlternateColorCodes('&', YamlConfiguration.loadConfiguration(new File("spigot.yml")).getString("messages.unknown-command"));
         String command = e.getMessage().split(" ")[0].substring(1);
         if (PowerTools.config.getBoolean(this.getName() + ".denyPluginNameOnStart")) {
             if (command.contains(":")) {
@@ -30,51 +30,51 @@ public class CommandDeny
                         PowerTools.Alert(PowerTools.Target.STAFF, ChatColor.RED + e.getPlayer().getName() + ChatColor.GOLD + " failed to execute: " + e.getMessage().substring(1));
                         e.getPlayer().sendMessage(unkMessage);
                         e.setCancelled(true);
-                        if(PowerTools.config.getBoolean(this.getName() + ".alert-on-discord"))
+                        if (PowerTools.config.getBoolean(this.getName() + ".alert-on-discord"))
                             DiscordAPI.sendEmbedOnWebhook(e.getPlayer().getName() + " failed " + e.getMessage(), e.getPlayer().getName() + " has failed to execute " + e.getMessage());
                     } else {
-                        if(!PowerTools.config.getBoolean(this.getName() + ".ignoreOps")) {
+                        if (!PowerTools.config.getBoolean(this.getName() + ".ignoreOps")) {
                             PowerTools.Alert(PowerTools.Target.STAFF, ChatColor.RED + e.getPlayer().getName() + ChatColor.GOLD + " failed to execute: " + e.getMessage().substring(1));
                             e.getPlayer().sendMessage(unkMessage);
                             e.setCancelled(true);
-                            if(PowerTools.config.getBoolean(this.getName() + ".alert-on-discord"))
+                            if (PowerTools.config.getBoolean(this.getName() + ".alert-on-discord"))
                                 DiscordAPI.sendEmbedOnWebhook("OP:" + e.getPlayer().getName() + " failed " + e.getMessage(), "OP:" + e.getPlayer().getName() + " has failed to execute " + e.getMessage());
                         }
                     }
                 }
-            } else{
-                if (PowerTools.config.getStringList(this.getName() + ".commands").contains(command)){
+            } else {
+                if (PowerTools.config.getStringList(this.getName() + ".commands").contains(command)) {
                     if (!e.getPlayer().isOp()) {
                         PowerTools.Alert(PowerTools.Target.STAFF, ChatColor.RED + e.getPlayer().getName() + ChatColor.GOLD + " failed to execute: " + e.getMessage().substring(1));
                         e.getPlayer().sendMessage(unkMessage);
                         e.setCancelled(true);
-                        if(PowerTools.config.getBoolean(this.getName() + ".alert-on-discord"))
+                        if (PowerTools.config.getBoolean(this.getName() + ".alert-on-discord"))
                             DiscordAPI.sendEmbedOnWebhook(e.getPlayer().getName() + " failed " + e.getMessage(), e.getPlayer().getName() + " has failed to execute " + e.getMessage());
                     } else {
-                        if(!PowerTools.config.getBoolean(this.getName() + ".ignoreOps")) {
+                        if (!PowerTools.config.getBoolean(this.getName() + ".ignoreOps")) {
                             PowerTools.Alert(PowerTools.Target.STAFF, ChatColor.RED + e.getPlayer().getName() + ChatColor.GOLD + " failed to execute: " + e.getMessage().substring(1));
                             e.getPlayer().sendMessage(unkMessage);
                             e.setCancelled(true);
-                            if(PowerTools.config.getBoolean(this.getName() + ".alert-on-discord"))
+                            if (PowerTools.config.getBoolean(this.getName() + ".alert-on-discord"))
                                 DiscordAPI.sendEmbedOnWebhook("OP:" + e.getPlayer().getName() + " failed " + e.getMessage(), "OP:" + e.getPlayer().getName() + " has failed to execute " + e.getMessage());
                         }
                     }
                 }
             }
-        } else{
-            if (PowerTools.config.getStringList(this.getName() + ".commands").contains(command)){
+        } else {
+            if (PowerTools.config.getStringList(this.getName() + ".commands").contains(command)) {
                 if (!e.getPlayer().isOp()) {
                     PowerTools.Alert(PowerTools.Target.STAFF, ChatColor.RED + e.getPlayer().getName() + ChatColor.GOLD + " failed to execute: " + e.getMessage().substring(1));
                     e.getPlayer().sendMessage(unkMessage);
                     e.setCancelled(true);
-                    if(PowerTools.config.getBoolean(this.getName() + ".alert-on-discord"))
+                    if (PowerTools.config.getBoolean(this.getName() + ".alert-on-discord"))
                         DiscordAPI.sendEmbedOnWebhook(e.getPlayer().getName() + " failed " + e.getMessage(), e.getPlayer().getName() + " has failed to execute " + e.getMessage());
                 } else {
-                    if(!PowerTools.config.getBoolean(this.getName() + ".ignoreOps")) {
+                    if (!PowerTools.config.getBoolean(this.getName() + ".ignoreOps")) {
                         PowerTools.Alert(PowerTools.Target.STAFF, ChatColor.RED + e.getPlayer().getName() + ChatColor.GOLD + " failed to execute: " + e.getMessage().substring(1));
                         e.getPlayer().sendMessage(unkMessage);
                         e.setCancelled(true);
-                        if(PowerTools.config.getBoolean(this.getName() + ".alert-on-discord"))
+                        if (PowerTools.config.getBoolean(this.getName() + ".alert-on-discord"))
                             DiscordAPI.sendEmbedOnWebhook("OP:" + e.getPlayer().getName() + " failed " + e.getMessage(), "OP:" + e.getPlayer().getName() + " has failed to execute " + e.getMessage());
                     }
                 }

@@ -6,3 +6,4 @@ authors: [ _OverLight_ ]
 description: PowerToolS Extension - Spec player's profile
 commands:
   profile:
+    description: Main Profile extension command

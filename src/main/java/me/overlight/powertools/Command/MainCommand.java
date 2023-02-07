@@ -5,10 +5,8 @@ import me.overlight.powertools.Libraries.ColorFormat;
 import me.overlight.powertools.Libraries.RepItem;
 import me.overlight.powertools.Modules.impls.Timer;
 import me.overlight.powertools.Modules.mods.*;
-import me.overlight.powertools.Modules.mods.Freeze;
 import me.overlight.powertools.Plugin.*;
 import me.overlight.powertools.PowerTools;
-import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -31,7 +29,7 @@ public class MainCommand
         if (args.length > 0) {
             switch (args[0]) {
                 case "help":
-                    if(args.length == 1) {
+                    if (args.length == 1) {
                         sender.sendMessage(ColorFormat.formatColor("@color_gold@format_mid_line===================================================="));
                         sender.sendMessage(ColorFormat.formatColor(PlInfo.INV_PREFIX.substring(0, PlInfo.INV_PREFIX.length() - 11) + " @color_goldHelp: "));
                         int index = 0;
@@ -40,11 +38,11 @@ public class MainCommand
                             index++;
                         }
                         sender.sendMessage(ColorFormat.formatColor("@color_gold@format_mid_line===================================================="));
-                    } else if(args.length == 2){
+                    } else if (args.length == 2) {
                         PlCommands cmd = null;
                         try {
                             cmd = PlCommands.valueOf(args[1]);
-                        } catch(IllegalArgumentException ex){
+                        } catch (IllegalArgumentException ex) {
                             sender.sendMessage(PlMessages.HelpCMD_CommandNotFind.get());
                             return true;
                         }
@@ -54,7 +52,8 @@ public class MainCommand
                         sender.sendMessage(ColorFormat.formatColor("@color_goldCommand description: " + cmd.getDesc()));
                         sender.sendMessage(ColorFormat.formatColor("@color_goldCommand usage: " + cmd.getUsage()));
                         sender.sendMessage(ColorFormat.formatColor("@color_goldCommand permission: " + cmd.getPermission()));
-                        sender.sendMessage(ColorFormat.formatColor("@color_gold@format_mid_line===================================================="));}
+                        sender.sendMessage(ColorFormat.formatColor("@color_gold@format_mid_line===================================================="));
+                    }
                     break;
                 case "knockback":
                 case "kb":
@@ -238,24 +237,22 @@ public class MainCommand
                             Toggle.toggledPlayers.put(sender.getName(), getPlayer(args[2]).getName());
                             sender.sendMessage(PlMessages.Toggle_SimplifySet.get(new RepItem("%TARGET_PLAYER%", getPlayer(args[2]).getName()), new RepItem("%TARGET_ITEM%", item)));
                         }
-                    } else if(args.length == 2){
+                    } else if (args.length == 2) {
                         String item = "";
-                        switch (args[1].toLowerCase()) {
-                            case "tps":
-                                Toggle.toggledItem.put(sender.getName(), Toggle.ToggleItems.TPS);
-                                item = "TPS";
-                                break;
-                            default:
-                                sender.sendMessage(PlMessages.Toggle_TargetItemNotFind.get());
-                                return false;
+                        if (args[1].toLowerCase().equals("tps")) {
+                            Toggle.toggledItem.put(sender.getName(), Toggle.ToggleItems.TPS);
+                            item = "TPS";
+                        } else {
+                            sender.sendMessage(PlMessages.Toggle_TargetItemNotFind.get());
+                            return false;
                         }
                         Toggle.toggledPlayers.put(sender.getName(), "Server");
                         sender.sendMessage(PlMessages.Toggle_SimplifySet.get(new RepItem("%TARGET_PLAYER%", "Server"), new RepItem("%TARGET_ITEM%", item)));
                     }
                     break;
                 case "settings":
-                    if(args.length > 2){
-                        if(!PowerTools.config.getConfigurationSection(mixArray(new ArrayList<>(Arrays.asList(args)), ".", 1, args.length - 1)).getKeys(false).isEmpty()){
+                    if (args.length > 2) {
+                        if (!PowerTools.config.getConfigurationSection(mixArray(new ArrayList<>(Arrays.asList(args)), ".", 1, args.length - 1)).getKeys(false).isEmpty()) {
                             sender.sendMessage(PlMessages.Settings_InvalidPath.get());
                             return false;
                         }
@@ -266,11 +263,11 @@ public class MainCommand
                 default:
                     sender.sendMessage(PlMessages.CommandNotFind.get());
             }
-        } else{
+        } else {
             // args.length == 0
-            if(!PlPerms.hasPerm(sender, "powertools")){
+            if (!PlPerms.hasPerm(sender, "powertools")) {
                 sender.sendMessage(ColorFormat.formatColor("@color_aquaWelcome to PowerToolS v" + PlInfo.VERSION));
-            } else{
+            } else {
                 sender.sendMessage(ColorFormat.formatColor("@color_aquaWelcome to PowerToolS v" + PlInfo.VERSION));
                 sender.sendMessage(ColorFormat.formatColor("@color_aquaUse '/pts help' for information"));
             }
@@ -279,18 +276,20 @@ public class MainCommand
         return true;
     }
 
-    public boolean isPlayerValid(String username){
+    public boolean isPlayerValid(String username) {
         return Bukkit.getPlayer(username) != null;
     }
-    public Player getPlayer(String username){
+
+    public Player getPlayer(String username) {
         return Bukkit.getPlayer(username);
     }
-    private String mixArray(List<String> array, String splitter, int from, int length){
+
+    private String mixArray(List<String> array, String splitter, int from, int length) {
         String main = "";
         int index = -1;
-        for(String s: array) {
+        for (String s : array) {
             index++;
-            if(index >= from && index <= length + from)
+            if (index >= from && index <= length + from)
                 main += s + splitter;
         }
         return main.substring(0, main.length() - splitter.length());

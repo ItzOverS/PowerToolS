@@ -16,13 +16,13 @@ public class QuitMessage
     }
 
     @EventHandler
-    public void playerLeft(PlayerQuitEvent e){
-        if(this.isEnabled()) {
-            String message = PowerTools.config.getString( this.getName() + ".message");
+    public void playerLeft(PlayerQuitEvent e) {
+        if (this.isEnabled()) {
+            String message = PowerTools.config.getString(this.getName() + ".message");
             assert message != null;
             message = message.replace("%NAME%", e.getPlayer().getName());
             message = message.replace("%ONLINE%", String.valueOf(Bukkit.getOnlinePlayers().size()));
-            if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+            if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
                 e.setQuitMessage(ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), message)));
             else
                 e.setQuitMessage(ChatColor.translateAlternateColorCodes('&', message));

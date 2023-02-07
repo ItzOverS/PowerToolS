@@ -28,14 +28,15 @@ public class PlayerProfile {
     }
 
     private int maxRMBCps;
-    public PlayerProfile(Player player){
+
+    public PlayerProfile(Player player) {
         name = player.getName();
         displayName = player.getDisplayName();
         IPv4 = NetworkChecker.getPlayerIPv4(player);
         country = NetworkChecker.getPlayerCountry(player);
         city = NetworkChecker.getPlayerCity(player);
         uniqueID = player.getUniqueId();
-        isPremium = NetworkChecker.isPremium(player) ==  PremiumField.TRUE;
+        isPremium = NetworkChecker.isPremium(player) == PremiumField.TRUE;
         this.player = player;
     }
 
@@ -67,24 +68,25 @@ public class PlayerProfile {
         return isPremium;
     }
 
-    public List<Entity> getNearestEntities(int radians){
+    public List<Entity> getNearestEntities(int radians) {
         List<Entity> entities = new ArrayList<Entity>();
-        for(Entity entity : player.getWorld().getEntities()){
-            if(entity.getLocation().distance(player.getLocation()) < radians){
+        for (Entity entity : player.getWorld().getEntities()) {
+            if (entity.getLocation().distance(player.getLocation()) < radians) {
                 entities.add(entity);
             }
         }
         return entities;
     }
 
-    public String getClientVersion(){
+    public String getClientVersion() {
         return PacketEvents.get().getPlayerUtils().getClientVersion(player).name();
     }
-    public int getClientVersionProtocol(){
+
+    public int getClientVersionProtocol() {
         return PacketEvents.get().getPlayerUtils().getClientVersion(player).getProtocolVersion();
     }
 
-    public String getClientBrand(){
+    public String getClientBrand() {
         return VersionCheck.playersClientBrand.getOrDefault(player.getName(), "N/A");
     }
 }

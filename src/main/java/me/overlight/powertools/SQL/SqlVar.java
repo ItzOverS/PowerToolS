@@ -24,9 +24,9 @@ public class SqlVar {
         this.value = value;
     }
 
-    public static String getAsSqlAction(String primary, SqlVar... hashes){
+    public static String getAsSqlAction(String primary, SqlVar... hashes) {
         String result = "(";
-        for(SqlVar hash : hashes){
+        for (SqlVar hash : hashes) {
             result += hash.getName() + " " + hash.getType() + ",";
         }
         return result + "PRIMARY KEY (" + primary + "))";

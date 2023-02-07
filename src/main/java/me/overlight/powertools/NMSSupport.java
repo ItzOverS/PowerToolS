@@ -9,7 +9,7 @@ public class NMSSupport {
     public static Class<?> getClass(String className) {
         try {
             return Class.forName("net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3] + "." + className);
-        } catch(Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
