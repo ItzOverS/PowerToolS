@@ -48,6 +48,15 @@ NetworkChecker: # This plugin uses an api that only render 45 requests per minut
 
 AntiBot:
   enabled: false
+  FastJoin:
+    enabled: false
+    maxJoinPerSecond: 10
+  UserNameLearning:
+    enabled: true
+    maxMultiLetter: 4
+    maxJoinDelay: 3000
+  MultiIP:
+    enabled: true
 
 UsernameManager:
   enabled: false

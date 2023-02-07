@@ -197,7 +197,7 @@ public class ChatManager
         return mentionedPlayers;
     }
 
-    private static Long Count(String text, String charector) {
+    public static Long Count(String text, String charector) {
         long amount = 0;
         for (int i = 0; i < text.length() - charector.length(); i++) {
             if (text.startsWith(charector, i))
@@ -206,7 +206,7 @@ public class ChatManager
         return amount;
     }
 
-    private static String removeSymbols(String text, String[] Symbols) {
+    public static String removeSymbols(String text, String[] Symbols) {
         String newText = text;
         for (String symbol : Symbols) {
             newText = newText.replace(symbol, "");
