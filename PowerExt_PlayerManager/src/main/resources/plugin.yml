@@ -1,0 +1,6 @@
+name: PowerExt_PlayerManager
+version: '${project.version}'
+main: me.overlight.powertools.playermanager.PowerExt
+authors: [ _OverLight_ ]
+depend: [ PowerToolS ]
+description: PowerToolS Extension - Manage player's client and data's

@@ -131,6 +131,7 @@ public class PowerTools
             try { ExtensionManager.hookInto("DiscordLink"); } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | IllegalAccessException e) { e.printStackTrace(); }
             try { ExtensionManager.hookInto("CommandPanel"); } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | IllegalAccessException e) { e.printStackTrace(); }
             try { ExtensionManager.hookInto("Profiles"); } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | IllegalAccessException e) { e.printStackTrace(); }
+            try { ExtensionManager.hookInto("PlayerManager"); } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | IllegalAccessException e) { e.printStackTrace(); }
 
             try {
                 getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_goldChecking for updates"));
