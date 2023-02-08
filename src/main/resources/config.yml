@@ -286,6 +286,10 @@ ServerAddOns:
     enabled: false
     MOTD: "&cYou're Banned from mc.example.net"
 
+  PluginHider:
+    enabled: false
+    tabComplete: true # This mode will *not* fully block the tab complete!
+
 WorldEnvironments:
   enabled: false
   allowHunger: false
