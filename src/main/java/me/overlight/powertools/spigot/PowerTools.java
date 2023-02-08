@@ -68,6 +68,7 @@ public class PowerTools
     @Override
     public void onEnable() {
         try {
+            Alert(Target.CONSOLE, "@color_greenEnabling " + PlInfo.INV_PREFIX.substring(0, PlInfo.INV_PREFIX.length() - 11));
             INSTANCE = this;
             saveDefaultConfig();
             if (!new File("plugins\\PowerToolS\\types.yml").exists())
@@ -213,7 +214,8 @@ public class PowerTools
         String s = (!msg.startsWith(PlInfo.PREFIX) ? PlInfo.PREFIX : "") + msg;
         if (targ == Target.CONSOLE) {
             if(PowerTools.INSTANCE != null)
-                PowerTools.INSTANCE.getServer().getConsoleSender().sendMessage(s);
+                PowerTools.INSTANCE.getServer().getConsoleSender().sendMessage(ColorFormat.formatColor(s));
+            return;
         }
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (targ == Target.STAFF) {
@@ -230,7 +232,8 @@ public class PowerTools
             s = (!msg.startsWith(PlInfo.PREFIX) ? PlInfo.PREFIX : "") + msg;
         if (targ == Target.CONSOLE) {
             if(PowerTools.INSTANCE != null)
-                PowerTools.INSTANCE.getServer().getConsoleSender().sendMessage(s);
+                PowerTools.INSTANCE.getServer().getConsoleSender().sendMessage(ColorFormat.formatColor(s));
+            return;
         }
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (targ == Target.STAFF) {
