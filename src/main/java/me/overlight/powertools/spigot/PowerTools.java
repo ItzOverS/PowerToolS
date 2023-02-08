@@ -17,8 +17,11 @@ import me.overlight.powertools.spigot.AddOns.Main.Captcha.Captcha;
 import me.overlight.powertools.spigot.AddOns.Main.PvpRegisterer.PvpRegisterer;
 import me.overlight.powertools.spigot.AddOns.Render.ScoreBoards;
 import me.overlight.powertools.spigot.AddOns.Render.TabList;
-import me.overlight.powertools.spigot.AddOns.Server.*;
+import me.overlight.powertools.spigot.AddOns.Server.AntiRejoin;
+import me.overlight.powertools.spigot.AddOns.Server.BanMOTD;
+import me.overlight.powertools.spigot.AddOns.Server.ForcePing;
 import me.overlight.powertools.spigot.AddOns.Server.PluginHider.PluginHider;
+import me.overlight.powertools.spigot.AddOns.Server.RandomMOTD;
 import me.overlight.powertools.spigot.AddOns.Survival.FallingBlocks;
 import me.overlight.powertools.spigot.AddOns.Survival.NoRespawn;
 import me.overlight.powertools.spigot.AddOns.Survival.RandomSpawn;
@@ -42,11 +45,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.parser.ParseException;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
 
 public class PowerTools
         extends JavaPlugin {
@@ -224,119 +224,27 @@ public class PowerTools
             }
         }
     }
+    public static void Alert(Target targ, String msg, boolean insertPrefix) {
+        String s = msg;
+        if(insertPrefix)
+            s = (!msg.startsWith(PlInfo.PREFIX) ? PlInfo.PREFIX : "") + msg;
+        if (targ == Target.CONSOLE) {
+            if(PowerTools.INSTANCE != null)
+                PowerTools.INSTANCE.getServer().getConsoleSender().sendMessage(s);
+        }
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (targ == Target.STAFF) {
+                if (player.isOp())
+                    player.sendMessage(s);
+            } else {
+                player.sendMessage(s);
+            }
+        }
+    }
 
     public static void kickPlayerByBungee(Player player){
         ByteArrayDataOutput data = ByteStreams.newDataOutput();
         data.writeUTF("kick|" + player.getName() + "|You just kicked from server by bungeecord");
         player.sendPluginMessage(PowerTools.INSTANCE, "pts:bungee", data.toByteArray());
-    }
-
-    public enum PluginAddOns {
-        Bedwars("  AntiTeamup:\n" +
-                "    enabled: false\n" +
-                "    distance: 5\n" +
-                "    maxVL: 20\n" +
-                "\n" +
-                "  TntKnockback:\n" +
-                "    enabled: false\n" +
-                "    multiply: 1.6\n" +
-                "\n" +
-                "  FireballKnockback:\n" +
-                "    enabled: false\n" +
-                "    multiply: 1.4"),
-        Hub("  KnockbackPlates:\n" +
-                "    enabled: false\n" +
-                "    locations:\n" +
-                "      001:\n" +
-                "        world: \"World\" # Insert world's NAME\n" +
-                "        location: [100, 100] #NOTE: [X, Z]\n" +
-                "        mode: \"HEAD\" # Insert \"HEAD\" to knockback to head direction or \"FORCE\" to knockback to a default location\n" +
-                "        knockback: [1, 2, 1] # this only work when on FORCE\n" +
-                "        multiply: 2 # this only work when on HEAD\n" +
-                "        verticalNormal: 2\n" +
-                "  VoidTP:\n" +
-                "    enabled: false\n" +
-                "    respawnLocation:\n" +
-                "      x: 100\n" +
-                "      y: 100\n" +
-                "      z: 100\n" +
-                "    teleportY: -5 # When player's Y position get lower than this value will teleport to the respawnLocation"),
-        Survival("  NoRespawn: # BETA #When player kill by another player a head will drop from dead player! If that head place, player will respawn... else they're spectator\n" +
-                "    enabled: false\n" +
-                "\n" +
-                "  ChatGame:\n" +
-                "    # Delays are in InGameTicks: 20 ticks = 1 second: 1200 ticks = 1 minute\n" +
-                "    enabled: false\n" +
-                "    delay: 18000 # = every 15 mins\n" +
-                "    rewardsPerGame: 1 # AI only select 1 reward per game\n" +
-                "    answerTime: 1200 # 1 min insert -1 for disable\n" +
-                "    rewards:\n" +
-                "      Money: 10000 # 10000$ REQUIRED *VAULT ECONOMY*\n" +
-                "      IRON_BLOCK: 1\n" +
-                "      GOLD_BLOCK: 1\n" +
-                "      EMERALD_BLOCK: 1\n" +
-                "      DIAMOND: 3"),
-        Server("  randomMOTD:\n" +
-                "    enabled: false\n" +
-                "    MOTDs:\n" +
-                "      - \"&6THIS IS MY SERVER!\"\n" +
-                "      - \"&6ANOTHER &5SPIGOT SERVER\"\n" +
-                "\n" +
-                "  ForcePing:\n" +
-                "    enabled: false\n" +
-                "    maxDelay: 5000\n" +
-                "\n" +
-                "  AntiRejoin: # Works better if ForcePing enabled\n" +
-                "    enabled: false\n" +
-                "    wait: 5000\n" +
-                "\n" +
-                "  BanMOTD:\n" +
-                "    enabled: false\n" +
-                "    MOTD: \"&cYou're Banned from mc.example.net\""),
-        Render("  ScoreBoards:\n" +
-                "    enabled: false\n" +
-                "    switchDelay: 20 # 20 ticks = 1 second\n" +
-                "    name: \"Minecraft server\"\n" +
-                "    boards:\n" +
-                "      index01:\n" +
-                "        - \"&2Welcome to minecraft server\"\n" +
-                "        - \"&2On %onlines-size%/%max-onlines-size%\"\n" +
-                "        - \"&2You're using %cl-brand%\"\n" +
-                "      index02:\n" +
-                "        - \"&2Welcome to minecraft server\"\n" +
-                "        - \"&2On %onlines-size%/%max-onlines-size%\"\n" +
-                "        - \"&2You're using %cl-version%\"\n" +
-                "    # You can insert more items than these");
-
-        String config;
-
-
-        PluginAddOns(String config) {
-            this.config = config;
-        }
-
-        void insert() throws FileNotFoundException, UnsupportedEncodingException {
-            PrintWriter file = new PrintWriter("plugins\\PowerToolS\\config.yml", "UTF-8");
-            file.println();
-            for (int line = 0; line < config.split("\n").length; line++)
-                file.println(config.split("\n")[line]);
-            file.close();
-        }
-
-        void removeInserts() throws FileNotFoundException, UnsupportedEncodingException {
-            PrintWriter file = new PrintWriter("plugins\\PowerToolS\\config.yml", "UTF-8");
-            List<String> content = getConfigContent();
-            for (String s : content)
-                if (!Arrays.asList(config.split("\n")).contains(s))
-                    file.println(s);
-            file.close();
-        }
-
-        List<String> getConfigContent() throws FileNotFoundException {
-            List<String> content = new ArrayList<>();
-            Scanner sc = new Scanner(new File("plugins\\PowerToolS\\config.yml"));
-            while (sc.hasNextLine()) content.add(sc.nextLine());
-            return content;
-        }
     }
 }
