@@ -36,10 +36,10 @@ public class MainCommand
                     if (args.length == 1) {
                         sender.sendMessage(ColorFormat.formatColor("@color_gold@format_mid_line===================================================="));
                         sender.sendMessage(ColorFormat.formatColor(PlInfo.INV_PREFIX.substring(0, PlInfo.INV_PREFIX.length() - 11) + " @color_goldHelp: "));
-                        int index = 0;
+                        int index = 1;
                         for (PlCommands item : PlCommands.values()) {
                             if(!(sender instanceof Player))
-                                PowerTools.Alert(PowerTools.Target.CONSOLE, ChatColor.GRAY + "#" + index + "  " + ChatColor.GREEN + item.getName(), false);
+                                PowerTools.Alert(PowerTools.Target.CONSOLE, ChatColor.GRAY + "#" + index + "  " + ChatColor.GREEN + item.getName() + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + item.getDesc(), false);
                             else
                                 AlertUtils.sendHoverClickableMessage((Player) sender, ChatColor.GRAY + "#" + index + "  " + ChatColor.GREEN + item.getName(), new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, item.getUsage()), new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(item.getDesc() + "\n\n" + ChatColor.AQUA + "Click to use it in your chat").create()));
                             index++;
