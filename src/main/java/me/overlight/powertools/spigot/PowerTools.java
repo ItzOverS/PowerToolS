@@ -164,11 +164,13 @@ public class PowerTools
                 getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_redFailed to check for updates | check your network connection"));
             }
 
-            if (!new PlaceHolders().isRegistered()) {
-                if (new PlaceHolders().register())
-                    getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_greenSuccess registered placeholders"));
-                else
-                    getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_redFailed to register placeholders"));
+            if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+                if (!new PlaceHolders().isRegistered()) {
+                    if (new PlaceHolders().register())
+                        getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_greenSuccess registered placeholders"));
+                    else
+                        getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_redFailed to register placeholders"));
+                }
             }
 
             if (!PacketEvents.get().isInitialized() && !PacketEvents.get().isInitializing()) {
