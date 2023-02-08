@@ -199,6 +199,8 @@ public class MainCommand
                                 sender.sendMessage(PlMessages.Protect_PlayerIsNowProtected.get().replace("%PLAYER_NAME%", getPlayer(args[1]).getName()));
                                 Protect.protectedPlayers.add(getPlayer(args[1]).getName());
                             }
+                        } else{
+                            sender.sendMessage(PlMessages.PlayerNotFind.get());
                         }
                     }
                     break;
@@ -228,6 +230,8 @@ public class MainCommand
                                 sender.sendMessage(PlMessages.Vanish_PlayerIsNowVanish.get().replace("%PLAYER_NAME%", getPlayer(args[1]).getName()));
                                 Vanish.vanishPlayer(getPlayer(args[1]));
                             }
+                        } else{
+                            sender.sendMessage(PlMessages.PlayerNotFind.get());
                         }
                     }
                     break;
@@ -261,6 +265,8 @@ public class MainCommand
                             }
                             Toggle.toggledPlayers.put(sender.getName(), getPlayer(args[2]).getName());
                             sender.sendMessage(PlMessages.Toggle_SimplifySet.get(new RepItem("%TARGET_PLAYER%", getPlayer(args[2]).getName()), new RepItem("%TARGET_ITEM%", item)));
+                        } else{
+                            sender.sendMessage(PlMessages.PlayerNotFind.get());
                         }
                     } else if (args.length == 2) {
                         String item = "";
