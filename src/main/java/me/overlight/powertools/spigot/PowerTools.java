@@ -15,10 +15,8 @@ import me.overlight.powertools.spigot.AddOns.Main.Captcha.Captcha;
 import me.overlight.powertools.spigot.AddOns.Main.PvpRegisterer.PvpRegisterer;
 import me.overlight.powertools.spigot.AddOns.Render.ScoreBoards;
 import me.overlight.powertools.spigot.AddOns.Render.TabList;
-import me.overlight.powertools.spigot.AddOns.Server.AntiRejoin;
-import me.overlight.powertools.spigot.AddOns.Server.BanMOTD;
-import me.overlight.powertools.spigot.AddOns.Server.ForcePing;
-import me.overlight.powertools.spigot.AddOns.Server.RandomMOTD;
+import me.overlight.powertools.spigot.AddOns.Server.*;
+import me.overlight.powertools.spigot.AddOns.Server.PluginHider.PluginHider;
 import me.overlight.powertools.spigot.AddOns.Survival.FallingBlocks;
 import me.overlight.powertools.spigot.AddOns.Survival.NoRespawn;
 import me.overlight.powertools.spigot.AddOns.Survival.RandomSpawn;
@@ -227,7 +225,7 @@ public class PowerTools
         String s = (!msg.startsWith(PlInfo.PREFIX) ? PlInfo.PREFIX : "") + msg;
         if (targ == Target.CONSOLE) {
             if(PowerTools.INSTANCE != null)
-            PowerTools.INSTANCE.getServer().getConsoleSender().sendMessage(s);
+                PowerTools.INSTANCE.getServer().getConsoleSender().sendMessage(s);
         }
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (targ == Target.STAFF) {
