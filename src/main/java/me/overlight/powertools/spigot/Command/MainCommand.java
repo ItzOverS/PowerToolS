@@ -236,6 +236,13 @@ public class MainCommand
                         sender.sendMessage(PlMessages.NoPermission.get());
                         return false;
                     }
+                    if(args.length == 2 &&
+                            args[1].equals("remove")){
+                        Toggle.toggledItem.remove(sender.getName());
+                        Toggle.toggledPlayers.remove(sender.getName());
+                        sender.sendMessage(PlMessages.Toggle_SimplifyRemovedToggle.get());
+                        return true;
+                    }
                     if (args.length == 3) {
                         if (isPlayerValid(args[2])) {
                             String item = "";

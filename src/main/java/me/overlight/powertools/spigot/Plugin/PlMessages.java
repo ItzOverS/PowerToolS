@@ -34,6 +34,7 @@ public enum PlMessages {
     NetworkChecker_PlayerTempBannedForInvalidCountry("@color_gold%PLAYER_NAME%@color_green has temp banned for invalid country"),
     Toggle_TargetItemNotFind("@color_redTarget type not find!"),
     Toggle_SimplifySet("@color_greenSimplify toggled @color_gold%TARGET_PLAYER%@color_green's @color_gold%TARGET_ITEM%@color_green for You"),
+    Toggle_SimplifyRemovedToggle("@color_greenSimplify un-toggled"),
     OnlyPlayersCanUseCommand("@color_redOnly players can use this command"),
     NoPermission("@color_redYou don't have enough permission to do this!"),
     ReloadSuccess("@color_greenSimplify reloaded config.yml"),

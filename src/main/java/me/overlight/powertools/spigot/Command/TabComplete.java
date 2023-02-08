@@ -62,6 +62,7 @@ public class TabComplete
                         "pts vanish {TARGET}",
                         "pts toggle {TOGGLE_TYPES} {TARGET}",
                         "pts toggle tps",
+                        "pts toggle remove",
                         "pts cps {TARGET}",
                         "pts help {COMMANDS}",
                 };
