@@ -88,6 +88,21 @@ public class MainCommand
                         sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools knockback {username}")));
                     }
                     break;
+                case "knocbackall":
+                case "kba":
+                    if (!PlPerms.hasPerm(sender, PlPerms.Perms.KnockBackCommand.get())) {
+                        sender.sendMessage(PlMessages.NoPermission.get());
+                        return false;
+                    }
+                    if (args.length == 1) {
+                        if(sender instanceof Player)
+                            Knockback.testKnockbackAll((Player) sender);
+                        else
+                            PowerTools.Alert(PowerTools.Target.CONSOLE, PlMessages.OnlyPlayersCanUseCommand.get());
+                    } else{
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools knockbackall")));
+                    }
+                    break;
                 case "freeze":
                 case "fr":
                     if (!PlPerms.hasPerm(sender, PlPerms.Perms.FreezeCommand.get())) {

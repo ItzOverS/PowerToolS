@@ -51,6 +51,8 @@ public class TabComplete
                 String[] commands = {
                         "pts knockback {TARGET}",
                         "pts hide:kb {TARGET}",
+                        "pts knockbackall",
+                        "pts hide:kba",
                         "pts freeze {TARGET}",
                         "pts hide:fr {TARGET}",
                         "pts rotate {TARGET}",
