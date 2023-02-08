@@ -15,6 +15,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class MainCommand
         implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if(!(sender instanceof Player || sender instanceof ConsoleCommandSender)) return false;
         if (args.length > 0) {
             switch (args[0]) {
                 case "help":
@@ -34,7 +36,10 @@ public class MainCommand
                         sender.sendMessage(ColorFormat.formatColor(PlInfo.INV_PREFIX.substring(0, PlInfo.INV_PREFIX.length() - 11) + " @color_goldHelp: "));
                         int index = 0;
                         for (PlCommands item : PlCommands.values()) {
-                            AlertUtils.sendHoverClickableMessage((Player) sender, ChatColor.GRAY + "#" + index + "  " + ChatColor.GREEN + item.getName(), new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, item.getUsage()), new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(item.getDesc() + "\n\n" + ChatColor.AQUA + "Click to use it in your chat").create()));
+                            if(!(sender instanceof Player))
+                                PowerTools.Alert(PowerTools.Target.CONSOLE, ChatColor.GRAY + "#" + index + "  " + ChatColor.GREEN + item.getName());
+                            else
+                                AlertUtils.sendHoverClickableMessage((Player) sender, ChatColor.GRAY + "#" + index + "  " + ChatColor.GREEN + item.getName(), new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, item.getUsage()), new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(item.getDesc() + "\n\n" + ChatColor.AQUA + "Click to use it in your chat").create()));
                             index++;
                         }
                         sender.sendMessage(ColorFormat.formatColor("@color_gold@format_mid_line===================================================="));
@@ -62,9 +67,12 @@ public class MainCommand
                         return false;
                     }
                     if (args.length == 2) {
-                        if (isPlayerValid(args[1]))
-                            Knockback.testKnockback((Player) sender, getPlayer(args[1]));
-                        else
+                        if (isPlayerValid(args[1])) {
+                            if(sender instanceof Player)
+                                Knockback.testKnockback((Player) sender, getPlayer(args[1]));
+                            else
+                                PowerTools.Alert(PowerTools.Target.CONSOLE, PlMessages.OnlyPlayersCanUseCommand.get());
+                        } else
                             sender.sendMessage(PlMessages.PlayerNotFind.get());
                     } else if (args.length == 3) {
                         if (!Objects.equals(args[2], "stick")) return true;
@@ -83,9 +91,12 @@ public class MainCommand
                         return false;
                     }
                     if (args.length == 2) {
-                        if (isPlayerValid(args[1]))
-                            Freeze.freezePlayer((Player) sender, getPlayer(args[1]));
-                        else
+                        if (isPlayerValid(args[1])) {
+                            if(sender instanceof Player)
+                                Freeze.freezePlayer((Player) sender, getPlayer(args[1]));
+                            else
+                                PowerTools.Alert(PowerTools.Target.CONSOLE, PlMessages.OnlyPlayersCanUseCommand.get());
+                        } else
                             sender.sendMessage(PlMessages.PlayerNotFind.get());
                     } else if (args.length == 3) {
                         if (!Objects.equals(args[2], "stick")) return true;
@@ -127,9 +138,12 @@ public class MainCommand
                         return false;
                     }
                     if (args.length == 2) {
-                        if (isPlayerValid(args[1]))
-                            Rotate.testRotate((Player) sender, getPlayer(args[1]));
-                        else
+                        if (isPlayerValid(args[1])) {
+                            if(sender instanceof Player)
+                                Rotate.testRotate((Player) sender, getPlayer(args[1]));
+                            else
+                                PowerTools.Alert(PowerTools.Target.CONSOLE, PlMessages.OnlyPlayersCanUseCommand.get());
+                        } else
                             sender.sendMessage(PlMessages.PlayerNotFind.get());
                     } else if (args.length == 3) {
                         if (!Objects.equals(args[2], "stick")) return true;
@@ -194,6 +208,10 @@ public class MainCommand
                         return false;
                     }
                     if (args.length == 1) {
+                        if(!(sender instanceof Player)) {
+                            PowerTools.Alert(PowerTools.Target.CONSOLE, PlMessages.OnlyPlayersCanUseCommand.get());
+                            return true;
+                        }
                         if (Vanish.vanishedPlayers.contains(((Player) sender).getUniqueId())) {
                             sender.sendMessage(PlMessages.Vanish_YouAreNoLongerVanish.get());
                             Vanish.vanishPlayer(Bukkit.getPlayer(sender.getName()));
@@ -239,7 +257,7 @@ public class MainCommand
                         }
                     } else if (args.length == 2) {
                         String item = "";
-                        if (args[1].toLowerCase().equals("tps")) {
+                        if (args[1].equalsIgnoreCase("tps")) {
                             Toggle.toggledItem.put(sender.getName(), Toggle.ToggleItems.TPS);
                             item = "TPS";
                         } else {
@@ -256,7 +274,7 @@ public class MainCommand
                             sender.sendMessage(PlMessages.Settings_InvalidPath.get());
                             return false;
                         }
-                        PowerTools.config.set(mixArray(new ArrayList<>(Arrays.asList(args)), ".", 1, args.length - 1), args[args.length - 1]);
+                        PowerTools.config.set(mixArray(new ArrayList<>(Arrays.asList(args)), ".", 1, args.length - 3), args[args.length - 1]);
                         sender.sendMessage(PlMessages.Settings_SuccessSetValue.get(new RepItem("%PATH%", mixArray(new ArrayList<>(Arrays.asList(args)), ".", 1, args.length - 2)), new RepItem("%VALUE%", args[args.length - 1])));
                     }
                     break;
