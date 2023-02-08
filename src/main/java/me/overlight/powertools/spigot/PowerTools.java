@@ -177,6 +177,8 @@ public class PowerTools
                 PacketEvents.get().init();
             }
 
+            getServer().getMessenger().registerOutgoingPluginChannel(this, "pts:bungee");
+
             getServer().getConsoleSender().sendMessage("");
             getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("   @color_dark_green___  @color_aqua__________   "));
             getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("  @color_dark_green/ _ \\@color_aqua/_  __/ __/ @color_dark_gray Welcome to PowerToolS v" + PlInfo.VERSION));
@@ -235,6 +237,12 @@ public class PowerTools
                 player.sendMessage(s);
             }
         }
+    }
+
+    public static void kickPlayerByBungee(Player player){
+        ByteArrayDataOutput data = ByteStreams.newDataOutput();
+        data.writeUTF("kick|" + player.getName() + "|You just kicked from server by bungeecord");
+        player.sendPluginMessage(PowerTools.INSTANCE, "pts:bungee", data.toByteArray());
     }
 
     public enum PluginAddOns {

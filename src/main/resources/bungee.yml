@@ -1,0 +1,5 @@
+name: PowerToolS
+version: '${project.version}'
+author: _OverLight_
+main: me.overlight.powertools.bungee.PowerTools
+description: Give staffs powerful options for detecting cheaters

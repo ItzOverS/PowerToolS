@@ -37,7 +37,6 @@ public class AddOnManager {
 
     public static void unRegisterAll() {
         try {
-
             addOns.forEach(AddOn::onDisabled);
             addOns.clear();
         } catch (Exception ignored) {
