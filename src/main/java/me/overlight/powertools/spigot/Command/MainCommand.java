@@ -16,8 +16,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -82,6 +84,8 @@ public class MainCommand
                         } else {
                             sender.sendMessage(PlMessages.PlayerNotFind.get());
                         }
+                    } else{
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools knockback {username}")));
                     }
                     break;
                 case "freeze":
@@ -106,6 +110,8 @@ public class MainCommand
                         } else {
                             sender.sendMessage(PlMessages.PlayerNotFind.get());
                         }
+                    } else{
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools freeze {username}")));
                     }
                     break;
                 case "cps":
@@ -120,6 +126,15 @@ public class MainCommand
                         } else {
                             sender.sendMessage(PlMessages.PlayerNotFind.get());
                         }
+                    } else if(args.length == 1){
+                        if(!(sender instanceof Player)) {
+                            PowerTools.Alert(PowerTools.Target.CONSOLE, PlMessages.OnlyPlayersCanUseCommand.get());
+                            return true;
+                        }
+                        sender.sendMessage(PlMessages.CpsCheck_PlayersCpsGet.get(new RepItem("%PLAYER_NAME%", getPlayer(args[1]).getName()), new RepItem("%CPS_TYPE%", "LMB"), new RepItem("%CPS%", CpsMap.LMB.getOrDefault(sender.getName(), 0) + "")));
+                        sender.sendMessage(PlMessages.CpsCheck_PlayersCpsGet.get(new RepItem("%PLAYER_NAME%", getPlayer(args[1]).getName()), new RepItem("%CPS_TYPE%", "RMB"), new RepItem("%CPS%", CpsMap.RMB.getOrDefault(sender.getName(), 0) + "")));
+                    } else{
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools cps [username]")));
                     }
                     break;
                 case "reload":
@@ -128,7 +143,7 @@ public class MainCommand
                         sender.sendMessage(PlMessages.NoPermission.get());
                         return false;
                     }
-                    PowerTools.config = PowerTools.INSTANCE.getConfig();
+                    PowerTools.config = YamlConfiguration.loadConfiguration(new File("plugins\\PowerToolS\\config.yml"));
                     sender.sendMessage(PlMessages.ReloadSuccess.get());
                     break;
                 case "rotate":
@@ -153,6 +168,8 @@ public class MainCommand
                         } else {
                             sender.sendMessage(PlMessages.PlayerNotFind.get());
                         }
+                    } else{
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools rotate {username}")));
                     }
                     break;
                 case "playtime":
@@ -170,9 +187,24 @@ public class MainCommand
                                     (time.hour == 0 ? "" : time.hour + " hour" + (time.hour == 1 ? " " : "s ")) +
                                     (time.minute == 0 ? "" : time.minute + " minute" + (time.minute == 1 ? " " : "s ")) +
                                     (time.second == 0 ? "" : time.second + " second" + (time.second == 1 ? " " : "s ")) +
-                                    ChatColor.GREEN + " playTime!");
+                                    ChatColor.GREEN + " play time!");
                         } else
                             sender.sendMessage(PlMessages.PlayerNotFind.get());
+                    } else if(args.length == 1){
+                        if(!(sender instanceof Player)) {
+                            PowerTools.Alert(PowerTools.Target.CONSOLE, PlMessages.OnlyPlayersCanUseCommand.get());
+                            return true;
+                        }
+                        Timer time = PlayTime.PlayTime.get(sender.getName());
+                        sender.sendMessage(PlInfo.PREFIX +
+                                ChatColor.GOLD + getPlayer(args[1]).getName() + ChatColor.GREEN + " has " +
+                                ChatColor.GOLD +
+                                (time.hour == 0 ? "" : time.hour + " hour" + (time.hour == 1 ? " " : "s ")) +
+                                (time.minute == 0 ? "" : time.minute + " minute" + (time.minute == 1 ? " " : "s ")) +
+                                (time.second == 0 ? "" : time.second + " second" + (time.second == 1 ? " " : "s ")) +
+                                ChatColor.GREEN + " play time!");
+                    } else{
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools playtime [username]")));
                     }
                     break;
                 case "protect":
@@ -183,6 +215,10 @@ public class MainCommand
                     }
 
                     if (args.length == 1) {
+                        if(!(sender instanceof Player)) {
+                            PowerTools.Alert(PowerTools.Target.CONSOLE, PlMessages.OnlyPlayersCanUseCommand.get());
+                            return true;
+                        }
                         if (Protect.protectedPlayers.contains(sender.getName())) {
                             sender.sendMessage(PlMessages.Protect_YouAreNoLongerProtected.get());
                             Protect.protectedPlayers.remove(sender.getName());
@@ -202,6 +238,8 @@ public class MainCommand
                         } else{
                             sender.sendMessage(PlMessages.PlayerNotFind.get());
                         }
+                    } else{
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools protect [username]")));
                     }
                     break;
                 case "vanish":
@@ -233,6 +271,8 @@ public class MainCommand
                         } else{
                             sender.sendMessage(PlMessages.PlayerNotFind.get());
                         }
+                    } else{
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools vanish [username]")));
                     }
                     break;
                 case "toggle":
@@ -279,6 +319,8 @@ public class MainCommand
                         }
                         Toggle.toggledPlayers.put(sender.getName(), "Server");
                         sender.sendMessage(PlMessages.Toggle_SimplifySet.get(new RepItem("%TARGET_PLAYER%", "Server"), new RepItem("%TARGET_ITEM%", item)));
+                    } else{
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools toggle {item} [ofPlayer]")));
                     }
                     break;
                 case "settings":
