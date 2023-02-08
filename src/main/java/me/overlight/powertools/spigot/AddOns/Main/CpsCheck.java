@@ -103,7 +103,7 @@ public class CpsCheck
                     if (PowerTools.config.getBoolean(this.getName() + ".maxCps.LMB.alert-on-discord")) {
                         DiscordAPI.sendEmbedOnWebhook(player.getName() + " kicked - Max cps", "I kicked " + player.getName() + " for **MaxCPS**");
                     }
-                    player.kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "\nYou has kicked for max cps");
+                    PowerTools.kick(player, PlInfo.KICK_PREFIX + ChatColor.RED + "\nYou has kicked for max cps");
                 }
             }
             if (PowerTools.config.getBoolean(this.getName() + ".maxCps.RMB.enabled")) {
@@ -117,7 +117,7 @@ public class CpsCheck
                     if (PowerTools.config.getBoolean(this.getName() + ".maxCps.RMB.alert-on-discord")) {
                         DiscordAPI.sendEmbedOnWebhook(player.getName() + " kicked - Max cps", "I kicked " + player.getName() + " for **MaxCPS**");
                     }
-                    player.kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "\nYou has kicked for max cps");
+                    PowerTools.kick(player, PlInfo.KICK_PREFIX + ChatColor.RED + "\nYou has kicked for max cps");
                 }
             }
             if (PowerTools.config.getBoolean(this.getName() + ".AutoClickerCheck.enabled")) {
@@ -131,7 +131,7 @@ public class CpsCheck
                             if (PowerTools.config.getBoolean(this.getName() + ".AutoClickerCheck.alert-on-discord")) {
                                 DiscordAPI.sendEmbedOnWebhook(player.getName() + " kicked - Using AutoClicker", "I think " + player.getName() + " using **auto clicker**");
                             }
-                            player.kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "\nI think you're using AutoClicker");
+                            PowerTools.kick(player, PlInfo.KICK_PREFIX + ChatColor.RED + "\nI think you're using AutoClicker");
                             PlayerCpsHistory.remove(player.getName());
                             PlayerCpsTaskID.remove(player.getName());
                         } else {

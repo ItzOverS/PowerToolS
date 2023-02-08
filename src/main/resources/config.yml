@@ -1,5 +1,10 @@
 # Welcome to PowerTools PowerTools.config!!
 # You can use this plugin addons in this file!
+
+# Enable this if you using bungeecord
+# Plugin will sync with bungeecord...
+bungeecord: false
+
 discordWebhook:
   enabled: false
   url: ""

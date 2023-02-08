@@ -245,9 +245,15 @@ public class PowerTools
         }
     }
 
-    public static void kickPlayerByBungee(Player player){
-        ByteArrayDataOutput data = ByteStreams.newDataOutput();
-        data.writeUTF("kick|" + player.getName() + "|You just kicked from server by bungeecord");
-        player.sendPluginMessage(PowerTools.INSTANCE, "pts:bungee", data.toByteArray());
+    public static void kick(Player player, String reason) {
+        if (PowerTools.config.getBoolean("bungeecord")) {
+            ByteArrayDataOutput data = ByteStreams.newDataOutput();
+            data.writeUTF("kick|" + player.getName() + "|" + reason);
+            player.sendPluginMessage(PowerTools.INSTANCE, "pts:bungee", data.toByteArray());
+        } else {
+            Bukkit.getScheduler().runTask(PowerTools.INSTANCE, () -> {
+                player.kickPlayer(reason);
+            });
+        }
     }
 }

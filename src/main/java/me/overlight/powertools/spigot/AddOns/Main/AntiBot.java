@@ -42,7 +42,7 @@ public class AntiBot
             if (antiBotMode) {
                 Bukkit.banIP(NetworkChecker.getPlayerIPv4(e.getPlayer()));
                 e.getPlayer().setBanned(true);
-                e.getPlayer().kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "\nYou temp banned from this server");
+                PowerTools.kick(e.getPlayer(), PlInfo.KICK_PREFIX + ChatColor.RED + "\nYou temp banned from this server");
                 e.setJoinMessage(null);
                 return;
             }
@@ -54,7 +54,7 @@ public class AntiBot
                         player.sendMessage(PlInfo.PREFIX + ChatColor.RED + ChatColor.BOLD + "Server on bot attack any join will deny!");
                         continue;
                     }
-                    player.kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "Server on bot attack, please rejoin 5 minutes later");
+                    PowerTools.kick(player, PlInfo.KICK_PREFIX + ChatColor.RED + "Server on bot attack, please rejoin 5 minutes later");
                 }
                 antiBotMode = true;
                 new BukkitRunnable() {
@@ -93,7 +93,7 @@ public class AntiBot
                 }
                 if (isMulti) {
                     if (Math.max(userJoinTime.get(p), userJoinTime.get(realName)) - Math.min(userJoinTime.get(p), userJoinTime.get(realName)) < PowerTools.config.getLong(this.getName() + ".UserNameLearning.maxJoinDelay")) {
-                        e.getPlayer().kickPlayer(PlInfo.KICK_PREFIX + "AntiBot: Multi Letter by name");
+                        PowerTools.kick(e.getPlayer(), PlInfo.KICK_PREFIX + "AntiBot: Multi Letter by name");
                     }
                 }
             }

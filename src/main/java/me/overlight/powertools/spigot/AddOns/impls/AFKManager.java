@@ -139,7 +139,7 @@ public class AFKManager {
                     if (Bukkit.getPlayer(name).isOnline()) {
                         Alert(PowerTools.Target.STAFF, ChatColor.GOLD + name + ChatColor.RED + " has kicked for AFKing");
                         AfkCheck.afkManager.playerLeft(Bukkit.getPlayer(name));
-                        Bukkit.getPlayer(name).kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "AFK");
+                        PowerTools.kick(Bukkit.getPlayer(name), PlInfo.KICK_PREFIX + ChatColor.RED + "AFK");
                         if (PowerTools.config.getBoolean("afkCheck.alert-on-discord")) {
                             DiscordAPI.sendEmbedOnWebhook(name + " kicked - AFK", name + " has kicked for **afking**...");
                         }

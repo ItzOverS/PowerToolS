@@ -18,8 +18,10 @@ public class PluginChannelListener
 
         if(!channel.equals("pts:bungee")) return;
 
-        if(content[0].equals("kick")){
-            PowerTools.INSTANCE.getProxy().getPlayer(content[1]).disconnect(new ComponentBuilder(ColorFormat.formatColorBungee(content[2])).create());
+        switch(content[0]) {
+            case "kick":
+                PowerTools.INSTANCE.getProxy().getPlayer(content[1]).disconnect(new ComponentBuilder(ColorFormat.formatColorBungee(content[2])).create());
+                break;
         }
     }
 

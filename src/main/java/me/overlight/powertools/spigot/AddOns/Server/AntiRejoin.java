@@ -31,7 +31,7 @@ public class AntiRejoin
         if (lastDisconnect.containsKey(e.getPlayer().getName())) {
             if (System.currentTimeMillis() - lastDisconnect.get(e.getPlayer().getName()) <= PowerTools.config.getLong(this.getName() + ".wait")) {
                 Bukkit.getScheduler().runTask(PowerTools.INSTANCE, () -> {
-                    e.getPlayer().kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "Please wait before reconnect");
+                    PowerTools.kick(e.getPlayer(), PlInfo.KICK_PREFIX + ChatColor.RED + "Please wait before reconnect");
                 });
             }
         }

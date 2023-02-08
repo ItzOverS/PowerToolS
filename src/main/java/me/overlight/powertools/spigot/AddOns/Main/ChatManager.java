@@ -62,9 +62,9 @@ public class ChatManager
                         e.setCancelled(true);
                         Bukkit.getScheduler().runTask(PowerTools.INSTANCE, () -> {
                             if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
-                                Bukkit.getPlayer(sender.getName()).kickPlayer(ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".AntiSpam.Kick.msg"))));
+                                PowerTools.kick(sender, ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".AntiSpam.Kick.msg"))));
                             else
-                                Bukkit.getPlayer(sender.getName()).kickPlayer(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".AntiSpam.Kick.msg")));
+                                PowerTools.kick(sender, ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".AntiSpam.Kick.msg")));
                         });
                         return;
                     }

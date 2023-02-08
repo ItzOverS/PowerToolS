@@ -111,7 +111,7 @@ public class Captcha
                 verifiedPlayers.setYaml(yml);
                 player.closeInventory();
             } else {
-                player.kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "Failed to verify");
+                PowerTools.kick(player, PlInfo.KICK_PREFIX + ChatColor.RED + "Failed to verify");
             }
         } else if (mode == CaptchaMode.GuiSelect) {
             if (e.getCurrentItem().getItemMeta().getDisplayName().equals("Click This")) {
@@ -121,7 +121,7 @@ public class Captcha
                 verifiedPlayers.setYaml(yml);
                 player.closeInventory();
             } else {
-                player.kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "Failed to verify");
+                PowerTools.kick(player, PlInfo.KICK_PREFIX + ChatColor.RED + "Failed to verify");
             }
         }
     }
@@ -134,7 +134,7 @@ public class Captcha
                 !e.getInventory().getTitle().contains("h") && !e.getInventory().getTitle().contains("a")) return;
         if (verifiedPlayers.getYaml().getKeys(false).contains(e.getPlayer().getName())) return;
 
-        ((Player) e.getPlayer()).kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "Failed to verify");
+        PowerTools.kick((Player) e.getPlayer(), PlInfo.KICK_PREFIX + ChatColor.RED + "Failed to verify");
     }
 
     public enum CaptchaMode {

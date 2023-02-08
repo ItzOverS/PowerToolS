@@ -117,7 +117,7 @@ public class AntiTeamUp
                     continue;
                 }
                 Bukkit.getScheduler().runTaskAsynchronously(PowerTools.INSTANCE, () -> {
-                    Bukkit.getPlayer(name).kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "Do not teamUp");
+                    PowerTools.kick(Bukkit.getPlayer(name), PlInfo.KICK_PREFIX + ChatColor.RED + "Do not teamUp");
                 });
             }
         }

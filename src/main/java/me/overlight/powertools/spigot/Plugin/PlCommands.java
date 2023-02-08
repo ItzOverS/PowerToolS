@@ -10,6 +10,7 @@ public enum PlCommands {
     toggle("toggle", "toggle something of a player to your self", "toggle {toggleItem} [target]", PlPerms.Perms.ToggleCommand.get()),
     freeze("freeze", "freeze a player for SS", "freeze {target}", PlPerms.Perms.FreezeCommand.get()),
     cps("cps", "get player's 'client show' cps", "cps {target}", PlPerms.Perms.CpsCheckCommand.get()),
+    knockbackAll("knockbackAll", "Knockback all players at same time to detect who using velocity hack", "knockbackall", PlPerms.Perms.KnockBackCommand.get()),
 
     ;
     final String name, hover, click, perm;

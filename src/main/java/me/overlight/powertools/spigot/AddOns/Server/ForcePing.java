@@ -44,7 +44,7 @@ public class ForcePing
         Bukkit.getScheduler().runTask(PowerTools.INSTANCE, new Runnable() {
             @Override
             public void run() {
-                player.kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "You have to add our server to your server list to connect our server");
+                PowerTools.kick(player, PlInfo.KICK_PREFIX + ChatColor.RED + "You have to add our server to your server list to connect our server");
             }
         });
     }

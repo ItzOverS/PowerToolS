@@ -47,7 +47,7 @@ public class VersionCheck
     public void event(PlayerJoinEvent e) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
             if (!playersClientBrand.containsKey(e.getPlayer().getName()))
-                e.getPlayer().kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "No Client Brand Request");
+                PowerTools.kick(e.getPlayer(), PlInfo.KICK_PREFIX + ChatColor.RED + "No Client Brand Request");
         }, 100);
     }
 

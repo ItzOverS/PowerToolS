@@ -30,7 +30,7 @@ public class PingCheck
 
                 @Override
                 public void run() {
-                    player.kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "Your ping is too high - " + PacketEvents.get().getPlayerUtils().getPing(player) + "ms > " + PowerTools.config.getInt(thisName + ".maxPing") + "ms");
+                    PowerTools.kick(player, PlInfo.KICK_PREFIX + ChatColor.RED + "Your ping is too high - " + PacketEvents.get().getPlayerUtils().getPing(player) + "ms > " + PowerTools.config.getInt(thisName + ".maxPing") + "ms");
                     PowerTools.Alert(PowerTools.Target.STAFF, ChatColor.RED + player.getName() + ChatColor.GOLD + " kicked for high ping");
                     if (PowerTools.config.getBoolean(thisName + ".alert-on-discord")) {
                         DiscordAPI.sendEmbedOnWebhook(player.getName() + " kicked - HighPing", player.getName() + " kicked for has unstable ping on server");

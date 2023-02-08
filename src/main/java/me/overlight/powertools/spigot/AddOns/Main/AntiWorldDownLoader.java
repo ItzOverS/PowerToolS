@@ -47,14 +47,14 @@ public class AntiWorldDownLoader
             String thisName = this.getName();
             if (!player.isOp()) {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
-                    Bukkit.getPlayer(player.getName()).kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "I think you're using WorldDownLoader");
+                    PowerTools.kick(player, PlInfo.KICK_PREFIX + ChatColor.RED + "I think you're using WorldDownLoader");
                     if (PowerTools.config.getBoolean(thisName + ".alert-on-discord"))
                         DiscordAPI.sendEmbedOnWebhook(player.getName() + " kicked - Using **W**orld**D**own**L**oader", "I think " + player.getName() + " using **W**orld**D**own**L**oader");
                 }, 100);
             } else {
                 if (!PowerTools.config.getBoolean("AntiWorldDownLoader.continueOperators")) {
                     Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
-                        Bukkit.getPlayer(player.getName()).kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "I think you're using WorldDownLoader");
+                        PowerTools.kick(player, PlInfo.KICK_PREFIX + ChatColor.RED + "I think you're using WorldDownLoader");
                         if (PowerTools.config.getBoolean(thisName + ".alert-on-discord"))
                             DiscordAPI.sendEmbedOnWebhook("OP:" + player.getName() + " kicked - Using **W**orld**D**own**L**oader", "I think OP:" + player.getName() + " using **W**orld**D**own**L**oader");
                     }, 100);
