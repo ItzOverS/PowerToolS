@@ -26,7 +26,7 @@ public class VersionCheck
     public static HashMap<String, String> playersClientBrand = new HashMap<>();
 
     public VersionCheck() {
-        super("VersionCheck", "1.0", "check players version", PowerTools.config.getBoolean("VersionCheck.enabled"), (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12)) ? "mc:brand" : "MC|BRAND");
+        super("VersionCheck", "1.0", "check players version", PowerTools.config.getBoolean("VersionCheck.enabled"), (PacketEvents.get().getServerUtils().getVersion().isNewerThanOrEquals(ServerVersion.v_1_13)) ? "mc:brand" : "MC|Brand");
     }
 
     @Override
