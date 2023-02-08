@@ -1,5 +1,7 @@
 package me.overlight.powertools.spigot;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.utils.server.ServerVersion;
 import me.overlight.powertools.spigot.APIs.UpdateChecker;
@@ -123,29 +125,13 @@ public class PowerTools
 
             getServer().getPluginManager().registerEvents(new PluginEnabledEvent(), this);
 
-            try {
-                ExtensionManager.hookInto("DiscordLink");
-            } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException |
-                     IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            try {
-                ExtensionManager.hookInto("CommandPanel");
-            } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException |
-                     IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            try {
-                ExtensionManager.hookInto("Profiles");
-            } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException |
-                     IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            try {
-                ExtensionManager.hookInto("PlayerManager");
-            } catch (IOException | ClassNotFoundException | NoSuchMethodException | NoSuchFieldException |
-                     IllegalAccessException e) {
-                e.printStackTrace();
+            String[] hookList = new String[]{"DiscordLink", "CommandPanel", "Profiles", "PlayerManager"};
+            for(String ExName: hookList) {
+                try {
+                    ExtensionManager.hookInto(ExName);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
 
             try {
