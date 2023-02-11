@@ -22,8 +22,8 @@ public class InvGen {
     public static ItemStack generateItem(Material mat, int amount, String displayName, String[] Lore) {
         ItemStack stack = new ItemStack(mat, amount);
         ItemMeta meta = stack.getItemMeta();
-        meta.setDisplayName(displayName);
-        meta.setLore(Arrays.asList(Lore));
+        meta.setDisplayName(ColorFormat.formatColor(displayName));
+        if(Lore != null) meta.setLore(Arrays.asList(Lore));
         stack.setItemMeta(meta);
         return stack;
     }
