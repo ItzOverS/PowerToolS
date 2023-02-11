@@ -1,6 +1,6 @@
 package me.overlight.powertools.spigot.Libraries;
 
-import me.overlight.powertools.spigot.NMSSupport;
+import me.overlight.powertools.spigot.APIs.NMSSupport;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;

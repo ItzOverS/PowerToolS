@@ -3,7 +3,7 @@ package me.overlight.powertools.spigot.AddOns.Render;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.utils.server.ServerVersion;
 import me.overlight.powertools.spigot.AddOns.AddOn;
-import me.overlight.powertools.spigot.NMSSupport;
+import me.overlight.powertools.spigot.APIs.NMSSupport;
 import me.overlight.powertools.spigot.PowerTools;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

@@ -1,4 +1,4 @@
-package me.overlight.powertools.spigot;
+package me.overlight.powertools.spigot.APIs;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
