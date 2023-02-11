@@ -35,22 +35,6 @@ public class JoinMessage
             else
                 e.setJoinMessage(ChatColor.translateAlternateColorCodes('&', message));
         }
-
-        {
-            if (!new File("plugins\\PowerToolS\\JoinedPlayers.yml").exists()) {
-                YamlConfiguration config = new YamlConfiguration();
-                try {
-                    PowerTools.config.save(new File("plugins\\PowerToolS\\JoinedPlayers.yml"));
-                } catch (Exception ignored) {
-                }
-            }
-            YamlConfiguration yml = YamlConfiguration.loadConfiguration(new File("plugins\\PowerToolS\\JoinedPlayers.yml"));
-            yml.set(e.getPlayer().getName(), yml.getKeys(false).size() + 1);
-            try {
-                yml.save(new File("plugins\\PowerToolS\\JoinedPlayers.yml"));
-            } catch (Exception ignored) {
-            }
-        }
     }
 
     private boolean contains(String path, String text) {

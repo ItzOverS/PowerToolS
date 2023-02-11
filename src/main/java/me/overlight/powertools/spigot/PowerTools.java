@@ -164,6 +164,8 @@ public class PowerTools
                 PacketEvents.get().init();
             }
 
+            getServer().getPluginManager().registerEvents(new MainEventHandler(), this);
+
             getServer().getMessenger().registerOutgoingPluginChannel(this, "pts:bungee");
 
             getServer().getConsoleSender().sendMessage("");
