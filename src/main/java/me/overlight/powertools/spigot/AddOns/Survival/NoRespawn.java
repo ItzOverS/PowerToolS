@@ -2,35 +2,36 @@ package me.overlight.powertools.spigot.AddOns.Survival;
 
 import me.overlight.powertools.spigot.AddOns.AddOn;
 import me.overlight.powertools.spigot.Plugin.PlInfo;
+import me.overlight.powertools.spigot.PowerTools;
 import org.bukkit.*;
-import org.bukkit.block.Skull;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 public class NoRespawn
         extends AddOn
         implements Listener {
     public NoRespawn() {
-        super("SurvivalAddOns.NoRespawn", "1.0", "When player kill by another player a head will drop from dead! If that head place player will respawn... else they're spectator", false);
+        super("SurvivalAddOns.NoRespawn", "1.0", "When player kill by another player a head will drop from dead! If that head place player will respawn... else they're spectator", PowerTools.config.getBoolean("SurvivalAddOns.NoRespawn.enabled"));
     }
 
     @EventHandler
     public void playerKillByPlayer(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player && e.getDamager() instanceof Player))
             return;
-
         if (((Player) e.getEntity()).getHealth() - e.getDamage() <= 0) {
             ItemStack stack = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
             SkullMeta meta = (SkullMeta) stack.getItemMeta();
@@ -42,22 +43,24 @@ public class NoRespawn
         }
     }
 
+    List<Player> headPlaceEventActivated = new ArrayList<>();
+
     @EventHandler
-    public void playerPlaceBlock(BlockPlaceEvent e) {
-        if (e.getBlockPlaced().getType() == Material.SKULL) {
-            Skull skull = (Skull) e.getBlockPlaced().getState();
-            if (checkPlayerHead(skull) != null) {
+    public void playerInteract(PlayerInteractEvent e) {
+        if(e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        if(e.getItem() == null) return;
+        if (e.getItem().getType() == Material.SKULL_ITEM) {
+            if (checkPlayerHead(e.getItem().getItemMeta().getDisplayName()) != null) {
                 try {
-                    e.getPlayer().sendMessage("TRUE");
-                    Player player = Bukkit.getPlayer(checkPlayerHead(skull));
+                    Player player = Bukkit.getPlayer(checkPlayerHead(e.getItem().getItemMeta().getDisplayName()));
                     if (player == null)
                         throw new Exception("N");
                     if (!player.isOnline())
                         throw new Exception("N");
-                    player.teleport(new Location(e.getBlockPlaced().getLocation().getWorld(), e.getPlayer().getLocation().getX(), e.getPlayer().getLocation().getY() + 2, e.getPlayer().getLocation().getZ()));
+                    player.teleport(new Location(e.getClickedBlock().getLocation().getWorld(), e.getPlayer().getLocation().getX(), e.getPlayer().getLocation().getY() + 2, e.getPlayer().getLocation().getZ()));
                     player.setGameMode(GameMode.SURVIVAL);
                     player.sendMessage(PlInfo.PREFIX + PlInfo.ADDONS.SurvivalPrefix + ChatColor.RED + "You has respawned by " + e.getPlayer().getName());
-                    e.setCancelled(false);
+                    headPlaceEventActivated.add(e.getPlayer());
                 } catch (Exception ex) {
                     e.getPlayer().sendMessage(PlInfo.PREFIX + PlInfo.ADDONS.SurvivalPrefix + ChatColor.RED + "Not online to respawn");
                     e.setCancelled(true);
@@ -66,17 +69,17 @@ public class NoRespawn
         }
     }
 
-    private boolean searchDown(List<String> list, String string) {
-        for (String item : list) {
-            if (Objects.equals(item, string))
-                return true;
+    @EventHandler
+    public void playerBlockPlace(BlockPlaceEvent e){
+        if(headPlaceEventActivated.contains(e.getPlayer())){
+            headPlaceEventActivated.remove(e.getPlayer());
+            e.getBlockPlaced().setType(Material.AIR);
         }
-        return false;
     }
 
-    public String checkPlayerHead(Skull skull) {
+    public String checkPlayerHead(String skullName) {
         for (String str : SetToList(YamlConfiguration.loadConfiguration(new File("plugins\\PowerTools\\JoinedPlayers.yml")).getKeys(true))) {
-            if (skull.getOwner().equals(str)) {
+            if (skullName.substring(2).replace("'s Head", "").equals(str)) {
                 return str;
             }
         }
