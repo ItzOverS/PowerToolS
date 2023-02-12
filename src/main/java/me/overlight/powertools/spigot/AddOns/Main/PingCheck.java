@@ -2,7 +2,7 @@ package me.overlight.powertools.spigot.AddOns.Main;
 
 import io.github.retrooper.packetevents.PacketEvents;
 import me.overlight.powertools.spigot.AddOns.AddOn;
-import me.overlight.powertools.spigot.Libraries.WebHooks.DiscordAPI;
+import me.overlight.powertools.spigot.Discord.WebHooks.DiscordAPI;
 import me.overlight.powertools.spigot.Modules.mods.PlayTime;
 import me.overlight.powertools.spigot.Plugin.PlInfo;
 import me.overlight.powertools.spigot.PowerTools;

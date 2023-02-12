@@ -1,4 +1,4 @@
-package me.overlight.powertools.spigot.Libraries.WebHooks;/*
+package me.overlight.powertools.spigot.Discord.WebHooks;/*
  * Decompiled with CFR 0.152.
  */
 

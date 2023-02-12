@@ -3,7 +3,7 @@ package me.overlight.powertools.spigot.AddOns.Main;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.utils.server.ServerVersion;
 import me.overlight.powertools.spigot.AddOns.AddOn;
-import me.overlight.powertools.spigot.Libraries.WebHooks.DiscordAPI;
+import me.overlight.powertools.spigot.Discord.WebHooks.DiscordAPI;
 import me.overlight.powertools.spigot.Plugin.PlInfo;
 import me.overlight.powertools.spigot.PowerTools;
 import org.bukkit.Bukkit;

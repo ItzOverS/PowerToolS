@@ -1,4 +1,4 @@
-package me.overlight.powertools.spigot.Libraries.WebHooks;/*
+package me.overlight.powertools.spigot.Discord.WebHooks;/*
  * Decompiled with CFR 0.152.
  */
 
@@ -110,7 +110,7 @@ public class DiscordWebhook {
         URL url = new URL(this.url);
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
         connection.addRequestProperty("Content-Type", "application/json");
-        connection.addRequestProperty("User-Agent", "Java-DiscordWebhook-BY-Gelox_");
+        connection.addRequestProperty("User-Agent", "Java-DiscordWebhook-BY-ItzOverLight");
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
         OutputStream stream = connection.getOutputStream();

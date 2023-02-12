@@ -27,10 +27,11 @@ import me.overlight.powertools.spigot.AddOns.Survival.NoRespawn;
 import me.overlight.powertools.spigot.AddOns.Survival.RandomSpawn;
 import me.overlight.powertools.spigot.Command.MainCommand;
 import me.overlight.powertools.spigot.Command.TabComplete;
+import me.overlight.powertools.spigot.Discord.Bot;
 import me.overlight.powertools.spigot.Libraries.ColorFormat;
 import me.overlight.powertools.spigot.Libraries.PlaceHolders;
-import me.overlight.powertools.spigot.Libraries.WebHooks.DiscordAPI;
-import me.overlight.powertools.spigot.Libraries.WebHooks.DiscordWebhook;
+import me.overlight.powertools.spigot.Discord.WebHooks.DiscordAPI;
+import me.overlight.powertools.spigot.Discord.WebHooks.DiscordWebhook;
 import me.overlight.powertools.spigot.Modules.ModuleManager;
 import me.overlight.powertools.spigot.Modules.mods.*;
 import me.overlight.powertools.spigot.Plugin.PlInfo;
@@ -85,8 +86,8 @@ public class PowerTools
 
             discordWebhookConnection:
             {
-                if (PowerTools.config.getBoolean("discordWebhook.enabled")) {
-                    String url = PowerTools.config.getString("discordWebhook.url");
+                if (config.getBoolean("Discord.WebHook.enabled")) {
+                    String url = config.getString("Discord.WebHook.url");
                     if (url == null || url.equals(""))
                         break discordWebhookConnection;
                     getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.GOLD + "Connecting to discord webhook");
@@ -102,6 +103,13 @@ public class PowerTools
                         getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.RED + "Something went wrong: " + ex.getMessage());
                         DiscordAPI.DiscordWebHookURL = null;
                     }
+                }
+            }
+
+            {
+                if(!config.getString("Discord.Bot.token").replace(" ", "").equals("")) {
+                    getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.GOLD + "Logging in to Discord-Bot");
+                    Bot.loginClient(config.getString("Discord.Bot.token"));
                 }
             }
 

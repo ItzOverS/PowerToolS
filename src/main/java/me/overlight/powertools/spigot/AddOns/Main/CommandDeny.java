@@ -1,7 +1,7 @@
 package me.overlight.powertools.spigot.AddOns.Main;
 
 import me.overlight.powertools.spigot.AddOns.AddOn;
-import me.overlight.powertools.spigot.Libraries.WebHooks.DiscordAPI;
+import me.overlight.powertools.spigot.Discord.WebHooks.DiscordAPI;
 import me.overlight.powertools.spigot.PowerTools;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;

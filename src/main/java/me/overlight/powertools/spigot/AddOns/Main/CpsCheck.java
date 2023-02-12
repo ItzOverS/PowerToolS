@@ -3,7 +3,7 @@ package me.overlight.powertools.spigot.AddOns.Main;
 import me.overlight.powertools.spigot.AddOns.AddOn;
 import me.overlight.powertools.spigot.AddOns.impls.cpsHistory;
 import me.overlight.powertools.spigot.Libraries.RepItem;
-import me.overlight.powertools.spigot.Libraries.WebHooks.DiscordAPI;
+import me.overlight.powertools.spigot.Discord.WebHooks.DiscordAPI;
 import me.overlight.powertools.spigot.Modules.mods.CpsMap;
 import me.overlight.powertools.spigot.Plugin.PlInfo;
 import me.overlight.powertools.spigot.Plugin.PlMessages;

@@ -1,4 +1,4 @@
-package me.overlight.powertools.spigot.Libraries.WebHooks;
+package me.overlight.powertools.spigot.Discord.WebHooks;
 
 import me.overlight.powertools.spigot.Plugin.PlInfo;
 import org.bukkit.Bukkit;

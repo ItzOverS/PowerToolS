@@ -5,9 +5,12 @@
 # Plugin will sync with bungeecord...
 bungeecord: false
 
-discordWebhook:
-  enabled: false
-  url: ""
+Discord:
+  WebHook:
+    enabled: false
+    url: ""
+  Bot:
+    token: ""
 
 ChatManager:
   enabled: false
@@ -294,6 +297,14 @@ ServerAddOns:
   PluginHider:
     enabled: false
     tabComplete: true # This mode will *not* fully block the tab complete!
+
+  # usage will `$$execute {command}` for discord -> minecraft
+  # Before enable this you must fill the field: Discord.Bot.token - It's on top of this page
+  SyncDiscord:
+    enabled: false
+    allowedChannelIDs:
+      - 44465415418452 # This ID is random
+    fromDiscord: true # execute the commands they send in chat at discord
 
 WorldEnvironments:
   enabled: false

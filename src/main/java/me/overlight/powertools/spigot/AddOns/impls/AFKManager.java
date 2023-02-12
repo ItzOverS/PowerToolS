@@ -1,7 +1,7 @@
 package me.overlight.powertools.spigot.AddOns.impls;
 
 import me.overlight.powertools.spigot.AddOns.Main.AfkCheck;
-import me.overlight.powertools.spigot.Libraries.WebHooks.DiscordAPI;
+import me.overlight.powertools.spigot.Discord.WebHooks.DiscordAPI;
 import me.overlight.powertools.spigot.Plugin.PlInfo;
 import me.overlight.powertools.spigot.PowerTools;
 import org.bukkit.Bukkit;
