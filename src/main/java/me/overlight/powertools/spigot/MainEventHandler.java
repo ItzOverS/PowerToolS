@@ -16,7 +16,6 @@ public class MainEventHandler
         new BukkitRunnable(){
             public void run() {
                 if (!new File("plugins\\PowerToolS\\JoinedPlayers.yml").exists()) {
-                    YamlConfiguration config = new YamlConfiguration();
                     try {
                         PowerTools.config.save(new File("plugins\\PowerToolS\\JoinedPlayers.yml"));
                     } catch (Exception ignored) {
