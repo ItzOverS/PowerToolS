@@ -1,13 +1,17 @@
 package me.overlight.powertools.spigot.AddOns.Main.Captcha;
 
+import me.overlight.powertools.spigot.PowerTools;
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapCanvas;
 import org.bukkit.map.MapPalette;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 
-import java.awt.*;
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MapViewRenderer
@@ -19,15 +23,13 @@ public class MapViewRenderer
         if (done)
             return;
         Random random = new Random();
-        BufferedImage img = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = img.createGraphics();
-        String num = "";
-        for (int i = 0; i < 3; i++) {
-            int rand = random.nextInt(10);
-            num += rand;
-            g.drawString(rand + "", (i + 1) * (random.nextInt(5) * 2), (i + 1) * random.nextInt(10));
+        int num = random.nextInt(PowerTools.config.getConfigurationSection("Captcha.MapsLink").getKeys(false).size());
+        Captcha.playersCodes.put(player.getName(), num);
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new URL(new ArrayList<>(PowerTools.config.getConfigurationSection("Captcha.MapsLink").getKeys(false)).get(num)));
+        } catch (IOException ignored) {
         }
-        g.dispose();
         img = MapPalette.resizeImage(img);
         mapCanvas.drawImage(0, 0, img);
         done = true;

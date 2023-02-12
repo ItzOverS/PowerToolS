@@ -13,6 +13,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -20,11 +22,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.map.MapView;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Random;
+import java.util.*;
 
 public class Captcha
         extends AddOn
         implements Listener {
+    public static HashMap<String, Integer> playersCodes = new HashMap<>();
     PluginYaml verifiedPlayers;
     CaptchaMode mode;
 
@@ -36,8 +39,8 @@ public class Captcha
         }
         String text = PowerTools.config.getString(this.getName() + ".AI");
         switch (text.toLowerCase()) {
-            case "mapnumber":
-                mode = CaptchaMode.MapNumber;
+            case "map":
+                mode = CaptchaMode.Map;
                 break;
             case "gui":
                 mode = CaptchaMode.GuiSelect;
@@ -53,11 +56,25 @@ public class Captcha
         if (verifiedPlayers.getYaml().getKeys(false).contains(e.getPlayer().getName())) return;
 
         Random random = new Random();
-        if (mode == CaptchaMode.MapNumber) {
+        if (mode == CaptchaMode.Map) {
             MapView map = Bukkit.createMap(e.getPlayer().getWorld());
             map.getRenderers().clear();
             MapViewRenderer renderer = new MapViewRenderer();
             map.addRenderer(renderer);
+
+            ItemStack stack = new ItemStack(Material.MAP, 1);
+            e.getPlayer().getInventory().setItem(4, stack);
+            e.getPlayer().sendMap(map);
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (verifiedPlayers.getYaml().getKeys(false).contains(e.getPlayer().getName())) {
+                        cancel();
+                        return;
+                    }
+                    e.getPlayer().sendMessage("Enter in chat, what you see in picture");
+                }
+            }.runTaskTimer(PowerTools.INSTANCE, 0, 100);
         } else if (mode == CaptchaMode.GuiSelect) {
             new BukkitRunnable() {
                 @Override
@@ -88,6 +105,13 @@ public class Captcha
                     e.getPlayer().openInventory(inv);
                 }
             }.runTaskLater(PowerTools.INSTANCE, 5);
+        }
+    }
+
+    @EventHandler
+    public void event(InventoryOpenEvent e) {
+        if (mode == CaptchaMode.Map) {
+            e.getPlayer().closeInventory();
         }
     }
 
@@ -128,19 +152,45 @@ public class Captcha
 
     @EventHandler
     public void event(InventoryCloseEvent e) {
-        if (!e.getInventory().getTitle().startsWith(PlInfo.INV_PREFIX) && !e.getInventory().getTitle().contains("C") &&
-                !e.getInventory().getTitle().contains("a") && !e.getInventory().getTitle().contains("p") &&
-                !e.getInventory().getTitle().contains("t") && !e.getInventory().getTitle().contains("c") &&
-                !e.getInventory().getTitle().contains("h") && !e.getInventory().getTitle().contains("a")) return;
-        if (verifiedPlayers.getYaml().getKeys(false).contains(e.getPlayer().getName())) return;
+        if (mode == CaptchaMode.GuiSelect || mode == CaptchaMode.GuiSelect_AB) {
+            if (!e.getInventory().getTitle().startsWith(PlInfo.INV_PREFIX) && !e.getInventory().getTitle().contains("C") &&
+                    !e.getInventory().getTitle().contains("a") && !e.getInventory().getTitle().contains("p") &&
+                    !e.getInventory().getTitle().contains("t") && !e.getInventory().getTitle().contains("c") &&
+                    !e.getInventory().getTitle().contains("h") && !e.getInventory().getTitle().contains("a")) return;
+            if (verifiedPlayers.getYaml().getKeys(false).contains(e.getPlayer().getName())) return;
 
-        PowerTools.kick((Player) e.getPlayer(), PlInfo.KICK_PREFIX + ChatColor.RED + "Failed to verify");
+            PowerTools.kick((Player) e.getPlayer(), PlInfo.KICK_PREFIX + ChatColor.RED + "Failed to verify");
+        }
+    }
+
+    @EventHandler
+    public void event(AsyncPlayerChatEvent e) {
+        if (mode == CaptchaMode.Map) {
+            if (!verifiedPlayers.getYaml().getKeys(false).contains(e.getPlayer().getName())) {
+                if (getKey(e.getMessage()) == null &&
+                        Objects.equals(getKey(new ArrayList<>(PowerTools.config.getConfigurationSection("Captcha.MapsLink").getKeys(false)).get(playersCodes.get(e.getPlayer().getName()))), e.getMessage())) {
+                    YamlConfiguration yml = verifiedPlayers.getYaml();
+                    yml.set(e.getPlayer().getName(), "");
+                    verifiedPlayers.setYaml(yml);
+                    e.getPlayer().closeInventory();
+                }
+            }
+        }
     }
 
     public enum CaptchaMode {
-        MapNumber,
+        Map,
         GuiSelect,
         GuiSelect_AB
+    }
+
+    private String getKey(String value) {
+        List<String> items = new ArrayList<>(PowerTools.config.getConfigurationSection("Captcha.MapsLink").getKeys(false));
+        for (String m : items) {
+            if (m.equals(value))
+                return m;
+        }
+        return null;
     }
 
     private ItemStack generateRandomizedItemStack(String text) {

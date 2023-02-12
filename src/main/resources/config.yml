@@ -87,10 +87,13 @@ UsernameManager:
 Captcha:
   enabled: false
   # AIs:
-  # X MapNumber: Give player a map... in map we can see number... player most write the number in chat
+  # Map: Give player a map... in map we can see number... player most write the number in chat
   # GUI: Open a gui with random items... player most select the one has "This One" text
   # GUI-AB: Open a gui with random items... player most select the one has "So One" text ( Anti-Bypass ) ( NOTE: TenaCity ( hacked client ) can't render its text )
   AI: "GUI"
+  MapsLink:
+    "1234": https://test.net/examplePic/1234.png
+    "532a": https://test.net/examplePic/532a.png
 
 CpsCheck:
   enabled: false
