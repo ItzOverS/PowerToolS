@@ -12,6 +12,12 @@ Discord:
   Bot:
     token: ""
 
+Extensions:
+  - DiscordLink
+  - PlayerManager
+  - CommandPanel
+  - Profiles
+
 ChatManager:
   enabled: false
   AntiSpam:

@@ -17,9 +17,7 @@ import me.overlight.powertools.spigot.AddOns.Main.Captcha.Captcha;
 import me.overlight.powertools.spigot.AddOns.Main.PvpRegisterer.PvpRegisterer;
 import me.overlight.powertools.spigot.AddOns.Render.ScoreBoards;
 import me.overlight.powertools.spigot.AddOns.Render.TabList;
-import me.overlight.powertools.spigot.AddOns.Server.AntiRejoin;
-import me.overlight.powertools.spigot.AddOns.Server.BanMOTD;
-import me.overlight.powertools.spigot.AddOns.Server.ForcePing;
+import me.overlight.powertools.spigot.AddOns.Server.*;
 import me.overlight.powertools.spigot.AddOns.Server.PluginHider.PluginHider;
 import me.overlight.powertools.spigot.AddOns.Server.RandomMOTD;
 import me.overlight.powertools.spigot.AddOns.Survival.FallingBlocks;
@@ -134,8 +132,7 @@ public class PowerTools
 
             getServer().getPluginManager().registerEvents(new PluginEnabledEvent(), this);
 
-            String[] hookList = new String[]{"DiscordLink", "CommandPanel", "Profiles", "PlayerManager"};
-            for(String ExName: hookList) {
+            for(String ExName: config.getStringList("Extensions")) {
                 try {
                     ExtensionManager.hookInto(ExName);
                 } catch (Exception ex) {
