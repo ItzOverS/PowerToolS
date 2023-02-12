@@ -18,8 +18,8 @@ import me.overlight.powertools.spigot.AddOns.Main.PvpRegisterer.PvpRegisterer;
 import me.overlight.powertools.spigot.AddOns.Render.ScoreBoards;
 import me.overlight.powertools.spigot.AddOns.Render.TabList;
 import me.overlight.powertools.spigot.AddOns.Server.*;
+import me.overlight.powertools.spigot.AddOns.Server.DiscordSync.DiscordSync;
 import me.overlight.powertools.spigot.AddOns.Server.PluginHider.PluginHider;
-import me.overlight.powertools.spigot.AddOns.Server.RandomMOTD;
 import me.overlight.powertools.spigot.AddOns.Survival.FallingBlocks;
 import me.overlight.powertools.spigot.AddOns.Survival.NoRespawn;
 import me.overlight.powertools.spigot.AddOns.Survival.RandomSpawn;
@@ -125,7 +125,7 @@ public class PowerTools
             if (config.getBoolean("SurvivalAddOns.enabled"))
                 AddOnManager.registerAddOn(new ChatManager(), new NoRespawn(), new RandomSpawn(), new FallingBlocks());
             if (config.getBoolean("ServerAddOns.enabled"))
-                AddOnManager.registerAddOn(new RandomMOTD(), new BanMOTD(), new AntiRejoin(), new ForcePing(), new PluginHider());
+                AddOnManager.registerAddOn(new RandomMOTD(), new BanMOTD(), new AntiRejoin(), new ForcePing(), new PluginHider(), new DiscordSync());
             if (config.getBoolean("RenderAddOns.enabled"))
                 AddOnManager.registerAddOn(new ScoreBoards(), new TabList());
             AddOnManager.loadAddons();
