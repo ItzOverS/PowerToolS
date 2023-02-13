@@ -29,16 +29,17 @@ public class AddOnManager {
 
     public static void unRegisterAddOn(AddOn... addOn) {
         try {
-            addOns.removeAll(Arrays.asList(addOn));
             Arrays.asList(addOn).forEach(AddOn::onDisabled);
+            addOns.removeAll(Arrays.asList(addOn));
         } catch (Exception ignored) {
         }
     }
 
     public static void unRegisterAll() {
         try {
-            addOns.forEach(AddOn::onDisabled);
-            addOns.clear();
+            for (AddOn addon : addOns) {
+                unRegisterAddOn(addon);
+            }
         } catch (Exception ignored) {
         }
     }
