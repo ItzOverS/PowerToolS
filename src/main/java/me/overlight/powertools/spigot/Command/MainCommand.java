@@ -1,11 +1,13 @@
 package me.overlight.powertools.spigot.Command;
 
+import me.overlight.powertools.spigot.AddOns.AddOnManager;
 import me.overlight.powertools.spigot.Libraries.AlertUtils;
 import me.overlight.powertools.spigot.Libraries.ColorFormat;
 import me.overlight.powertools.spigot.Libraries.RepItem;
 import me.overlight.powertools.spigot.Modules.impls.Timer;
 import me.overlight.powertools.spigot.Modules.mods.*;
 import me.overlight.powertools.spigot.Plugin.*;
+import me.overlight.powertools.spigot.PowerModules.ExtensionManager;
 import me.overlight.powertools.spigot.PowerTools;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -159,6 +161,10 @@ public class MainCommand
                         return false;
                     }
                     PowerTools.config = YamlConfiguration.loadConfiguration(new File("plugins\\PowerToolS\\config.yml"));
+                    AddOnManager.unRegisterAll();
+                    PowerTools.loadAddOns();
+                    ExtensionManager.removeAllExtensions();
+                    PowerTools.loadExtensions();
                     sender.sendMessage(PlMessages.ReloadSuccess.get());
                     break;
                 case "rotate":
