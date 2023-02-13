@@ -13,23 +13,27 @@ import me.overlight.powertools.spigot.AddOns.Bedwars.TntKnockback;
 import me.overlight.powertools.spigot.AddOns.Hub.KnockbackPlate;
 import me.overlight.powertools.spigot.AddOns.Hub.VoidTP;
 import me.overlight.powertools.spigot.AddOns.Main.*;
+import me.overlight.powertools.spigot.AddOns.Main.AntiBot.AntiBot;
 import me.overlight.powertools.spigot.AddOns.Main.Captcha.Captcha;
 import me.overlight.powertools.spigot.AddOns.Main.PvpRegisterer.PvpRegisterer;
 import me.overlight.powertools.spigot.AddOns.Render.ScoreBoards;
 import me.overlight.powertools.spigot.AddOns.Render.TabList;
-import me.overlight.powertools.spigot.AddOns.Server.*;
+import me.overlight.powertools.spigot.AddOns.Server.AntiRejoin;
+import me.overlight.powertools.spigot.AddOns.Server.BanMOTD;
 import me.overlight.powertools.spigot.AddOns.Server.DiscordSync.DiscordSync;
+import me.overlight.powertools.spigot.AddOns.Server.ForcePing;
 import me.overlight.powertools.spigot.AddOns.Server.PluginHider.PluginHider;
+import me.overlight.powertools.spigot.AddOns.Server.RandomMOTD;
 import me.overlight.powertools.spigot.AddOns.Survival.FallingBlocks;
 import me.overlight.powertools.spigot.AddOns.Survival.NoRespawn;
 import me.overlight.powertools.spigot.AddOns.Survival.RandomSpawn;
 import me.overlight.powertools.spigot.Command.MainCommand;
 import me.overlight.powertools.spigot.Command.TabComplete;
 import me.overlight.powertools.spigot.Discord.Bot;
-import me.overlight.powertools.spigot.Libraries.ColorFormat;
-import me.overlight.powertools.spigot.Libraries.PlaceHolders;
 import me.overlight.powertools.spigot.Discord.WebHooks.DiscordAPI;
 import me.overlight.powertools.spigot.Discord.WebHooks.DiscordWebhook;
+import me.overlight.powertools.spigot.Libraries.ColorFormat;
+import me.overlight.powertools.spigot.Libraries.PlaceHolders;
 import me.overlight.powertools.spigot.Modules.ModuleManager;
 import me.overlight.powertools.spigot.Modules.mods.*;
 import me.overlight.powertools.spigot.Plugin.PlInfo;
@@ -44,13 +48,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.parser.ParseException;
 
-import java.io.File;
 import java.io.IOException;
 
 public class PowerTools
         extends JavaPlugin {
     public static PowerTools INSTANCE;
     public static FileConfiguration config;
+    private static String err = "";
 
     @Override
     public void onLoad() {
@@ -70,8 +74,6 @@ public class PowerTools
             Alert(Target.CONSOLE, "@color_greenEnabling " + PlInfo.INV_PREFIX.substring(0, PlInfo.INV_PREFIX.length() - 11));
             INSTANCE = this;
             saveDefaultConfig();
-            if (!new File("plugins\\PowerToolS\\types.yml").exists())
-                saveResource("types.yml", false);
 
             PowerTools.config = getConfig();
 
@@ -105,7 +107,7 @@ public class PowerTools
             }
 
             {
-                if(!config.getString("Discord.Bot.token").replace(" ", "").equals("")) {
+                if (!config.getString("Discord.Bot.token").replace(" ", "").equals("")) {
                     getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.GOLD + "Logging in to Discord-Bot");
                     Bot.loginClient(config.getString("Discord.Bot.token"));
                 }
@@ -114,31 +116,8 @@ public class PowerTools
             ModuleManager.registerModule(new Knockback(), new Freeze(), new Channel(), new MemoryUsage(), new Protect(), new Rotate(), new PlayTime(), new Vanish(), new Toggle(), new CpsMap());
             ModuleManager.loadModulesData();
 
-            AddOnManager.registerAddOn(new AfkCheck(), new AntiWorldDownLoader(), new CpsCheck(), new PingCheck(), new ChatManager(), new ForceSpawn(), new JoinMessage(), new CommandRedirect(),
-                    new QuitMessage(), new UserNameManager(), new CommandDeny(), new PvpManager(), new PvpRegisterer(), new VersionCheck(), new WorldEnvironments(), new ChatFormat(),
-                    new SlashServer(), new Captcha(), new NetworkChecker(), new AntiBot());
-
-            if (config.getBoolean("BedwarsAddOns.enabled"))
-                AddOnManager.registerAddOn(new AntiTeamUp(), new TntKnockback(), new FireBallKnockback());
-            if (config.getBoolean("HubAddOns.enabled"))
-                AddOnManager.registerAddOn(new KnockbackPlate(), new VoidTP());
-            if (config.getBoolean("SurvivalAddOns.enabled"))
-                AddOnManager.registerAddOn(new ChatManager(), new NoRespawn(), new RandomSpawn(), new FallingBlocks());
-            if (config.getBoolean("ServerAddOns.enabled"))
-                AddOnManager.registerAddOn(new RandomMOTD(), new BanMOTD(), new AntiRejoin(), new ForcePing(), new PluginHider(), new DiscordSync());
-            if (config.getBoolean("RenderAddOns.enabled"))
-                AddOnManager.registerAddOn(new ScoreBoards(), new TabList());
-            AddOnManager.loadAddons();
-
-            getServer().getPluginManager().registerEvents(new PluginEnabledEvent(), this);
-
-            for(String ExName: config.getStringList("Extensions")) {
-                try {
-                    ExtensionManager.hookInto(ExName);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
+            loadAddOns();
+            loadExtensions();
 
             try {
                 getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ColorFormat.formatColor("@color_goldChecking for updates"));
@@ -170,6 +149,7 @@ public class PowerTools
             }
 
             getServer().getPluginManager().registerEvents(new MainEventHandler(), this);
+            getServer().getPluginManager().registerEvents(new PluginEnabledEvent(), this);
 
             getServer().getMessenger().registerOutgoingPluginChannel(this, "pts:bungee");
 
@@ -181,12 +161,17 @@ public class PowerTools
             getServer().getConsoleSender().sendMessage("");
             getServer().getConsoleSender().sendMessage("");
         } catch (Exception e) {
+            err = "Err: " + e.getMessage();
+            e.printStackTrace();
+            Alert(Target.CONSOLE, "@color_redAn error occurred while enabling plugin");
             getServer().getPluginManager().disablePlugin(this);
         }
     }
 
     @Override
     public void onDisable() {
+        Alert(Target.CONSOLE, "@color_redDisabling @color_dark_redPower@color_redToolS");
+
         PacketEvents.get().terminate();
 
         if (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12)) {
@@ -198,14 +183,14 @@ public class PowerTools
         }
         getServer().getMessenger().unregisterIncomingPluginChannel(this, (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12)) ? "mc:brand" : "MC|BRAND");
 
-        AddOnManager.unRegisterAddOn();
+        AddOnManager.unRegisterAll();
 
         ExtensionManager.removeAllExtensions();
 
         getServer().getConsoleSender().sendMessage("");
         getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("   @color_dark_red___  @color_red__________   "));
-        getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("  @color_dark_red/ _ \\@color_red/_  __/ __/ @color_dark_gray Disabled PowerToolS v" + PlInfo.VERSION));
-        getServer().getConsoleSender().sendMessage(ColorFormat.formatColor(" @color_dark_red/ ___/ @color_red/ / _\\ \\   @color_dark_gray "));
+        getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("  @color_dark_red/ _ \\@color_red/_  __/ __/ @color_dark_gray " + err));
+        getServer().getConsoleSender().sendMessage(ColorFormat.formatColor(" @color_dark_red/ ___/ @color_red/ / _\\ \\   @color_dark_gray Disabled PowerToolS v" + PlInfo.VERSION));
         getServer().getConsoleSender().sendMessage(ColorFormat.formatColor("@color_dark_red/_/    @color_red/_/ /___/  @color_dark_gray  by ItzOver"));
         getServer().getConsoleSender().sendMessage("");
         getServer().getConsoleSender().sendMessage("");
@@ -261,6 +246,33 @@ public class PowerTools
             Bukkit.getScheduler().runTask(PowerTools.INSTANCE, () -> {
                 player.kickPlayer(reason);
             });
+        }
+    }
+
+    public static void loadAddOns() {
+        AddOnManager.registerAddOn(new AfkCheck(), new AntiWorldDownLoader(), new CpsCheck(), new PingCheck(), new ChatManager(), new ForceSpawn(), new JoinMessage(), new CommandRedirect(),
+                new QuitMessage(), new UserNameManager(), new CommandDeny(), new PvpManager(), new PvpRegisterer(), new VersionCheck(), new WorldEnvironments(), new ChatFormat(),
+                new SlashServer(), new Captcha(), new NetworkChecker(), new AntiBot());
+        if (config.getBoolean("BedwarsAddOns.enabled"))
+            AddOnManager.registerAddOn(new AntiTeamUp(), new TntKnockback(), new FireBallKnockback());
+        if (config.getBoolean("HubAddOns.enabled"))
+            AddOnManager.registerAddOn(new KnockbackPlate(), new VoidTP());
+        if (config.getBoolean("SurvivalAddOns.enabled"))
+            AddOnManager.registerAddOn(new ChatManager(), new NoRespawn(), new RandomSpawn(), new FallingBlocks());
+        if (config.getBoolean("ServerAddOns.enabled"))
+            AddOnManager.registerAddOn(new RandomMOTD(), new BanMOTD(), new AntiRejoin(), new ForcePing(), new PluginHider(), new DiscordSync());
+        if (config.getBoolean("RenderAddOns.enabled"))
+            AddOnManager.registerAddOn(new ScoreBoards(), new TabList());
+        AddOnManager.loadAddons();
+    }
+
+    public static void loadExtensions() {
+        for (String ExName : config.getStringList("Extensions")) {
+            try {
+                ExtensionManager.hookInto(ExName);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 }
