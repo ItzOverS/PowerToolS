@@ -304,6 +304,8 @@ ServerAddOns:
   PluginHider:
     enabled: false
     tabComplete: true # This mode will *not* fully block the tab complete!
+    disableCommand: true # This mode will disable commands '/pl' & '/plugins'
+    chatMessagesCheck: true # This mode will block any message from server to player that contains a plugin name ( note: Will ignore prefixes ) ( only for normal-players )
 
   # usage will `$$execute {command}` for discord -> minecraft
   # Before enable this you must fill the field: Discord.Bot.token - It's on top of this page
