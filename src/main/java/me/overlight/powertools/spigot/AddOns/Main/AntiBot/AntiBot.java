@@ -1,7 +1,9 @@
-package me.overlight.powertools.spigot.AddOns.Main;
+package me.overlight.powertools.spigot.AddOns.Main.AntiBot;
 
 import me.overlight.powertools.spigot.APIs.NetworkChecker;
 import me.overlight.powertools.spigot.AddOns.AddOn;
+import me.overlight.powertools.spigot.AddOns.Main.ChatManager;
+import me.overlight.powertools.spigot.Libraries.PluginFile;
 import me.overlight.powertools.spigot.Plugin.PlInfo;
 import me.overlight.powertools.spigot.PowerTools;
 import org.bukkit.Bukkit;
@@ -12,8 +14,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 
 public class AntiBot
         extends AddOn
@@ -28,20 +30,46 @@ public class AntiBot
         }.runTaskTimerAsynchronously(PowerTools.INSTANCE, 0, 20);
     }
 
+    @Override
+    public void onEnabled() {
+        try {
+            BlackListManager.init();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void onDisabled() {
+        try {
+            BlackListManager.save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     int joinedUsers = 0;
     boolean antiBotMode = false;
     HashMap<String, Long> userJoinTime = new HashMap<>();
-    HashMap<String, List<String>> duplicateNamesGroup = new HashMap<>();
+    String banPrefix = PlInfo.KICK_PREFIX + ChatColor.RED + "You got blacklisted by PowerAB";
 
     @EventHandler
-    public void event(PlayerJoinEvent e) {
+    public void event(PlayerJoinEvent e) throws IOException {
+        if (BlackListManager.checkPlayer(e.getPlayer(), banPrefix))
+            return;
+        for (String key : new PluginFile("AntiBot\\patterns").getYaml().getKeys(true)) {
+            if (isStringEqualsDiff(key, e.getPlayer().getName())) {
+                BlackListManager.blackList(e.getPlayer(), banPrefix);
+                return;
+            }
+        }
         userJoinTime.put(e.getPlayer().getName(), System.currentTimeMillis());
 
         // -> Fast Joins
         if (PowerTools.config.getBoolean(this.getName() + ".FastJoin.enabled")) {
             if (antiBotMode) {
                 Bukkit.banIP(NetworkChecker.getPlayerIPv4(e.getPlayer()));
-                e.getPlayer().setBanned(true);
+                BlackListManager.blackList(e.getPlayer(), banPrefix);
                 PowerTools.kick(e.getPlayer(), PlInfo.KICK_PREFIX + ChatColor.RED + "\nYou temp banned from this server");
                 e.setJoinMessage(null);
                 return;
@@ -68,35 +96,21 @@ public class AntiBot
 
         // -> Username Learning
         if (PowerTools.config.getBoolean(this.getName() + ".UserNameLearning.enabled")) {
+            String diff = null;
             String realName = ChatManager.removeSymbols(e.getPlayer().getName(), new String[]{",", "|", "!", "@", "#", "$", "%", "^", "&", "(", ")", "[", "]", "{", "}", "`", "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"});
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                if (onlinePlayer == e.getPlayer()) continue;
                 String p = ChatManager.removeSymbols(onlinePlayer.getName(), new String[]{",", "|", "!", "@", "#", "$", "%", "^", "&", "(", ")", "[", "]", "{", "}", "`", "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"});
-                int startIndex = 0;
-                boolean isMulti = false;
-                for (char ch : realName.toCharArray()) {
-                    if (p.indexOf(ch) != -1) {
-                        int m = 0;
-                        for (int i = startIndex; i < p.length(); i++) {
-                            if (m > PowerTools.config.getInt(this.getName() + ".UserNameLearning.maxMultiLetter")) {
-                                isMulti = true;
-                                break;
-                            }
-                            if (ch == p.charAt(i)) {
-                                m++;
-                            } else {
-                                break;
-                            }
-                        }
-                    }
-                    if (isMulti)
-                        break;
-                }
-                if (isMulti) {
-                    if (Math.max(userJoinTime.get(p), userJoinTime.get(realName)) - Math.min(userJoinTime.get(p), userJoinTime.get(realName)) < PowerTools.config.getLong(this.getName() + ".UserNameLearning.maxJoinDelay")) {
-                        PowerTools.kick(e.getPlayer(), PlInfo.KICK_PREFIX + "AntiBot: Multi Letter by name");
+                if (p.length() == realName.length() &&
+                        p.equals(realName)) {
+                    diff = getStringDiff(e.getPlayer().getName(), onlinePlayer.getName());
+                    if (diff != null &&
+                            isStringEqualsDiff(diff, onlinePlayer.getName())) {
+                        BlackListManager.blackList(e.getPlayer(), banPrefix);
                     }
                 }
             }
+            if (diff != null) new PluginFile("AntiBot\\patterns").insertItem(diff, "").saveYaml();
         }
 
         // -> MultiIP
@@ -104,10 +118,31 @@ public class AntiBot
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (NetworkChecker.getPlayerIPv4(e.getPlayer()).equals(NetworkChecker.getPlayerIPv4(onlinePlayer))) {
                     Bukkit.banIP(NetworkChecker.getPlayerIPv4(e.getPlayer()));
-                    onlinePlayer.setBanned(true);
-                    e.getPlayer().setBanned(true);
+                    BlackListManager.blackList(onlinePlayer, banPrefix);
+                    BlackListManager.blackList(e.getPlayer(), banPrefix);
                 }
             }
         }
+    }
+
+    private String getStringDiff(String a, String b) {
+        if (a.length() != b.length()) return null;
+        String diff = "";
+        for (int index = 0; index < a.length(); index++) {
+            if (String.valueOf(a.charAt(index)).equalsIgnoreCase(String.valueOf(b.charAt(index))))
+                diff += a.charAt(index);
+            else diff += "*";
+        }
+        return diff;
+    }
+
+    private boolean isStringEqualsDiff(String diff, String text) {
+        if (diff.length() != text.length()) return false;
+        for (int i = 0; i < diff.length(); i++) {
+            if (diff.charAt(i) == '*') continue;
+            if (diff.charAt(i) != text.charAt(i))
+                return false;
+        }
+        return true;
     }
 }

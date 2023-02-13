@@ -1,7 +1,7 @@
 package me.overlight.powertools.spigot.AddOns.Main.Captcha;
 
 import me.overlight.powertools.spigot.AddOns.AddOn;
-import me.overlight.powertools.spigot.Libraries.PluginYaml;
+import me.overlight.powertools.spigot.Libraries.PluginFile;
 import me.overlight.powertools.spigot.Plugin.PlInfo;
 import me.overlight.powertools.spigot.PowerTools;
 import org.bukkit.Bukkit;
@@ -22,19 +22,20 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.map.MapView;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.IOException;
 import java.util.*;
 
 public class Captcha
         extends AddOn
         implements Listener {
     public static HashMap<String, Integer> playersCodes = new HashMap<>();
-    PluginYaml verifiedPlayers;
+    PluginFile verifiedPlayers;
     CaptchaMode mode;
 
     public Captcha() {
         super("Captcha", "1.0", "Filter bots from humans", PowerTools.config.getBoolean("Captcha.enabled"));
         try {
-            verifiedPlayers = new PluginYaml("verifiedPlayers");
+            verifiedPlayers = new PluginFile("verifiedPlayers");
         } catch (Exception ex) {
         }
         String text = PowerTools.config.getString(this.getName() + ".AI");
@@ -169,9 +170,10 @@ public class Captcha
             if (!verifiedPlayers.getYaml().getKeys(false).contains(e.getPlayer().getName())) {
                 if (getKey(e.getMessage()) == null &&
                         Objects.equals(getKey(new ArrayList<>(PowerTools.config.getConfigurationSection("Captcha.MapsLink").getKeys(false)).get(playersCodes.get(e.getPlayer().getName()))), e.getMessage())) {
-                    YamlConfiguration yml = verifiedPlayers.getYaml();
-                    yml.set(e.getPlayer().getName(), "");
-                    verifiedPlayers.setYaml(yml);
+                    try {
+                        verifiedPlayers.insertItem(e.getPlayer().getName(), "").saveYaml();
+                    } catch (IOException ignored) {
+                    }
                     e.getPlayer().closeInventory();
                 }
             }

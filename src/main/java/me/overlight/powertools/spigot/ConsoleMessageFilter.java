@@ -6,7 +6,6 @@ import org.apache.logging.log4j.core.Filter;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.message.Message;
-import org.bukkit.Bukkit;
 
 public class ConsoleMessageFilter
         implements Filter {
@@ -15,7 +14,12 @@ public class ConsoleMessageFilter
             "[PowerToolS] Disabling PowerToolS",
             "[PlaceholderAPI] Successfully registered expansion: PowerToolS",
             "[PowerToolS] Enabling PowerToolS",
-            "[PowerToolS] Loading PowerToolS"
+            "[PowerToolS] Loading PowerToolS",
+            "handleDisconnection() called twice",
+            " logged in with entity id ",
+            "lost connection",
+            "left the game",
+            "UUID of player"
     };
 
     public Filter.Result checkMessage(String message) {

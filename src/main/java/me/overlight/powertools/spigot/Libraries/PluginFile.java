@@ -5,11 +5,11 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 
-public class PluginYaml {
+public class PluginFile {
     private final String path;
     private YamlConfiguration yml;
 
-    public PluginYaml(String fileName) throws IOException {
+    public PluginFile(String fileName) throws IOException {
         this.path = "plugins\\PowerToolS\\" + fileName + ".yml";
         yml = new YamlConfiguration();
 
@@ -32,18 +32,23 @@ public class PluginYaml {
         }
     }
 
-    public PluginYaml loadYaml() {
+    public PluginFile loadYaml() {
         if (!new File(path).exists()) yml = new YamlConfiguration();
         else yml = YamlConfiguration.loadConfiguration(new File(path));
         return this;
     }
 
-    public PluginYaml setYaml(YamlConfiguration yaml) {
+    public PluginFile setYaml(YamlConfiguration yaml) {
         this.yml = yaml;
         return this;
     }
 
     public YamlConfiguration getYaml() {
         return this.yml;
+    }
+
+    public PluginFile insertItem(String key, String value) {
+        yml.set(key, value);
+        return this;
     }
 }
