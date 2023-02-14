@@ -1,5 +1,6 @@
 package me.overlight.powertools.spigot;
 
+import me.overlight.powertools.spigot.AddOns.Main.AntiBot.BlackListManager;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
@@ -18,7 +19,9 @@ public class MainEventHandler
     private static final List<String> kickedPlayers = new ArrayList<String>();
     @EventHandler
     public void event(PlayerJoinEvent e) {
-        new BukkitRunnable(){
+        if (BlackListManager.checkPlayer(e.getPlayer(), ChatColor.RED + "You got blacklisted by PowerAB"))
+            return;
+        new BukkitRunnable() {
             public void run() {
                 if (!new File("plugins\\PowerToolS\\JoinedPlayers.yml").exists()) {
                     try {

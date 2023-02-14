@@ -11,15 +11,25 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class AntiBot
         extends AddOn
         implements Listener {
+
+    public static final List<String> verifyingPlayers = new ArrayList<String>();
+    public static final HashMap<String, String> playerCodes = new HashMap<String, String>();
+
     public AntiBot() {
         super("AntiBot", "1.0", "Prevent server from bots", PowerTools.config.getBoolean("AntiBot.enabled"));
         new BukkitRunnable() {
@@ -37,6 +47,13 @@ public class AntiBot
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        try {
+            WhiteListManager.init();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        PowerTools.INSTANCE.getServer().getPluginCommand("verify").setExecutor(new Verify());
+        PowerTools.INSTANCE.getServer().getPluginCommand("verify").setTabCompleter(new TabCompleteCancel());
     }
 
     @Override
@@ -55,8 +72,9 @@ public class AntiBot
 
     @EventHandler
     public void event(PlayerJoinEvent e) throws IOException {
-        if (BlackListManager.checkPlayer(e.getPlayer(), banPrefix))
+        if (BlackListManager.isBlackList(e.getPlayer().getName()))
             return;
+
         for (String key : new PluginFile("AntiBot\\patterns").getYaml().getKeys(true)) {
             if (isStringEqualsDiff(key, e.getPlayer().getName())) {
                 BlackListManager.blackList(e.getPlayer(), banPrefix);
@@ -144,5 +162,41 @@ public class AntiBot
                 return false;
         }
         return true;
+    }
+
+
+    @EventHandler
+    public void event(PlayerMoveEvent e) {
+        if (verifyingPlayers.contains(e.getPlayer().getName()))
+            e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void event(PlayerInteractEvent e) {
+        if (verifyingPlayers.contains(e.getPlayer().getName()))
+            e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void event(EntityDamageByEntityEvent e) {
+        if (verifyingPlayers.contains(e.getDamager().getName()) ||
+                verifyingPlayers.contains(e.getEntity().getName()))
+            e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void event(AsyncPlayerChatEvent e) {
+        if (verifyingPlayers.contains(e.getPlayer().getName())) {
+            if (playerCodes.get(e.getPlayer().getName()).equals(e.getMessage())) {
+                WhiteListManager.whitelist(e.getPlayer());
+                try {
+                    WhiteListManager.save();
+                } catch (IOException z) {
+                    throw new RuntimeException(z);
+                }
+            } else {
+                BlackListManager.blackList(e.getPlayer(), banPrefix);
+            }
+        }
     }
 }
