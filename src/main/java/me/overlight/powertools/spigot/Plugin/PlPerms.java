@@ -20,6 +20,8 @@ public class PlPerms {
         VanishCommand("modules.vanish.command"),
         ToggleCommand("modules.toggle.command"),
         CpsCheckCommand("modules.cpscheck.command"),
+        BlackList("blacklist.command"),
+        WhiteList("whitelist.command"),
         PluginReload("reload");
         private final String perm;
 

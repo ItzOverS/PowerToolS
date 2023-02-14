@@ -1,6 +1,8 @@
 package me.overlight.powertools.spigot.Command;
 
 import me.overlight.powertools.spigot.AddOns.AddOnManager;
+import me.overlight.powertools.spigot.AddOns.Main.AntiBot.BlackListManager;
+import me.overlight.powertools.spigot.AddOns.Main.AntiBot.WhiteListManager;
 import me.overlight.powertools.spigot.Libraries.AlertUtils;
 import me.overlight.powertools.spigot.Libraries.ColorFormat;
 import me.overlight.powertools.spigot.Libraries.RepItem;
@@ -22,6 +24,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -352,6 +355,72 @@ public class MainCommand
                         }
                         PowerTools.config.set(mixArray(new ArrayList<>(Arrays.asList(args)), ".", 1, args.length - 3), args[args.length - 1]);
                         sender.sendMessage(PlMessages.Settings_SuccessSetValue.get(new RepItem("%PATH%", mixArray(new ArrayList<>(Arrays.asList(args)), ".", 1, args.length - 2)), new RepItem("%VALUE%", args[args.length - 1])));
+                    }
+                    break;
+                case "blacklist":
+                    if (!PlPerms.hasPerm(sender, PlPerms.Perms.BlackList.get())) {
+                        sender.sendMessage(PlMessages.NoPermission.get());
+                        return false;
+                    }
+                    if (args.length == 3) {
+                        switch (args[1].toLowerCase()) {
+                            case "add":
+                                WhiteListManager.removeWhitelist(args[2]);
+                                BlackListManager.blackList(args[2]);
+                                sender.sendMessage(PlMessages.BlackList_Added.get(new RepItem("%USERNAME%", args[2])));
+                                break;
+                            case "remove":
+                                BlackListManager.removeBlackList(args[2]);
+                                sender.sendMessage(PlMessages.BlackList_Removed.get(new RepItem("%USERNAME%", args[2])));
+                                break;
+                            default:
+                                sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools blacklist {add/remove} {playerName}")));
+                                break;
+                        }
+                    } else if (args.length == 2) {
+                        if (Objects.equals(args[1], "list")) {
+                            sender.sendMessage(PlInfo.PREFIX + ChatColor.GOLD + BlackListManager.getBlacklistedPlayers());
+                        }
+                    } else {
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools blacklist {add/remove/list} [playerName]")));
+                    }
+                    break;
+                case "whitelist":
+                    if (!PlPerms.hasPerm(sender, PlPerms.Perms.WhiteList.get())) {
+                        sender.sendMessage(PlMessages.NoPermission.get());
+                        return false;
+                    }
+                    if (args.length == 3) {
+                        switch (args[1].toLowerCase()) {
+                            case "add":
+                                BlackListManager.removeBlackList(args[2]);
+                                WhiteListManager.whitelist(args[2]);
+                                sender.sendMessage(PlMessages.WhiteList_Added.get(new RepItem("%USERNAME%", args[2])));
+                                try {
+                                    WhiteListManager.save();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                break;
+                            case "remove":
+                                WhiteListManager.removeWhitelist(args[2]);
+                                sender.sendMessage(PlMessages.WhiteList_Removed.get(new RepItem("%USERNAME%", args[2])));
+                                try {
+                                    WhiteListManager.save();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                break;
+                            default:
+                                sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools whitelist {add/remove} {playerName}")));
+                                break;
+                        }
+                    } else if (args.length == 2) {
+                        if (Objects.equals(args[1], "list")) {
+                            sender.sendMessage(PlInfo.PREFIX + ChatColor.GOLD + WhiteListManager.getWhitelistedPlayers());
+                        }
+                    } else {
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools whitelist {add/remove/list} [playerName]")));
                     }
                     break;
                 default:

@@ -11,6 +11,8 @@ public enum PlCommands {
     freeze("freeze", "freeze a player for SS", "freeze {target}", PlPerms.Perms.FreezeCommand.get()),
     cps("cps", "get player's 'client show' cps", "cps {target}", PlPerms.Perms.CpsCheckCommand.get()),
     knockbackAll("knockbackAll", "Knockback all players at same time to detect who using velocity hack", "knockbackall", PlPerms.Perms.KnockBackCommand.get()),
+    blacklist("blacklist", "Blacklist who you want they don't play in your server", "blacklist {add/remove/list} [target]", PlPerms.Perms.BlackList.get()),
+    whitelist("whitelist", "whitelist who you want powertools skip them at checks ( AntiBot, ... )", "whitelist {add/remove/list} [target]", PlPerms.Perms.WhiteList.get()),
 
     ;
     final String name, hover, click, perm;

@@ -42,7 +42,11 @@ public enum PlMessages {
     CommandNotFind("@color_redCommand not found... Use /pts help"),
     Settings_InvalidPath("@color_redInvalid path"),
     Settings_SuccessSetValue("@color_greenSimplify set @color_gold%PATH%@color_red to @color_gold%VALUE%"),
-    InvalidUsage("@color_redInvalid usage...@color_gold use %CORRECT%")
+    InvalidUsage("@color_redInvalid usage...@color_gold use %CORRECT%"),
+    BlackList_Added("@color_redBlackListed %USERNAME%"),
+    BlackList_Removed("@color_redUn BlackListed %USERNAME%"),
+    WhiteList_Added("@color_greenWhiteListed %USERNAME%"),
+    WhiteList_Removed("@color_greenUn Whitelisted %USERNAME%"),
     ;
     private final String desc;
 
