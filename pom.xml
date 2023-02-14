@@ -63,7 +63,7 @@
     <repositories>
         <repository>
             <id>spigotmc-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/snapshots/public/</url>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/public/</url>
         </repository>
         <repository>
             <id>spigotmc-repo2</id>
@@ -80,6 +80,10 @@
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
+        </repository>
+        <repository>
+            <id>maven-elmarkers</id>
+            <url>https://maven.elmakers.com/repository/</url>
         </repository>
     </repositories>
 
@@ -112,6 +116,18 @@
             <groupId>com.github.retrooper</groupId>
             <artifactId>packetevents</artifactId>
             <version>v1.8.4</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.DV8FromTheWorld</groupId>
+            <artifactId>JDA</artifactId>
+            <version>v5.0.0-beta.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>club.minnced</groupId>
+                    <artifactId>opus-java</artifactId>
+                </exclusion>
+            </exclusions>
             <scope>compile</scope>
         </dependency>
     </dependencies>
