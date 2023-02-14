@@ -73,7 +73,7 @@ public class Captcha
                         cancel();
                         return;
                     }
-                    e.getPlayer().sendMessage("Enter in chat, what you see in picture");
+                    e.getPlayer().sendMessage(PlInfo.PREFIX + ChatColor.GOLD + "Enter in chat, what you see in picture");
                 }
             }.runTaskTimer(PowerTools.INSTANCE, 0, 100);
         } else if (mode == CaptchaMode.GuiSelect) {
