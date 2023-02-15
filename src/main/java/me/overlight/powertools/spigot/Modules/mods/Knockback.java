@@ -35,7 +35,8 @@ public class Knockback
         Location loc = player.getLocation();
         player.setVelocity(new Vector(2, 3, 2));
         Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
-            if (player.getLocation().distance(loc) < 8) {
+            double distance = player.getLocation().distance(loc);
+            if (!(distance > 13.5 && distance < 17.5)) {
                 executor.sendMessage(PlMessages.KnockBack_FailedToApply.get().replace("%PLAYER_NAME%", player.getName()));
             } else {
                 executor.sendMessage(PlMessages.KnockBack_SimplifyApplied.get().replace("%PLAYER_NAME%", player.getName()));
@@ -55,7 +56,7 @@ public class Knockback
             player.setVelocity(new Vector(2, 3, 2));
             Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
                 double distance = player.getLocation().distance(loc);
-                if (!(distance > 14.5 && distance < 17.5)) {
+                if (!(distance > 13.5 && distance < 17.5)) {
                     list.add(player.getName());
                 }
                 player.teleport(loc);
@@ -63,13 +64,19 @@ public class Knockback
         }
         Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
             String msg = "";
-            for (int i = 0; i < list.size(); i++) {
-                if(i == list.size() - 1){
-                    msg = msg.substring(0, msg.length() - 2);
-                    msg += ChatColor.DARK_GRAY + " & " + ChatColor.GOLD + list.get(i);
-                    break;
+            if (list.size() > 1) {
+                for (int i = 0; i < list.size(); i++) {
+                    if (i == list.size() - 1) {
+                        msg = msg.substring(0, msg.length() - 2);
+                        msg += ChatColor.DARK_GRAY + " & " + ChatColor.GOLD + list.get(i);
+                        break;
+                    }
+                    msg += ChatColor.GOLD + list.get(i) + ChatColor.DARK_GRAY + ", ";
                 }
-                msg += ChatColor.GOLD + list.get(i) + ChatColor.DARK_GRAY + ", ";
+            } else if (list.size() == 1) {
+                msg = list.get(0);
+            } else {
+                msg = "no one";
             }
             executor.sendMessage(PlMessages.KnockBack_FailedToApply.get(new RepItem("%PLAYER_NAME%", msg)));
         }, 15);
