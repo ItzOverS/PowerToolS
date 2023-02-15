@@ -17,7 +17,7 @@ public final class PowerTools extends Plugin {
             getProxy().getConsole().sendMessage(new ComponentBuilder("").create());
             getProxy().getConsole().sendMessage(new ComponentBuilder(ColorFormat.formatColorBungee("   @color_dark_green___  @color_aqua__________   ")).create());
             getProxy().getConsole().sendMessage(new ComponentBuilder(ColorFormat.formatColorBungee("  @color_dark_green/ _ \\@color_aqua/_  __/ __/ @color_dark_gray Welcome to PowerToolS v" + PlInfo.VERSION)).create());
-            getProxy().getConsole().sendMessage(new ComponentBuilder(ColorFormat.formatColorBungee(" @color_dark_green/ ___/ @color_aqua/ / _\\ \\   @color_dark_gray Running on Spigot/Bukkit")).create());
+            getProxy().getConsole().sendMessage(new ComponentBuilder(ColorFormat.formatColorBungee(" @color_dark_green/ ___/ @color_aqua/ / _\\ \\   @color_dark_gray Running on BungeeCord")).create());
             getProxy().getConsole().sendMessage(new ComponentBuilder(ColorFormat.formatColorBungee("@color_dark_green/_/    @color_aqua/_/ /___/  @color_dark_gray  by ItzOver")).create());
             getProxy().getConsole().sendMessage(new ComponentBuilder("").create());
             getProxy().getConsole().sendMessage(new ComponentBuilder("").create());
@@ -28,6 +28,12 @@ public final class PowerTools extends Plugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        getProxy().getConsole().sendMessage(new ComponentBuilder("").create());
+        getProxy().getConsole().sendMessage(new ComponentBuilder(ColorFormat.formatColor("   @color_dark_red___  @color_red__________   ")).create());
+        getProxy().getConsole().sendMessage(new ComponentBuilder(ColorFormat.formatColor("  @color_dark_red/ _ \\@color_red/_  __/ __/ @color_dark_gray ")).create());
+        getProxy().getConsole().sendMessage(new ComponentBuilder(ColorFormat.formatColor(" @color_dark_red/ ___/ @color_red/ / _\\ \\   @color_dark_gray Disabled PowerToolS v" + PlInfo.VERSION)).create());
+        getProxy().getConsole().sendMessage(new ComponentBuilder(ColorFormat.formatColor("@color_dark_red/_/    @color_red/_/ /___/  @color_dark_gray  by ItzOver")).create());
+        getProxy().getConsole().sendMessage(new ComponentBuilder("").create());
+        getProxy().getConsole().sendMessage(new ComponentBuilder("").create());
     }
 }
