@@ -114,3 +114,5 @@ buildNumber.properties
 
 # Common working directory
 run/
+!/src/main/java/me/overlight/powertools/ChangeLog.txt
+src/main/java/me/overlight/powertools/ChangeLog.txt
