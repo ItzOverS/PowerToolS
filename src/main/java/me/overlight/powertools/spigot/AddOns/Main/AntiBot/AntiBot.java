@@ -1,5 +1,6 @@
 package me.overlight.powertools.spigot.AddOns.Main.AntiBot;
 
+import io.github.retrooper.packetevents.PacketEvents;
 import me.overlight.powertools.spigot.APIs.NetworkChecker;
 import me.overlight.powertools.spigot.AddOns.AddOn;
 import me.overlight.powertools.spigot.AddOns.Main.ChatManager;
@@ -38,6 +39,12 @@ public class AntiBot
                 joinedUsers = 0;
             }
         }.runTaskTimerAsynchronously(PowerTools.INSTANCE, 0, 20);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                pings = 0;
+            }
+        }.runTaskTimerAsynchronously(PowerTools.INSTANCE, 0, 20);
     }
 
     @Override
@@ -52,6 +59,10 @@ public class AntiBot
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        if (PowerTools.config.getBoolean(this.getName() + ".PingAttack.enabled") && PowerTools.config.getBoolean("bungeecord"))
+            PowerTools.INSTANCE.getServer().getMessenger().registerIncomingPluginChannel(PowerTools.INSTANCE, "pts:ab:bungee", new ChannelListener());
+        else if (PowerTools.config.getBoolean(this.getName() + ".PingAttack.enabled") && !PowerTools.config.getBoolean("bungeecord"))
+            PacketEvents.get().getEventManager().registerListener(new PacketListener());
         PowerTools.INSTANCE.getServer().getPluginCommand("verify").setExecutor(new Verify());
         PowerTools.INSTANCE.getServer().getPluginCommand("verify").setTabCompleter(new TabCompleteCancel());
     }
@@ -199,4 +210,6 @@ public class AntiBot
             }
         }
     }
+
+    public static int pings = 0;
 }

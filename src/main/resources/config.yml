@@ -64,11 +64,14 @@ AntiBot:
   enabled: false
   FastJoin:
     enabled: false
-    maxJoinPerSecond: 10
+    maxJoinPerSecond: 25
   UserNameLearning:
     enabled: true
   MultiIP:
     enabled: true
+  PingAttack:
+    enabled: true
+    maxPingPerSecond: 85
 
 UsernameManager:
   enabled: false
