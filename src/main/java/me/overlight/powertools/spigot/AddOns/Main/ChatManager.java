@@ -31,131 +31,132 @@ public class ChatManager
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void playerChat(AsyncPlayerChatEvent e) {
-        if (this.isEnabled()) {
-            String message = e.getMessage().toLowerCase();
-            Player sender = e.getPlayer();
-            if (PowerTools.config.getBoolean(this.getName() + ".MessageDelay.enabled")) {
-                if (!DelayMessagePlayers.contains(sender.getName())) {
-                    DelayMessagePlayers.add(sender.getName());
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
-                        DelayMessagePlayers.remove(sender.getName());
-                    }, PowerTools.config.getInt(this.getName() + ".MessageDelay.delay") * 20L);
-                } else {
-                    if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".MessageDelay.msg"))));
-                    else
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".MessageDelay.msg")));
+        if (!LastMSGMs.containsKey(e.getPlayer().getName())) {
+            LastMSGMs.put(e.getPlayer().getName(), new Infinite<>(5L, 4L));
+        }
+        String message = e.getMessage().toLowerCase();
+        Player sender = e.getPlayer();
+        if (PowerTools.config.getBoolean(this.getName() + ".MessageDelay.enabled")) {
+            if (!DelayMessagePlayers.contains(sender.getName())) {
+                DelayMessagePlayers.add(sender.getName());
+                Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> {
+                    DelayMessagePlayers.remove(sender.getName());
+                }, PowerTools.config.getInt(this.getName() + ".MessageDelay.delay") * 20L);
+            } else {
+                if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".MessageDelay.msg"))));
+                else
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".MessageDelay.msg")));
+                e.setCancelled(true);
+                return;
+            }
+        }
+        if (PowerTools.config.getBoolean(this.getName() + ".AntiSpam.enabled")) {
+            if (LastMSGMs.get(sender.getName()).isFullEquals() || getDuplicates(message, LastMSG.get(e.getPlayer().getName())) > new HashSet<>(Arrays.asList(removeSymbols(message.toLowerCase(), new String[]{",", "|", "!", "@", "#", "$", "%", "^", "&", "(", ")", "[", "]", "{", "}", "`", "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"}).split(" "))).size() / 2) {
+                SpamAmount.put(sender.getName(), SpamAmount.containsKey(sender.getName()) ? SpamAmount.get(sender.getName()) + 1 : 1);
+            } else {
+                SpamAmount.put(sender.getName(), 0);
+                LastMSG.put(sender.getName(), message);
+                LastMSGMs.put(sender.getName(), new Infinite<Long>(4, LastMSGMs.get(sender.getName()), Collections.singletonList(System.currentTimeMillis())));
+            }
+            if (SpamAmount.get(sender.getName()) >= PowerTools.config.getInt(this.getName() + ".AntiSpam.maxSpam")) {
+                if (PowerTools.config.getBoolean(this.getName() + ".AntiSpam.Kick.enabled")) {
                     e.setCancelled(true);
+                    Bukkit.getScheduler().runTask(PowerTools.INSTANCE, () -> {
+                        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+                            PowerTools.kick(sender, ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".AntiSpam.Kick.msg"))));
+                        else
+                            PowerTools.kick(sender, ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".AntiSpam.Kick.msg")));
+                    });
                     return;
                 }
             }
-            if (PowerTools.config.getBoolean(this.getName() + ".AntiSpam.enabled")) {
-                if (LastMSGMs.get(sender.getName()).isFullEquals() || getDuplicates(message, LastMSG.get(e.getPlayer().getName())) > new HashSet<>(Arrays.asList(removeSymbols(message.toLowerCase(), new String[]{",", "|", "!", "@", "#", "$", "%", "^", "&", "(", ")", "[", "]", "{", "}", "`", "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"}).split(" "))).size() / 2) {
-                    SpamAmount.put(sender.getName(), SpamAmount.containsKey(sender.getName()) ? SpamAmount.get(sender.getName()) + 1 : 1);
-                } else {
-                    SpamAmount.put(sender.getName(), 0);
-                    LastMSG.put(sender.getName(), message);
-                    LastMSGMs.put(sender.getName(), new Infinite<Long>(4, LastMSGMs.get(sender.getName()), Collections.singletonList(System.currentTimeMillis())));
-                }
-                if (SpamAmount.get(sender.getName()) >= PowerTools.config.getInt(this.getName() + ".AntiSpam.maxSpam")) {
-                    if (PowerTools.config.getBoolean(this.getName() + ".AntiSpam.Kick.enabled")) {
-                        e.setCancelled(true);
-                        Bukkit.getScheduler().runTask(PowerTools.INSTANCE, () -> {
-                            if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
-                                PowerTools.kick(sender, ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".AntiSpam.Kick.msg"))));
-                            else
-                                PowerTools.kick(sender, ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".AntiSpam.Kick.msg")));
-                        });
-                        return;
-                    }
-                }
-            }
-            if (PowerTools.config.getBoolean(this.getName() + ".WordBlock.enabled")) {
-                boolean messageFlagged = false;
-                //------------------------------------>  AI 01:    Random char, splitter
-                if (PowerTools.config.getBoolean(this.getName() + ".WordBlock.Modes.Splitters") || PowerTools.config.getBoolean(this.getName() + ".WordBlock.Modes.MultiLetter")) {
-                    String msg = removeSymbols(message.toLowerCase(), new String[]{",", "|", "!", "@", "#", "$", "%", "^", "&", "(", ")", "[", "]", "{", "}", "`", "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"});
-                    for (String text : msg.split(" ")) {
-                        String tex = "";
-                        int index = 0;
-                        for (char ch : text.toCharArray()) {
-                            if (ch == text.charAt(index)) {
-                                tex += ch;
-                                index++;
-                            }
-                            if (PowerTools.config.getStringList(this.getName() + ".WordBlock.Words").contains(tex)) {
-                                messageFlagged = true;
-                                break;
-                            }
+        }
+        if (PowerTools.config.getBoolean(this.getName() + ".WordBlock.enabled")) {
+            boolean messageFlagged = false;
+            //------------------------------------>  AI 01:    Random char, splitter
+            if (PowerTools.config.getBoolean(this.getName() + ".WordBlock.Modes.Splitters") || PowerTools.config.getBoolean(this.getName() + ".WordBlock.Modes.MultiLetter")) {
+                String msg = removeSymbols(message.toLowerCase(), new String[]{",", "|", "!", "@", "#", "$", "%", "^", "&", "(", ")", "[", "]", "{", "}", "`", "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"});
+                for (String text : msg.split(" ")) {
+                    String tex = "";
+                    int index = 0;
+                    for (char ch : text.toCharArray()) {
+                        if (ch == text.charAt(index)) {
+                            tex += ch;
+                            index++;
                         }
-                    }
-                    if (!messageFlagged) {
-                        msg = msg.replace(" ", "");
-                        for (String str : PowerTools.config.getStringList(this.getName() + ".WordBlock.Words")) {
-                            if (msg.contains(str)) {
-                                messageFlagged = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-                //------------------------------------>  AI 02:    UniCodes
-                if (PowerTools.config.getBoolean(this.getName() + ".WordBlock.Modes.UniCodes")) {
-                    for (String word : PowerTools.config.getStringList(this.getName() + ".WordBlock.Words")) {
-                        String generatedText = "";
-                        int index = 0;
-                        for (char chr : message.toCharArray()) {
-                            if (DeUniCodedChar(chr) == word.charAt(index)) {
-                                generatedText += DeUniCodedChar(chr);
-                                index++;
-                            }
-                            if (generatedText.length() == word.length())
-                                break;
-                        }
-                        if (generatedText.equals(word)) {
+                        if (PowerTools.config.getStringList(this.getName() + ".WordBlock.Words").contains(tex)) {
                             messageFlagged = true;
                             break;
                         }
                     }
                 }
-                if (messageFlagged) {
-                    if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".WordBlock.msg"))));
-                    else
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".WordBlock.msg")));
-                    e.setCancelled(true);
-                    return;
-                }
-            }
-            if (PowerTools.config.getBoolean(this.getName() + ".AntiDuplicate.enabled")) {
-                String newMSG = removeSymbols(message.toLowerCase(), new String[]{",", "|", "!", "@", "#", "$", "%", "^", "&", "(", ")", "[", "]", "{", "}", "`", "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"});
-                String[] Words = newMSG.split(" ");
-                Set<String> words = new HashSet<>(Arrays.asList(Words));
-                for (String str : words) {
-                    if (Count(newMSG, str) > PowerTools.config.getLong(this.getName() + ".AntiDuplicate.maxDuplicate")) {
-                        e.setCancelled(true);
-                        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".AntiDuplicate.msg"))));
-                        else
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".AntiDuplicate.msg")));
-                        return;
+                if (!messageFlagged) {
+                    msg = msg.replace(" ", "");
+                    for (String str : PowerTools.config.getStringList(this.getName() + ".WordBlock.Words")) {
+                        if (msg.contains(str)) {
+                            messageFlagged = true;
+                            break;
+                        }
                     }
                 }
             }
-            if (PowerTools.config.getBoolean(this.getName() + ".PlayerMentions.enabled")) {
-                if (ContainsNameOnText(message) != null) {
-                    String mode = PowerTools.config.getString(this.getName() + ".PlayerMentions.Mode");
-                    List<String> mentionedPlayers = ContainsNameOnText(message);
-                    assert mentionedPlayers != null;
-                    for (String name : mentionedPlayers) {
-                        if (Objects.equals(mode, "title"))
-                            Bukkit.getPlayer(name).sendTitle(ChatColor.GOLD + sender.getName(), ChatColor.RED + "Has mentioned you");
-                        if (Objects.equals(mode, "chat"))
-                            Bukkit.getPlayer(name).sendMessage(ChatColor.GOLD + sender.getName() + ChatColor.RED + " has mentioned you");
-                        if (Objects.equals(mode, "both")) {
-                            Bukkit.getPlayer(name).sendTitle(ChatColor.GOLD + sender.getName(), ChatColor.RED + "Has mentioned you");
-                            Bukkit.getPlayer(name).sendMessage(ChatColor.GOLD + sender.getName() + ChatColor.RED + " has mentioned you");
+            //------------------------------------>  AI 02:    UniCodes
+            if (PowerTools.config.getBoolean(this.getName() + ".WordBlock.Modes.UniCodes")) {
+                for (String word : PowerTools.config.getStringList(this.getName() + ".WordBlock.Words")) {
+                    String generatedText = "";
+                    int index = 0;
+                    for (char chr : message.toCharArray()) {
+                        if (DeUniCodedChar(chr) == word.charAt(index)) {
+                            generatedText += DeUniCodedChar(chr);
+                            index++;
                         }
+                        if (generatedText.length() == word.length())
+                            break;
+                    }
+                    if (generatedText.equals(word)) {
+                        messageFlagged = true;
+                        break;
+                    }
+                }
+            }
+            if (messageFlagged) {
+                if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".WordBlock.msg"))));
+                else
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".WordBlock.msg")));
+                e.setCancelled(true);
+                return;
+            }
+        }
+        if (PowerTools.config.getBoolean(this.getName() + ".AntiDuplicate.enabled")) {
+            String newMSG = removeSymbols(message.toLowerCase(), new String[]{",", "|", "!", "@", "#", "$", "%", "^", "&", "(", ")", "[", "]", "{", "}", "`", "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"});
+            String[] Words = newMSG.split(" ");
+            Set<String> words = new HashSet<>(Arrays.asList(Words));
+            for (String str : words) {
+                if (Count(newMSG, str) > PowerTools.config.getLong(this.getName() + ".AntiDuplicate.maxDuplicate")) {
+                    e.setCancelled(true);
+                    if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".AntiDuplicate.msg"))));
+                    else
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".AntiDuplicate.msg")));
+                    return;
+                }
+            }
+        }
+        if (PowerTools.config.getBoolean(this.getName() + ".PlayerMentions.enabled")) {
+            if (ContainsNameOnText(message) != null) {
+                String mode = PowerTools.config.getString(this.getName() + ".PlayerMentions.Mode");
+                List<String> mentionedPlayers = ContainsNameOnText(message);
+                assert mentionedPlayers != null;
+                for (String name : mentionedPlayers) {
+                    if (Objects.equals(mode, "title"))
+                        Bukkit.getPlayer(name).sendTitle(ChatColor.GOLD + sender.getName(), ChatColor.RED + "Has mentioned you");
+                    if (Objects.equals(mode, "chat"))
+                        Bukkit.getPlayer(name).sendMessage(ChatColor.GOLD + sender.getName() + ChatColor.RED + " has mentioned you");
+                    if (Objects.equals(mode, "both")) {
+                        Bukkit.getPlayer(name).sendTitle(ChatColor.GOLD + sender.getName(), ChatColor.RED + "Has mentioned you");
+                        Bukkit.getPlayer(name).sendMessage(ChatColor.GOLD + sender.getName() + ChatColor.RED + " has mentioned you");
                     }
                 }
             }
