@@ -25,7 +25,6 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -346,7 +345,7 @@ public class MainCommand
                     } else{
                         sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools toggle {item} [ofPlayer]")));
                     }
-                    break;
+                    break;/*
                 case "settings":
                     if (args.length > 2) {
                         if (!PowerTools.config.getConfigurationSection(mixArray(new ArrayList<>(Arrays.asList(args)), ".", 1, args.length - 1)).getKeys(false).isEmpty()) {
@@ -356,7 +355,7 @@ public class MainCommand
                         PowerTools.config.set(mixArray(new ArrayList<>(Arrays.asList(args)), ".", 1, args.length - 3), args[args.length - 1]);
                         sender.sendMessage(PlMessages.Settings_SuccessSetValue.get(new RepItem("%PATH%", mixArray(new ArrayList<>(Arrays.asList(args)), ".", 1, args.length - 2)), new RepItem("%VALUE%", args[args.length - 1])));
                     }
-                    break;
+                    break;*/
                 case "blacklist":
                     if (!PlPerms.hasPerm(sender, PlPerms.Perms.BlackList.get())) {
                         sender.sendMessage(PlMessages.NoPermission.get());
@@ -421,6 +420,57 @@ public class MainCommand
                         }
                     } else {
                         sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools whitelist {add/remove/list} [playerName]")));
+                    }
+                    break;
+                case "addons":
+                    if (!PlPerms.hasPerm(sender, PlPerms.Perms.AddOns.get())) {
+                        sender.sendMessage(PlMessages.NoPermission.get());
+                        return false;
+                    }
+                    if (args.length == 1) {
+                        String msg = "";
+                        for (int i = 0; i < AddOnManager.addOns.size(); i++) {
+                            String name = AddOnManager.addOns.get(i).getName().substring(AddOnManager.addOns.get(i).getName().indexOf(".") + 1);
+                            String coloredName = (AddOnManager.addOns.get(i).enabled()) ? ChatColor.GREEN + name : ChatColor.RED + name;
+                            if (i == AddOnManager.addOns.size() - 1) {
+                                msg = msg.substring(0, msg.length() - 2);
+                                msg += ChatColor.DARK_GRAY + " & " + coloredName;
+                                break;
+                            }
+                            msg += coloredName + ChatColor.DARK_GRAY + ", ";
+                        }
+                        sender.sendMessage(ColorFormat.formatColor("@color_gold@format_mid_line===================================================="));
+                        sender.sendMessage(msg);
+                        sender.sendMessage(ColorFormat.formatColor("@color_gold@format_mid_line===================================================="));
+                    } else {
+                        if (args.length >= 4) {
+                            try {
+
+                                String path = args[1] + "." + args[2];
+
+                                if (!PowerTools.config.contains(path)) {
+                                    sender.sendMessage(PlMessages.Settings_InvalidPath.get());
+                                    return false;
+                                }
+
+                                Object obj = PowerTools.config.get(path),
+                                        currentValue = PowerTools.config.get(path);
+
+                                if (obj instanceof String) PowerTools.config.set(path, mixArray(Arrays.asList(args), " ", 3, args.length - 3));
+                                else if (obj instanceof Integer) PowerTools.config.set(path, Integer.parseInt(args[3]));
+                                else if (obj instanceof Long) PowerTools.config.set(path, Long.parseLong(args[3]));
+                                else if (obj instanceof Boolean) PowerTools.config.set(path, Boolean.parseBoolean(args[3]));
+                                else if (obj instanceof List) PowerTools.config.set(path, Arrays.asList(args).subList(3, args.length - 3));
+
+                                PowerTools.config.save("plugins\\PowerToolS\\config.yml");
+                                sender.sendMessage(PlMessages.Settings_SuccessSetValue.get(new RepItem("%PATH%", path), new RepItem("%VALUE%", args[3]), new RepItem("%FROM%", String.valueOf(currentValue))));
+                            } catch (IOException e) {
+                                sender.sendMessage(PlMessages.Settings_InvalidPath.get());
+                            }
+
+                        } else {
+                            sender.sendMessage(PlMessages.Settings_InvalidPath.get());
+                        }
                     }
                     break;
                 default:

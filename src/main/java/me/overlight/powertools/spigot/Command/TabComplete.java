@@ -1,5 +1,6 @@
 package me.overlight.powertools.spigot.Command;
 
+import me.overlight.powertools.spigot.AddOns.AddOnManager;
 import me.overlight.powertools.spigot.Plugin.PlCommands;
 import me.overlight.powertools.spigot.PowerTools;
 import org.bukkit.Bukkit;
@@ -7,10 +8,9 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.ConfigurationSection;
+import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.util.*;
 
 public class TabComplete
@@ -18,41 +18,46 @@ public class TabComplete
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String s, String[] args) {
         if (args.length >= 1) {
-            if (args[0].equalsIgnoreCase("settings")) {
-                String configLocation = mixArray(new ArrayList<>(Arrays.asList(args)), ".", 1, args.length - 1);
-                FileConfiguration config = PowerTools.config;
-                if (!config.contains(configLocation)) return null;
-                if (!config.getConfigurationSection(configLocation).getKeys(false).isEmpty())
-                    return new ArrayList<>(config.getConfigurationSection(configLocation).getKeys(false));
-                YamlConfiguration types = YamlConfiguration.loadConfiguration(new File("plugins\\PowerToolS\\types.yml"));
-                String type = types.getString(configLocation);
-                switch (type) {
-                    case "string":
-                    case "stringList":
-                        return Collections.singletonList("<string>");
-                    case "integer":
-                    case "integerList":
-                        return Collections.singletonList("<integer>");
-                    case "double":
-                        return Collections.singletonList("<float-num>");
-                    case "materialList":
-                        return getMaterialList();
-                    case "boolean":
-                        return Arrays.asList("true", "false");
-                }
-                String replace = type.substring(type.indexOf("(") + 1).replace(")", "");
-                if (type.startsWith("stringList(")) {
-                    return Arrays.asList(replace.split(","));
-                }
-                if (type.startsWith("integerList(")) {
-                    return getNumsIn(Integer.parseInt(replace.split(",")[0]), Integer.parseInt(replace.split(",")[1]));
+            if (args[0].equalsIgnoreCase("addons")) {
+                if (args.length < 4) {
+                    if (args.length == 2) {
+                        if (!args[1].contains(".")) {
+                            return filter(AddOnManager.getName(), args[1]);
+                        } else {
+                            if (PowerTools.config.getConfigurationSection(args[1]) != null) {
+                                ConfigurationSection sec = PowerTools.config.getConfigurationSection(args[1]);
+                                List<String> list = new ArrayList<>();
+                                for (String key : sec.getKeys(false)) {
+                                    String path = Objects.requireNonNull(AddOnManager.getAddOnByName(args[1].split("\\.")[0])).getName() + "." + key;
+                                    if (PowerTools.config.getConfigurationSection(path) != null)
+                                        list.add(path);
+                                }
+                                return filter(list, args[1]);
+                            }
+                        }
+                    } else {
+                        if (PowerTools.config.getConfigurationSection(args[1]) != null) {
+                            ConfigurationSection sec = PowerTools.config.getConfigurationSection(args[1]);
+                            List<String> list = new ArrayList<>();
+                            for (String key : sec.getKeys(false)) {
+                                String path = args[1] + "." + key;
+                                if (PowerTools.config.getConfigurationSection(path) == null)
+                                    list.add(key);
+                            }
+                            return filter(list, args[2]);
+                        }
+                    }
+                } else {
+                    if (PowerTools.config.get(args[1] + "." + args[2]) instanceof List) return null;
+                    else if (PowerTools.config.get(args[1] + "." + args[2]) instanceof String) return new ArrayList<>(Arrays.asList(PowerTools.config.getString(args[1] + "." + args[2]).split(" ")));
+                    else return Collections.singletonList(PowerTools.config.getString(args[1] + "." + args[2]));
                 }
             } else {
                 String[] commands = {
                         "pts knockback {TARGET}",
                         "pts hide:kb {TARGET}",
                         "pts knockbackall",
-                        "pts hide:kba",
+                        "pts addons",
                         "pts freeze {TARGET}",
                         "pts hide:fr {TARGET}",
                         "pts rotate {TARGET}",
@@ -154,5 +159,10 @@ public class TabComplete
             for (PlCommands value : PlCommands.values()) commands.add(value.getName());
             return commands;
         }
+    }
+
+    private List<String> filter(@NotNull List<String> list, String text) {
+        list.removeIf(value -> !value.toLowerCase().startsWith(text.toLowerCase()));
+        return list;
     }
 }

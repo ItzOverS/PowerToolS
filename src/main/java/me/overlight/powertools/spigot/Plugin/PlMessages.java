@@ -41,7 +41,7 @@ public enum PlMessages {
     HelpCMD_CommandNotFind("@color_redYour target command not find!"),
     CommandNotFind("@color_redCommand not found... Use /pts help"),
     Settings_InvalidPath("@color_redInvalid path"),
-    Settings_SuccessSetValue("@color_greenSimplify set @color_gold%PATH%@color_red to @color_gold%VALUE%"),
+    Settings_SuccessSetValue("@color_greenSimplify set @color_gold%PATH%@color_green to @color_gold%VALUE% @color_green(from @color_gold%FROM%@color_green)"),
     InvalidUsage("@color_redInvalid usage...@color_gold use %CORRECT%"),
     BlackList_Added("@color_redBlackListed %USERNAME%"),
     BlackList_Removed("@color_redUn BlackListed %USERNAME%"),

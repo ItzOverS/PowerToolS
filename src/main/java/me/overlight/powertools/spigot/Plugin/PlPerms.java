@@ -22,6 +22,7 @@ public class PlPerms {
         CpsCheckCommand("modules.cpscheck.command"),
         BlackList("blacklist.command"),
         WhiteList("whitelist.command"),
+        AddOns("addons.command"),
         PluginReload("reload");
         private final String perm;
 

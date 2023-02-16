@@ -13,7 +13,7 @@ public enum PlCommands {
     knockbackAll("knockbackAll", "Knockback all players at same time to detect who using velocity hack", "knockbackall", PlPerms.Perms.KnockBackCommand.get()),
     blacklist("blacklist", "Blacklist who you want they don't play in your server", "blacklist {add/remove/list} [target]", PlPerms.Perms.BlackList.get()),
     whitelist("whitelist", "whitelist who you want powertools skip them at checks ( AntiBot, ... )", "whitelist {add/remove/list} [target]", PlPerms.Perms.WhiteList.get()),
-
+    addons("addons", "manage plugin's addons without accessing the config.yml", "addons {addonName} {option} {value}", PlPerms.Perms.AddOns.get()),
     ;
     final String name, hover, click, perm;
 
