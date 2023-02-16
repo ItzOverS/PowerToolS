@@ -23,6 +23,23 @@ public class AddOnManager {
         return null;
     }
 
+    public static List<String> getName() {
+        List<String> items = new ArrayList<>();
+        for (AddOn addon : addOns) {
+            items.add(addon.getName());
+        }
+        return items;
+    }
+
+    public static List<AddOn> enabledAddOns() {
+        List<AddOn> addons = new ArrayList<>();
+        addOns.forEach(m -> {
+            if (m.isEnabled())
+                addons.add(m);
+        });
+        return addons;
+    }
+
     public static void registerAddOn(AddOn... addOn) {
         addOns.addAll(Arrays.asList(addOn));
     }
@@ -45,8 +62,12 @@ public class AddOnManager {
     }
 
     public static void loadAddons() {
-        for (AddOn addon : addOns) {
-            if (!addon.isEnabled()) continue;
+        if (addOns.isEmpty()) return;
+        for (AddOn addon :
+                AddOnManager.addOns) {
+            if (!addon.isEnabled()) {
+                continue;
+            }
             if (addon instanceof Listener)
                 PowerTools.INSTANCE.getServer().getPluginManager().registerEvents((Listener) addon, PowerTools.INSTANCE);
             if (addon instanceof Runnable)
