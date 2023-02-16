@@ -11,7 +11,7 @@ public class PvpRegisterer
     public static HashMap<String, Integer> combo = new HashMap<>();
 
     public PvpRegisterer() {
-        super("pvpRegisterer", "1.0", "register player's unregistered clicks", PowerTools.config.getBoolean("pvpRegisterer.enabled"));
+        super("PvpRegisterer", "1.0", "register player's unregistered clicks", PowerTools.config.getBoolean("PvpRegisterer.enabled"));
     }
 
     @Override

@@ -189,7 +189,7 @@ ChatFormat:
   format: "&6<&7%player-name%&6> &8message"
 
 # -->> Note: This option may create lag in public servers ( +10 players )
-pvpRegisterer: # Required 100mg/1cps
+PvpRegisterer: # Required 100mg/1cps
   enabled: false
   registerDamages: true
   registerKnockback: true

@@ -24,7 +24,7 @@ public class AttackPacketListener
         if (Protect.protectedPlayers.contains(event.getPlayer().getName())) return;
         if (action.getAction() != WrappedPacketInUseEntity.EntityUseAction.ATTACK) return;
         Random random = new Random();
-        if (random.nextInt(100) + 1 > PowerTools.config.getInt("pvpRegisterer.chance")) return;
+        if (random.nextInt(100) + 1 > PowerTools.config.getInt("PvpRegisterer.chance")) return;
         PvpRegisterer.combo.put(event.getPlayer().getName(), PvpRegisterer.combo.getOrDefault(event.getPlayer().getName(), 0) + 1);
         new BukkitRunnable() {
             @Override
@@ -37,10 +37,10 @@ public class AttackPacketListener
         if (action.getEntity() instanceof Player)
             if (((Player) action.getEntity()).getGameMode() == GameMode.CREATIVE || ((Player) action.getEntity()).getGameMode() == GameMode.ADVENTURE)
                 return;
-        if (PowerTools.config.getBoolean("pvpRegisterer.registerDamages"))
+        if (PowerTools.config.getBoolean("PvpRegisterer.registerDamages"))
             if (((LivingEntity) action.getEntity()).getHealth() - 1 > -1)
                 ((LivingEntity) action.getEntity()).setHealth(((LivingEntity) action.getEntity()).getHealth() - 1);
-        if (PowerTools.config.getBoolean("pvpRegisterer.registerKnockback")) {
+        if (PowerTools.config.getBoolean("PvpRegisterer.registerKnockback")) {
             Vector vec = action.getEntity().getVelocity().multiply(event.getPlayer().getLocation().getDirection()).multiply(0.5);
             if (vec.getY() < 0) vec.setY(-vec.getY());
             action.getEntity().setVelocity((action.getEntity().isOnGround() ? event.getPlayer().getLocation().getDirection().multiply(0.3) : vec));
