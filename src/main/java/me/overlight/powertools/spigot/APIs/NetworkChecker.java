@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
 import java.net.URL;
 import java.time.LocalDateTime;
 
@@ -69,6 +70,10 @@ public class NetworkChecker {
 
     public static String getPlayerIPv4(Player player) {
         return player.getAddress().getAddress().toString().split("/")[0];
+    }
+
+    public static String getPlayerIPv4(InetSocketAddress address) {
+        return address.getAddress().toString().split("/")[0];
     }
 
     public static JSONObject getPlayerIPv4API(Player player) {

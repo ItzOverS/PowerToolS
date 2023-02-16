@@ -1,0 +1,5 @@
+# Welcome to PowerTools PowerTools.config!!
+# You can use this plugin addons in this file!
+
+AntiProtocolDetect:
+  enabled: true
