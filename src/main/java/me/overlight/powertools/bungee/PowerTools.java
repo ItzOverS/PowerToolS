@@ -5,15 +5,16 @@ import me.overlight.powertools.spigot.Libraries.ColorFormat;
 import me.overlight.powertools.spigot.Plugin.PlInfo;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.plugin.Plugin;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+import net.md_5.bungee.config.Configuration;
+import net.md_5.bungee.config.ConfigurationProvider;
+import net.md_5.bungee.config.YamlConfiguration;
 
 import java.io.*;
 
 public final class PowerTools
         extends Plugin {
     public static PowerTools INSTANCE;
-    public static FileConfiguration config;
+    public static Configuration config;
 
     @Override
     public void onEnable() {
@@ -23,7 +24,7 @@ public final class PowerTools
             getProxy().getPluginManager().registerListener(this, new MainEventHandler());
 
             saveResource("bungeeConfig.yml", false);
-            config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "config.yml"));
+            config = loadResource(getDataFolder().getPath() + "\\config.yml");
 
             if (config.getBoolean("AntiProtocolDetect.enabled"))
                 getProxy().getPluginManager().registerListener(this, new AntiProtocolDetect());
@@ -35,8 +36,14 @@ public final class PowerTools
             getProxy().getConsole().sendMessage(new ComponentBuilder(ColorFormat.formatColorBungee("@color_dark_green/_/    @color_aqua/_/ /___/  @color_dark_gray  by ItzOver")).create());
             getProxy().getConsole().sendMessage(new ComponentBuilder("").create());
             getProxy().getConsole().sendMessage(new ComponentBuilder("").create());
-        } catch(Exception ex){
-
+        } catch (Exception ex) {
+            getProxy().getConsole().sendMessage(new ComponentBuilder("").create());
+            getProxy().getConsole().sendMessage(new ComponentBuilder(ColorFormat.formatColorBungee("   @color_dark_red___  @color_red__________   ")).create());
+            getProxy().getConsole().sendMessage(new ComponentBuilder(ColorFormat.formatColorBungee("  @color_dark_red/ _ \\@color_red/_  __/ __/ @color_dark_gray " + ex.getLocalizedMessage())).create());
+            getProxy().getConsole().sendMessage(new ComponentBuilder(ColorFormat.formatColorBungee(" @color_dark_red/ ___/ @color_red/ / _\\ \\   @color_dark_gray Disabled PowerToolS v" + PlInfo.VERSION)).create());
+            getProxy().getConsole().sendMessage(new ComponentBuilder(ColorFormat.formatColorBungee("@color_dark_red/_/    @color_red/_/ /___/  @color_dark_gray  by ItzOver")).create());
+            getProxy().getConsole().sendMessage(new ComponentBuilder("").create());
+            getProxy().getConsole().sendMessage(new ComponentBuilder("").create());
         }
     }
 
@@ -53,6 +60,7 @@ public final class PowerTools
 
     public void saveResource(String resourcePath, boolean replace) {
         if (resourcePath != null && !resourcePath.equals("")) {
+            if (new File(getDataFolder(), "config.yml").exists()) return;
             resourcePath = resourcePath.replace('\\', '/');
             InputStream in = this.getResourceAsStream(resourcePath);
             if (in == null) {
@@ -86,5 +94,9 @@ public final class PowerTools
         } else {
             throw new IllegalArgumentException("ResourcePath cannot be null or empty");
         }
+    }
+
+    public Configuration loadResource(String path) throws IOException {
+        return ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(path));
     }
 }
