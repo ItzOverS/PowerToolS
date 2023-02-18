@@ -66,6 +66,8 @@ public class TabComplete
                         "pts hide:pt {TARGET}",
                         "pts protect {TARGET}",
                         "pts hide:prot {TARGET}",
+                        "pts mute {TARGET}",
+                        "pts unmute {TARGET}",
                         "pts vanish {TARGET}",
                         "pts toggle {TOGGLE_TYPES} {TARGET}",
                         "pts blacklist add {TARGET}",

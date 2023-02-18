@@ -24,6 +24,9 @@ public class PlPerms {
         WhiteList("whitelist.command"),
         AddOns("addons.command"),
         PluginReload("reload");
+        Mute("mute.command"),
+        UnMute("unmute.command"),
+        ;
         private final String perm;
 
         Perms(String perm) {

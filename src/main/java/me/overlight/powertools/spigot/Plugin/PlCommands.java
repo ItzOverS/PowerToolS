@@ -14,6 +14,8 @@ public enum PlCommands {
     blacklist("blacklist", "Blacklist who you want they don't play in your server", "blacklist {add/remove/list} [target]", PlPerms.Perms.BlackList.get()),
     whitelist("whitelist", "whitelist who you want powertools skip them at checks ( AntiBot, ... )", "whitelist {add/remove/list} [target]", PlPerms.Perms.WhiteList.get()),
     addons("addons", "manage plugin's addons without accessing the config.yml", "addons {addonName} {option} {value}", PlPerms.Perms.AddOns.get()),
+    mute("mute", "Mute a player to prevent them from sending chat & sign placement", "mute {target} {date} [reason]", PlPerms.Perms.Mute.get()),
+    unmute("unmute", "unMute a player if they're muted", "unmute {target}", PlPerms.Perms.UnMute.get()),
     ;
     final String name, hover, click, perm;
 

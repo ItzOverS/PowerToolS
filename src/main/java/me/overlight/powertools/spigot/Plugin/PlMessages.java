@@ -47,6 +47,12 @@ public enum PlMessages {
     BlackList_Removed("@color_redUn BlackListed %USERNAME%"),
     WhiteList_Added("@color_greenWhiteListed %USERNAME%"),
     WhiteList_Removed("@color_greenUn Whitelisted %USERNAME%"),
+    Mute_UserAlreadyMuted("@color_gold%USERNAME% @color_redhas already muted"),
+    Mute_UserMuted("@color_greenSimplify muted @color_gold%USERNAME%"),
+    Mute_UserNoLongerMuted("@color_gold%USERNAME%@color_red is no longer muted"),
+    Mute_UserIsntMuted("@color_gold%USERNAME%@color_red isn't muted"),
+    Mute_YouCantSendChatMessage("@color_redYou are muted & can't send message in public chat"),
+    Mute_YouCantPlaceSign("@color_redYou are muted & can't place sign"),
     ;
     private final String desc;
 

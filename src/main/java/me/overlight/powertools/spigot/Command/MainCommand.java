@@ -473,6 +473,40 @@ public class MainCommand
                         }
                     }
                     break;
+                case "mute":
+                    if (args.length == 3) { // /pts mute _OverLight_ 3d
+                        if (isPlayerValid(args[1])) {
+                            if (!Mute.isPlayerMuted(args[1])) {
+                                Mute.mutedPlayers.add(new MuteEntry(args[1], args[2], "The Mute Hammer has Spoken", Mute.currentTime()));
+                                sender.sendMessage(PlMessages.Mute_UserMuted.get(new RepItem("%USERNAME%", args[1])));
+                            } else {
+                                sender.sendMessage(PlMessages.Mute_UserAlreadyMuted.get(new RepItem("%USERNAME%", args[1])));
+                            }
+                        } else
+                            sender.sendMessage(PlMessages.PlayerNotFind.get());
+                    } else if (args.length > 3) {
+                        if (!Mute.isPlayerMuted(args[1])) {
+                            Mute.mutedPlayers.add(new MuteEntry(args[1], args[2], join(new ArrayList<>(Arrays.asList(args)).subList(3, args.length - 3), " "), Mute.currentTime()));
+                            sender.sendMessage(PlMessages.Mute_UserMuted.get(new RepItem("%USERNAME%", args[1])));
+                        } else {
+                            sender.sendMessage(PlMessages.Mute_UserAlreadyMuted.get(new RepItem("%USERNAME%", args[1])));
+                        }
+                    } else {
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools mute {target} {range} [reason]")));
+                    }
+                    break;
+                case "unmute":
+                    if (args.length == 2) { // /pts mute _OverLight_
+                        if (Mute.isPlayerMuted(args[1])) {
+                            Mute.unMute(args[1]);
+                            sender.sendMessage(PlMessages.Mute_UserNoLongerMuted.get(new RepItem("%USERNAME%", args[1])));
+                        } else {
+                            sender.sendMessage(PlMessages.Mute_UserIsntMuted.get(new RepItem("%USERNAME%", args[1])));
+                        }
+                    } else {
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools unmute {target}")));
+                    }
+                    break;
                 default:
                     sender.sendMessage(PlMessages.CommandNotFind.get());
             }
@@ -512,6 +546,12 @@ public class MainCommand
             if (index >= from && index <= length + from)
                 main += s + splitter;
         }
+        return main.substring(0, main.length() - splitter.length());
+    }
+
+    private String join(List<String> list, String splitter) {
+        String main = "";
+        for (String s : list) main += s + splitter;
         return main.substring(0, main.length() - splitter.length());
     }
 }
