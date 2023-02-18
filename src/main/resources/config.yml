@@ -319,6 +319,14 @@ ServerAddOns:
       - 44465415418452 # This ID is random
     fromDiscord: true # execute the commands they send in chat at discord
 
+  ConsoleMessageDeny:
+    enabled: false
+    messages: # Message will filter one of the texts below contains in it
+      - "test1 message deny..."
+      - "test2 message deny..."
+      - "test3 message deny..."
+      - "test4 message deny..."
+
   # Note: Required BungeeCord server & Required the plugin installed on all servers ( they connected to bungeecord ) & this option enabled on all of them ( if disabled on a server that server's chat will private )
   PublicChat:
     enabled: false
