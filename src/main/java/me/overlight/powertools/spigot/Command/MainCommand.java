@@ -5,6 +5,7 @@ import me.overlight.powertools.spigot.AddOns.Main.AntiBot.BlackListManager;
 import me.overlight.powertools.spigot.AddOns.Main.AntiBot.WhiteListManager;
 import me.overlight.powertools.spigot.Libraries.AlertUtils;
 import me.overlight.powertools.spigot.Libraries.ColorFormat;
+import me.overlight.powertools.spigot.Libraries.MuteEntry;
 import me.overlight.powertools.spigot.Libraries.RepItem;
 import me.overlight.powertools.spigot.Modules.impls.Timer;
 import me.overlight.powertools.spigot.Modules.mods.*;
@@ -25,6 +26,7 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -37,12 +39,16 @@ public class MainCommand
         if (args.length > 0) {
             switch (args[0]) {
                 case "help":
+                    if (!PlPerms.hasPerm(sender, PlPerms.Perms.Help.get())) {
+                        sender.sendMessage(PlMessages.NoPermission.get());
+                        return false;
+                    }
                     if (args.length == 1) {
                         sender.sendMessage(ColorFormat.formatColor("@color_gold@format_mid_line===================================================="));
                         sender.sendMessage(ColorFormat.formatColor(PlInfo.INV_PREFIX.substring(0, PlInfo.INV_PREFIX.length() - 11) + " @color_goldHelp: "));
                         int index = 1;
                         for (PlCommands item : PlCommands.values()) {
-                            if(!(sender instanceof Player))
+                            if (!(sender instanceof Player))
                                 PowerTools.Alert(PowerTools.Target.CONSOLE, ChatColor.GRAY + "#" + index + "  " + ChatColor.GREEN + item.getName() + ChatColor.GRAY + ": " + ChatColor.DARK_GREEN + item.getDesc(), false);
                             else
                                 AlertUtils.sendHoverClickableMessage((Player) sender, ChatColor.GRAY + "#" + index + "  " + ChatColor.GREEN + item.getName(), new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, item.getUsage()), new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(item.getDesc() + "\n\n" + ChatColor.AQUA + "Click to use it in your chat").create()));
@@ -92,7 +98,7 @@ public class MainCommand
                         sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools knockback {username}")));
                     }
                     break;
-                case "knocbackall":
+                case "knockbackall":
                 case "kba":
                     if (!PlPerms.hasPerm(sender, PlPerms.Perms.KnockBackCommand.get())) {
                         sender.sendMessage(PlMessages.NoPermission.get());
@@ -357,41 +363,57 @@ public class MainCommand
                     }
                     break;*/
                 case "blacklist":
-                    if (!PlPerms.hasPerm(sender, PlPerms.Perms.BlackList.get())) {
-                        sender.sendMessage(PlMessages.NoPermission.get());
-                        return false;
-                    }
                     if (args.length == 3) {
                         switch (args[1].toLowerCase()) {
                             case "add":
+                                if (!PlPerms.hasPerm(sender, PlPerms.Perms.BlackListAdd.get())) {
+                                    sender.sendMessage(PlMessages.NoPermission.get());
+                                    return false;
+                                }
                                 WhiteListManager.removeWhitelist(args[2]);
                                 BlackListManager.blackList(args[2]);
                                 sender.sendMessage(PlMessages.BlackList_Added.get(new RepItem("%USERNAME%", args[2])));
                                 break;
                             case "remove":
+                                if (!PlPerms.hasPerm(sender, PlPerms.Perms.BlackListRemove.get())) {
+                                    sender.sendMessage(PlMessages.NoPermission.get());
+                                    return false;
+                                }
                                 BlackListManager.removeBlackList(args[2]);
                                 sender.sendMessage(PlMessages.BlackList_Removed.get(new RepItem("%USERNAME%", args[2])));
                                 break;
                             default:
+                                if (!PlPerms.hasPerm(sender, PlPerms.Perms.BlackListNotFind.get())) {
+                                    sender.sendMessage(PlMessages.NoPermission.get());
+                                    return false;
+                                }
                                 sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools blacklist {add/remove} {playerName}")));
                                 break;
                         }
                     } else if (args.length == 2) {
                         if (Objects.equals(args[1], "list")) {
+                            if (!PlPerms.hasPerm(sender, PlPerms.Perms.BlackListList.get())) {
+                                sender.sendMessage(PlMessages.NoPermission.get());
+                                return false;
+                            }
                             sender.sendMessage(PlInfo.PREFIX + ChatColor.GOLD + BlackListManager.getBlacklistedPlayers());
                         }
                     } else {
+                        if (!PlPerms.hasPerm(sender, PlPerms.Perms.BlackListNotFind.get())) {
+                            sender.sendMessage(PlMessages.NoPermission.get());
+                            return false;
+                        }
                         sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools blacklist {add/remove/list} [playerName]")));
                     }
                     break;
                 case "whitelist":
-                    if (!PlPerms.hasPerm(sender, PlPerms.Perms.WhiteList.get())) {
-                        sender.sendMessage(PlMessages.NoPermission.get());
-                        return false;
-                    }
                     if (args.length == 3) {
                         switch (args[1].toLowerCase()) {
                             case "add":
+                                if (!PlPerms.hasPerm(sender, PlPerms.Perms.WhiteListAdd.get())) {
+                                    sender.sendMessage(PlMessages.NoPermission.get());
+                                    return false;
+                                }
                                 BlackListManager.removeBlackList(args[2]);
                                 WhiteListManager.whitelist(args[2]);
                                 sender.sendMessage(PlMessages.WhiteList_Added.get(new RepItem("%USERNAME%", args[2])));
@@ -402,6 +424,10 @@ public class MainCommand
                                 }
                                 break;
                             case "remove":
+                                if (!PlPerms.hasPerm(sender, PlPerms.Perms.WhiteListRemove.get())) {
+                                    sender.sendMessage(PlMessages.NoPermission.get());
+                                    return false;
+                                }
                                 WhiteListManager.removeWhitelist(args[2]);
                                 sender.sendMessage(PlMessages.WhiteList_Removed.get(new RepItem("%USERNAME%", args[2])));
                                 try {
@@ -411,23 +437,35 @@ public class MainCommand
                                 }
                                 break;
                             default:
+                                if (!PlPerms.hasPerm(sender, PlPerms.Perms.WhiteListNotFind.get())) {
+                                    sender.sendMessage(PlMessages.NoPermission.get());
+                                    return false;
+                                }
                                 sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools whitelist {add/remove} {playerName}")));
                                 break;
                         }
                     } else if (args.length == 2) {
                         if (Objects.equals(args[1], "list")) {
+                            if (!PlPerms.hasPerm(sender, PlPerms.Perms.WhiteListList.get())) {
+                                sender.sendMessage(PlMessages.NoPermission.get());
+                                return false;
+                            }
                             sender.sendMessage(PlInfo.PREFIX + ChatColor.GOLD + WhiteListManager.getWhitelistedPlayers());
                         }
                     } else {
+                        if (!PlPerms.hasPerm(sender, PlPerms.Perms.WhiteListNotFind.get())) {
+                            sender.sendMessage(PlMessages.NoPermission.get());
+                            return false;
+                        }
                         sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools whitelist {add/remove/list} [playerName]")));
                     }
                     break;
                 case "addons":
-                    if (!PlPerms.hasPerm(sender, PlPerms.Perms.AddOns.get())) {
-                        sender.sendMessage(PlMessages.NoPermission.get());
-                        return false;
-                    }
                     if (args.length == 1) {
+                        if (!PlPerms.hasPerm(sender, PlPerms.Perms.AddOnsList.get())) {
+                            sender.sendMessage(PlMessages.NoPermission.get());
+                            return false;
+                        }
                         String msg = "";
                         for (int i = 0; i < AddOnManager.addOns.size(); i++) {
                             String name = AddOnManager.addOns.get(i).getName().substring(AddOnManager.addOns.get(i).getName().indexOf(".") + 1);
@@ -443,6 +481,10 @@ public class MainCommand
                         sender.sendMessage(msg);
                         sender.sendMessage(ColorFormat.formatColor("@color_gold@format_mid_line===================================================="));
                     } else {
+                        if (!PlPerms.hasPerm(sender, PlPerms.Perms.AddOnsManage.get())) {
+                            sender.sendMessage(PlMessages.NoPermission.get());
+                            return false;
+                        }
                         if (args.length >= 4) {
                             try {
 
@@ -510,6 +552,10 @@ public class MainCommand
                 default:
                     sender.sendMessage(PlMessages.CommandNotFind.get());
             }
+
+            //TODO in-game chat voting - real-time stats
+            //TODO Add boss-bar for RenderAddOns
+
         } else {
             // args.length == 0
             if (!PlPerms.hasPerm(sender, "powertools")) {
