@@ -46,8 +46,9 @@ public class AddOnManager {
 
     public static void unRegisterAddOn(AddOn... addOn) {
         try {
-            Arrays.asList(addOn).forEach(AddOn::onDisabled);
-            addOns.removeAll(Arrays.asList(addOn));
+            for (AddOn addon : addOn) {
+                addOns.remove(addon);
+            }
         } catch (Exception ignored) {
         }
     }
