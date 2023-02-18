@@ -10,7 +10,7 @@ description: Give staffs powerful options for detecting cheaters
 commands:
   powertools:
     description: Use PowerToolS options
-    permission: powertools
+    default: true
     aliases: [ "pts" ]
   report:
     description: report player, bug & other

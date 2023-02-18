@@ -479,10 +479,17 @@ public class MainCommand
         } else {
             // args.length == 0
             if (!PlPerms.hasPerm(sender, "powertools")) {
-                sender.sendMessage(ColorFormat.formatColor("@color_aquaWelcome to PowerToolS v" + PlInfo.VERSION));
+                sender.sendMessage(ColorFormat.formatColor("@color_aqua@format_mid_line=============================="));
+                sender.sendMessage(ColorFormat.formatColor("@color_aquaPowerToolS v" + PlInfo.VERSION + " by ItzOverS"));
+                sender.sendMessage(ColorFormat.formatColor("@color_aquaGitHub: https://github.com/ItzOverS/"));
+                sender.sendMessage(ColorFormat.formatColor("@color_aqua@format_mid_line=============================="));
             } else {
+                sender.sendMessage(ColorFormat.formatColor("@color_aqua@format_mid_line=============================="));
                 sender.sendMessage(ColorFormat.formatColor("@color_aquaWelcome to PowerToolS v" + PlInfo.VERSION));
                 sender.sendMessage(ColorFormat.formatColor("@color_aquaUse '/pts help' for information"));
+                sender.sendMessage(ColorFormat.formatColor("@color_aquaPowerToolS by _OverLight_"));
+                sender.sendMessage(ColorFormat.formatColor("@color_aquaGitHub: https://github.com/ItzOverS/"));
+                sender.sendMessage(ColorFormat.formatColor("@color_aqua@format_mid_line=============================="));
             }
         }
 
