@@ -549,13 +549,40 @@ public class MainCommand
                         sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools unmute {target}")));
                     }
                     break;
+                case "vote":
+                    if (args.length == 2 &&
+                            args[1].equalsIgnoreCase("create")) {
+                        if (sender instanceof Player) {
+                            Vote.openVoteGUI((Player) sender);
+                        } else {
+                            sender.sendMessage(PlMessages.OnlyPlayersCanUseCommand.get());
+                        }
+                    } else if (args.length == 4 &&
+                            args[1].equalsIgnoreCase("give")) {
+                        if (sender instanceof Player) {
+                            try {
+                                me.overlight.powertools.spigot.Libraries.Vote.Vote v = Vote.getVoteById(args[3]);
+                                if (v == null) {
+                                    sender.sendMessage(PlMessages.Vote_TargetVoteHasExpired.get());
+                                    return true;
+                                }
+                                if (v.updateOption(Integer.parseInt(args[2]), (Player) sender)) {
+                                    v.getOptions().get(Integer.parseInt(args[2])).addVoter(sender.getName());
+                                    sender.sendMessage(PlMessages.Vote_SuccessfulVoted.get(new RepItem("%VOTE%", v.getOptions().get(Integer.parseInt(args[2])).getText())));
+                                    Vote.openVoteStatsInventory(v, Bukkit.getPlayer(Vote.voteOwner.get(v)));
+                                } else
+                                    sender.sendMessage(PlMessages.Vote_AlreadyVotedFor.get());
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        } else {
+                            sender.sendMessage(PlMessages.OnlyPlayersCanUseCommand.get());
+                        }
+                    }
+                    break;
                 default:
                     sender.sendMessage(PlMessages.CommandNotFind.get());
             }
-
-            //TODO in-game chat voting - real-time stats
-            //TODO Add boss-bar for RenderAddOns
-
         } else {
             // args.length == 0
             if (!PlPerms.hasPerm(sender, "powertools")) {

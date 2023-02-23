@@ -35,4 +35,15 @@ public class ColorFormat {
                 .replace("@format_italic", "&o").replace("@format_reset", "&r");
         return net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', ms);
     }
+
+    public static String removeAllFormats(String text) {
+        int index = 0;
+        for (char ch : text.toCharArray()) {
+            if (ch == '&') {
+                text = text.substring(index, 2);
+            }
+            index++;
+        }
+        return text;
+    }
 }

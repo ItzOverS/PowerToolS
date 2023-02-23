@@ -53,6 +53,17 @@ public enum PlMessages {
     Mute_UserIsntMuted("@color_gold%USERNAME%@color_red isn't muted"),
     Mute_YouCantSendChatMessage("@color_redYou are muted & can't send message in public chat"),
     Mute_YouCantPlaceSign("@color_redYou are muted & can't place sign"),
+    Vote_SelectYourVoteName("@color_greenEnter your vote name you wants in chat"),
+    Vote_SelectYourVoteItem("@color_greenEnter your vote item #%INDEX% in chat"),
+    Vote_SelectYourVotePermission("@color_greenEnter your vote permission you wants in chat"),
+    Vote_SuccessfulUpdateVoteName("@color_greenSimplify updated your vote name"),
+    Vote_SuccessfulUpdateVoteOption("@color_greenSimplify updated your vote item"),
+    Vote_SuccessfulUpdateVotePermission("@color_greenSimplify updated your vote permission"),
+    Vote_SuccessfulStarted("@color_greenStarted vote who has %PERM% permission"),
+    Vote_SuccessfulVoted("@color_greenYou simplify voted for %VOTE%"),
+    Vote_AlreadyVotedFor("@color_redYou already voted"),
+    Vote_VoteEnded("@color_greenVote ended & was have %VOTERS% voter(s)"),
+    Vote_TargetVoteHasExpired("@color_redTarget vote has expired"),
     ;
     private final String desc;
 

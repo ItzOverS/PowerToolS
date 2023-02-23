@@ -110,7 +110,7 @@ public class PowerTools
                 }
             }
 
-            ModuleManager.registerModule(new Knockback(), new Mute(), new Freeze(), new Channel(), new MemoryUsage(), new Protect(), new Rotate(), new PlayTime(), new Vanish(), new Toggle(), new CpsMap());
+            ModuleManager.registerModule(new Knockback(), new Mute(), new Freeze(), new Channel(), new MemoryUsage(), new Protect(), new Rotate(), new PlayTime(), new Vanish(), new Toggle(), new CpsMap(), new Vote());
             ModuleManager.loadModulesData();
 
             loadAddOns();

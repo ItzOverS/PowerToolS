@@ -36,6 +36,8 @@ public class PlPerms {
         PluginReload("reload"),
         Mute("mute.command"),
         UnMute("unmute.command"),
+        VoteCreate("vote.create"),
+
         ;
         private final String perm;
 
