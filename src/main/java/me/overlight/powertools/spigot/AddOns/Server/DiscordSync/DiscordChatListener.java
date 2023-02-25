@@ -13,6 +13,6 @@ public class DiscordChatListener
         if(!e.getMessage().getContentDisplay().startsWith("$$")) return;
         if(!e.getMessage().getContentDisplay().substring(2).split(" ")[0].toLowerCase().equals("execute")) return;
 
-        PowerTools.INSTANCE.getServer().getConsoleSender().sendMessage(e.getMessage().getContentDisplay().substring(e.getMessage().getContentDisplay().substring(2).split(" ")[0].length()));
+        PowerTools.INSTANCE.getServer().getConsoleSender().sendMessage(e.getMessage().getContentDisplay().substring(e.getMessage().getContentDisplay().split(" ")[0].length()));
     }
 }
