@@ -37,7 +37,7 @@ public class PlPerms {
         Mute("mute.command"),
         UnMute("unmute.command"),
         VoteCreate("vote.create"),
-
+        DistanceChatBypass("distancechat.bypass"),
         ;
         private final String perm;
 

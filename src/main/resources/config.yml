@@ -191,6 +191,10 @@ ChatFormat:
   enabled: false
   format: "&6<&7%player-name%&6> &8message"
 
+DistanceChat:
+  enabled: false
+  maxDistance: 70
+
 # -->> Note: This option may create lag in public servers ( +10 players )
 PvpRegisterer: # Required 100mg/1cps
   enabled: false
