@@ -240,7 +240,7 @@ public class PowerTools
             data.writeUTF("kick|" + player.getName() + "|" + reason);
             player.sendPluginMessage(PowerTools.INSTANCE, "pts:bungee", data.toByteArray());
         } else {
-            Bukkit.getScheduler().runTaskAsynchronously(PowerTools.INSTANCE, () -> {
+            Bukkit.getScheduler().runTask(PowerTools.INSTANCE, () -> {
                 player.kickPlayer(reason);
             });
         }
