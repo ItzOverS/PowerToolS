@@ -16,6 +16,7 @@ public enum PlCommands {
     addons("addons", "manage plugin's addons without accessing the config.yml", "addons {addonName} {option} {value}", PlPerms.Perms.AddOnsManage.get()),
     mute("mute", "Mute a player to prevent them from sending chat & sign placement", "mute {target} {date} [reason]", PlPerms.Perms.Mute.get()),
     unmute("unmute", "unMute a player if they're muted", "unmute {target}", PlPerms.Perms.UnMute.get()),
+    vote("vote", "vote between players for something in game", "vote create", PlPerms.Perms.VoteCreate.get()),
     ;
     final String name, hover, click, perm;
 
