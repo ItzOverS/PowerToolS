@@ -22,6 +22,10 @@ public class AntiTeamUp
         implements Listener {
     public AntiTeamUp() {
         super("BedwarsAddOns.AntiTeamup", "1.0", "prevent players from team up *only* in bedwars", PowerTools.config.getBoolean("BedwarsAddOns.AntiTeamup.enabled"));
+    }
+
+    @Override
+    public void onEnabled() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(PowerTools.INSTANCE, this::CheckTeamUps, 10, 10);
     }
 
@@ -32,8 +36,9 @@ public class AntiTeamUp
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player.getInventory().getChestplate() == null) continue;
             if (player.getInventory().getChestplate().getType() != Material.LEATHER_CHESTPLATE) continue;
-            List<Player> NearestPlayers = getNearestPlayers(player, 4.5);
+            List<Player> NearestPlayers = getNearestPlayers(player, PowerTools.config.getDouble(this.getName() + ".distance"));
             for (Player nearestPlayer : NearestPlayers) {
+                player.sendMessage((((LeatherArmorMeta) player.getInventory().getChestplate().getItemMeta()).getColor() == ((LeatherArmorMeta) nearestPlayer.getInventory().getChestplate().getItemMeta()).getColor()) + "");
                 if (isThereAnyWall(getHeadLocation(player), getHeadLocation(nearestPlayer))) {
                     VLplayers.put(player.getName(), 0);
                     VLplayers.put(nearestPlayer.getName(), 0);
@@ -43,8 +48,8 @@ public class AntiTeamUp
                     if (isDamagerContains(player.getName()))
                         if (System.currentTimeMillis() - getDamagerValue(player.getName()) < 5000)
                             break;
-                    if (isDamagedEntityContains(player.getName()))
-                        if (System.currentTimeMillis() - getDamagedEntityValue(player.getName()) < 5000)
+                    if (isDamagedEntityContains(nearestPlayer.getName()))
+                        if (System.currentTimeMillis() - getDamagedEntityValue(nearestPlayer.getName()) < 5000)
                             break;
 
                     VLplayers.put(player.getName(), VLplayers.containsKey(player.getName()) ? VLplayers.get(player.getName()) + 1 : 1);
@@ -64,9 +69,9 @@ public class AntiTeamUp
 
     private boolean isThereAnyWall(Location loc1, Location loc2) {
         if (loc1.getWorld() == loc2.getWorld()) {
-            double range = 0.7;
-            loc1 = new Location(loc1.getWorld(), loc1.getX(), loc1.getY() + 1, loc1.getZ());
-            loc2 = new Location(loc2.getWorld(), loc2.getX(), loc2.getY() + 1, loc2.getZ());
+            double range = 0.1;
+            loc1 = new Location(loc1.getWorld(), loc1.getX(), loc1.getY(), loc1.getZ());
+            loc2 = new Location(loc2.getWorld(), loc2.getX(), loc2.getY(), loc2.getZ());
             double distance = loc1.distance(loc2);
             Vector p1 = loc1.toVector();
             Vector p2 = loc2.toVector();
@@ -84,6 +89,7 @@ public class AntiTeamUp
     private List<Player> getNearestPlayers(Player target, double range) {
         List<Player> players = new ArrayList<>();
         for (Player player : target.getWorld().getPlayers()) {
+            if (player == target) continue;
             if (target.getLocation().distance(player.getLocation()) <= range) {
                 players.add(player);
             }
@@ -116,9 +122,8 @@ public class AntiTeamUp
                     VLplayers.remove(name);
                     continue;
                 }
-                Bukkit.getScheduler().runTaskAsynchronously(PowerTools.INSTANCE, () -> {
-                    PowerTools.kick(Bukkit.getPlayer(name), PlInfo.KICK_PREFIX + ChatColor.RED + "Do not teamUp");
-                });
+                PowerTools.kick(Bukkit.getPlayer(name), PlInfo.KICK_PREFIX + ChatColor.RED + "Do not teamUp");
+                VLplayers.put(name, 0);
             }
         }
     }
