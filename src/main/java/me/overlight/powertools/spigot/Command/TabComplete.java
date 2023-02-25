@@ -80,6 +80,7 @@ public class TabComplete
                         "pts toggle remove",
                         "pts cps {TARGET}",
                         "pts help {COMMANDS}",
+                        "pts vote create",
                 };
                 Set<String> currentIndexCommands = new HashSet<>();
                 for (String value : commands) {
