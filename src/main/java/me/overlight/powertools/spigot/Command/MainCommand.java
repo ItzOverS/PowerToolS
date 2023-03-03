@@ -616,7 +616,7 @@ public class MainCommand
                                             .replace("%ENABLED_ADDONS%", AddOnManager.getAsString()).replace("%ENABLED_EXTENSIONS%", ExtensionManager.getAsString())
                                             .replace("%PLUGINS%", PluginManager.getEnabledPluginsAsString());
 
-                                    sender.sendMessage(PlMessages.SimplifyCreatedDump.get(new RepItem("%URL%", "https://paste.helpch.at/" + pasteAtInternet(dump, "PowerToolS's DUMP url"))));
+                                    sender.sendMessage(PlMessages.SimplifyCreatedDump.get(new RepItem("%URL%", pasteAtInternet(dump, "PowerToolS's DUMP url"))));
                                 } catch (IOException ex) {
                                     sender.sendMessage(PlMessages.FailedCreateDump.get());
                                 }

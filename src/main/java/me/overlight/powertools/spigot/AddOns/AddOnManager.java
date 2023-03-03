@@ -68,6 +68,7 @@ public class AddOnManager {
             if(addon.isEnabled())
                 result += addon.getName() + ", ";
         }
+        if (result == "") return "None";
         return result.substring(0, result.length() - 2);
     }
 

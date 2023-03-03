@@ -67,6 +67,7 @@ public class ExtensionManager {
         for(PowerModule module: extensions){
             result += module.getConfigName() + ", ";
         }
+        if (result == "") return "None";
         return result.substring(0, result.length() - 2);
     }
 
