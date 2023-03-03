@@ -70,7 +70,7 @@ public class TabComplete
                         "pts mute {TARGET}",
                         "pts unmute {TARGET}",
                         "pts vanish {TARGET}",
-                        "pts toggle {TOGGLE_TYPES} {TARGET}",
+                        "pts toggle {cps/ping} {TARGET}",
                         "pts blacklist add {TARGET}",
                         "pts blacklist remove {TARGET}",
                         "pts blacklist list",
@@ -145,8 +145,6 @@ public class TabComplete
     public List<String> replaceVars(String text) {
         if (text.equals("{TARGET}"))
             return ImplementedVariables.getOnlinePlayers();
-        else if (text.equals("{TOGGLE_TYPES}"))
-            return new ArrayList<>(Arrays.asList("cps", "ping"));
         else if (text.equals("{COMMANDS}"))
             return ImplementedVariables.getPluginCommands();
         else if (text.contains("/")) {
