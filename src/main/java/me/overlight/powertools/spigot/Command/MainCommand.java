@@ -639,6 +639,20 @@ public class MainCommand
                                 sender.sendMessage(PlMessages.DumpItemNotFind.get());
                                 break;
                         }
+                    } else if (args.length == 1) {
+                        try {
+                            String dump = PlInfo.DUMP_STYLE
+                                    .replace("%SERVER_VERSION%", PacketEvents.get().getServerUtils().getVersion().name() + " (" + PacketEvents.get().getServerUtils().getVersion().getProtocolVersion() + ")")
+                                    .replace("%PL_VERSION%", PlInfo.VERSION).replace("%BUNGEE_CONNECTED%", String.valueOf(PowerTools.config.getBoolean("bungeecord")))
+                                    .replace("%ENABLED_ADDONS%", AddOnManager.getAsString()).replace("%ENABLED_EXTENSIONS%", ExtensionManager.getAsString())
+                                    .replace("%PLUGINS%", PluginManager.getEnabledPluginsAsString());
+
+                            sender.sendMessage(PlMessages.SimplifyCreatedDump.get(new RepItem("%URL%", pasteAtInternet(dump, "PowerToolS's DUMP url"))));
+                        } catch (IOException ex) {
+                            sender.sendMessage(PlMessages.FailedCreateDump.get());
+                        }
+                    } else {
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools dump [plugin/console/config]")));
                     }
                     break;
                 case "plugins":
