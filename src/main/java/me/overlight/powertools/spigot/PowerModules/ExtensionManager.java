@@ -62,6 +62,14 @@ public class ExtensionManager {
         }
     }
 
+    public static String getAsString(){
+        String result = "";
+        for(PowerModule module: extensions){
+            result += module.getConfigName() + ", ";
+        }
+        return result.substring(0, result.length() - 2);
+    }
+
     public static boolean hookInto(String plName) throws IOException, ClassNotFoundException, NoSuchMethodException, NoSuchFieldException, IllegalAccessException {
         try {
             plName = "PowerExt_" + plName;

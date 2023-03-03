@@ -1,8 +1,14 @@
 package me.overlight.powertools.spigot.Command;
 
+import com.google.common.io.CharStreams;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import io.github.retrooper.packetevents.PacketEvents;
+import me.overlight.powertools.spigot.APIs.PluginManager;
 import me.overlight.powertools.spigot.AddOns.AddOnManager;
 import me.overlight.powertools.spigot.AddOns.Main.AntiBot.BlackListManager;
 import me.overlight.powertools.spigot.AddOns.Main.AntiBot.WhiteListManager;
+import me.overlight.powertools.spigot.ConsoleMessageSaver;
 import me.overlight.powertools.spigot.Libraries.AlertUtils;
 import me.overlight.powertools.spigot.Libraries.ColorFormat;
 import me.overlight.powertools.spigot.Libraries.MuteEntry;
@@ -22,10 +28,17 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.libs.jline.internal.InputStreamReader;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -580,6 +593,146 @@ public class MainCommand
                         }
                     }
                     break;
+                case "dump":
+                    if (args.length == 2) {
+                        switch (args[1]) {
+                            case "plugin":
+                                try {
+                                    String dump = PlInfo.DUMP_STYLE
+                                            .replace("%SERVER_VERSION%", PacketEvents.get().getServerUtils().getVersion().name() + " (" + PacketEvents.get().getServerUtils().getVersion().getProtocolVersion() + ")")
+                                            .replace("%PL_VERSION%", PlInfo.VERSION).replace("%BUNGEE_CONNECTED%", String.valueOf(PowerTools.config.getBoolean("bungeecord")))
+                                            .replace("%ENABLED_ADDONS%", AddOnManager.getAsString()).replace("%ENABLED_EXTENSIONS%", ExtensionManager.getAsString())
+                                            .replace("%PLUGINS%", PluginManager.getEnabledPluginsAsString());
+
+                                    sender.sendMessage(PlMessages.SimplifyCreatedDump.get(new RepItem("%URL%", "https://paste.helpch.at/" + pasteAtInternet(dump, "PowerToolS's DUMP url"))));
+                                } catch (IOException ex) {
+                                    sender.sendMessage(PlMessages.FailedCreateDump.get());
+                                }
+                                break;
+                            case "console":
+                                try {
+                                    sender.sendMessage(PlMessages.SimplifyCreatedConsoleLog.get(new RepItem("%URL%", pasteAtInternet(ConsoleMessageSaver.getConsole(), "Server Version: " + PacketEvents.get().getServerUtils().getVersion()))));
+                                } catch (IOException e) {
+                                    sender.sendMessage(PlMessages.FailedCreateConsoleLog.get());
+                                }
+                                break;
+                            case "config":
+                                try {
+                                    sender.sendMessage(PlMessages.SimplifyCreatedConfigDump.get(new RepItem("%URL%", pasteAtInternet(ConsoleMessageSaver.getConsole(), "PowerToolS version: " + PlInfo.VERSION))));
+                                } catch (IOException e) {
+                                    sender.sendMessage(PlMessages.FailedCreateConfigDump.get());
+                                }
+                                break;
+                            default:
+                                sender.sendMessage(PlMessages.DumpItemNotFind.get());
+                                break;
+                        }
+                    }
+                    break;
+                case "plugins":
+                case "plugin":
+                case "pls":
+                    if (!PlPerms.hasPerm(sender, PlPerms.Perms.Plugins.get())) {
+                        sender.sendMessage(PlMessages.NoPermission.get());
+                        return false;
+                    }
+                    if (args.length == 3) {
+                        RepItem item = new RepItem("%PLUGIN_NAME%", args[2]);
+                        if (!PluginManager.isPluginValidate(args[2]) && !args[2].equalsIgnoreCase("all")) {
+                            sender.sendMessage(PlMessages.Plugins_PluginNotFind.get(item));
+                            break;
+                        }
+                        switch (args[1]) {
+                            case "enable":
+                                if (!PlPerms.hasPerm(sender, PlPerms.Perms.Plugins_Enable.get())) {
+                                    sender.sendMessage(PlMessages.NoPermission.get());
+                                    return false;
+                                }
+                                if (!args[2].equalsIgnoreCase("all")) {
+                                    if (PluginManager.isPluginEnabled(args[2]))
+                                        sender.sendMessage(PlMessages.Plugins_PluginAlreadyEnabled.get(item));
+                                    else {
+                                        PluginManager.enablePlugin(args[2]);
+                                        sender.sendMessage(PlMessages.Plugins_PluginSimplifyEnabled.get(item));
+                                    }
+                                } else {
+                                    PluginManager.enableAllPlugins();
+                                    sender.sendMessage(PlMessages.Plugins_AllPluginSimplifyEnabled.get());
+                                }
+                                break;
+                            case "disable":
+                                if (!PlPerms.hasPerm(sender, PlPerms.Perms.Plugins_Disable.get())) {
+                                    sender.sendMessage(PlMessages.NoPermission.get());
+                                    return false;
+                                }
+                                if (!args[2].equalsIgnoreCase("all")) {
+                                    if (!PluginManager.isPluginEnabled(args[2]))
+                                        sender.sendMessage(PlMessages.Plugins_PluginAlreadyDisabled.get(item));
+                                    else {
+                                        PluginManager.disablePlugin(args[2]);
+                                        sender.sendMessage(PlMessages.Plugins_PluginSimplifyDisabled.get(item));
+                                    }
+                                } else {
+                                    PluginManager.disableAllPlugins();
+                                    sender.sendMessage(PlMessages.Plugins_AllPluginSimplifyDisabled.get());
+                                }
+                                break;
+                            case "restart":
+                                if (!PlPerms.hasPerm(sender, PlPerms.Perms.Plugins_Restart.get())) {
+                                    sender.sendMessage(PlMessages.NoPermission.get());
+                                    return false;
+                                }
+                                if (!args[2].equalsIgnoreCase("all")) {
+                                    if (!PluginManager.isPluginEnabled(args[2]))
+                                        sender.sendMessage(PlMessages.Plugins_PluginAlreadyDisabled.get(item));
+                                    else {
+                                        PluginManager.restartPlugin(args[2]);
+                                        sender.sendMessage(PlMessages.Plugins_PluginSimplifyRestarted.get(item));
+                                    }
+                                } else {
+                                    PluginManager.restartAllPlugins();
+                                    sender.sendMessage(PlMessages.Plugins_AllPluginSimplifyRestarted.get());
+                                }
+                                break;
+                            case "info":
+                                if (!PlPerms.hasPerm(sender, PlPerms.Perms.Plugins_Info.get())) {
+                                    sender.sendMessage(PlMessages.NoPermission.get());
+                                    return false;
+                                }
+                                if (args[2].equalsIgnoreCase("all")) {
+                                    sender.sendMessage(PlMessages.Plugins_ThisCommandExecuteForOnePlugin.get());
+                                    break;
+                                }
+                                Plugin plugin = Bukkit.getPluginManager().getPlugin(args[2]);
+                                String authors = null;
+                                if (!plugin.getDescription().getAuthors().isEmpty()) {
+                                    authors = "";
+                                    if (plugin.getDescription().getAuthors().size() > 1) {
+                                        for (int i = 0; i < plugin.getDescription().getAuthors().size(); i++) {
+                                            if (i == plugin.getDescription().getAuthors().size() - 1) {
+                                                authors = authors.substring(0, authors.length() - 2);
+                                                authors += ChatColor.DARK_GRAY + " & " + plugin.getDescription().getAuthors().get(i);
+                                                break;
+                                            }
+                                            authors += plugin.getDescription().getAuthors().get(i) + ChatColor.DARK_GRAY + ", ";
+                                        }
+                                    } else {
+                                        authors = plugin.getDescription().getAuthors().get(0);
+                                    }
+                                }
+                                sender.sendMessage(ColorFormat.formatColor("@color_gold@format_mid_line===================================================="));
+                                sender.sendMessage(ColorFormat.formatColor(PlInfo.INV_PREFIX.substring(0, PlInfo.INV_PREFIX.length() - 11) + " @color_goldPlugin info: "));
+                                sender.sendMessage(ColorFormat.formatColor("@color_green" + plugin.getName() + " @color_goldv@color_green" + plugin.getDescription().getVersion() + "@color_gold by @color_green" + ((authors == null ? "@color_redSOME ONE" : authors))));
+                                sender.sendMessage(ColorFormat.formatColor("@color_goldDescription: " + (plugin.getDescription().getDescription() == null ? "@color_redDONT HAVE" : plugin.getDescription().getDescription())));
+                                sender.sendMessage(ColorFormat.formatColor("@color_goldWebPage: " + (plugin.getDescription().getWebsite() == null ? "@color_redDONT HAVE" : plugin.getDescription().getWebsite())));
+                                sender.sendMessage(ColorFormat.formatColor("@color_goldPlugin stats: " + (plugin.isEnabled() ? ChatColor.GREEN + "ENABLED" : ChatColor.RED + "DISABLED")));
+                                sender.sendMessage(ColorFormat.formatColor("@color_gold@format_mid_line===================================================="));
+                                break;
+                        }
+                    } else {
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools plugins {enable/disable/restart/info} {pluginName}")));
+                    }
+                    break;
                 default:
                     sender.sendMessage(PlMessages.CommandNotFind.get());
             }
@@ -626,5 +779,32 @@ public class MainCommand
         String main = "";
         for (String s : list) main += s + splitter;
         return main.substring(0, main.length() - splitter.length());
+    }
+
+    private String pasteAtInternet(String content, String info) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) new URL("https://paste.helpch.at/documents").openConnection();
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "text/plain; charset=utf-8");
+        connection.setDoOutput(true);
+        connection.connect();
+
+        content =
+                " /$$$$$$$                                          /$$$$$$$$                  /$$  /$$$$$$ \n" +
+                        "| $$__  $$                                        |__  $$__/                 | $$ /$$__  $$\n" +
+                        "| $$  \\ $$ /$$$$$$  /$$  /$$  /$$  /$$$$$$   /$$$$$$ | $$  /$$$$$$   /$$$$$$ | $$| $$  \\__/\n" +
+                        "| $$$$$$$//$$__  $$| $$ | $$ | $$ /$$__  $$ /$$__  $$| $$ /$$__  $$ /$$__  $$| $$|  $$$$$$ \n" +
+                        "| $$____/| $$  \\ $$| $$ | $$ | $$| $$$$$$$$| $$  \\__/| $$| $$  \\ $$| $$  \\ $$| $$ \\____  $$\n" +
+                        "| $$     | $$  | $$| $$ | $$ | $$| $$_____/| $$      | $$| $$  | $$| $$  | $$| $$ /$$  \\ $$\n" +
+                        "| $$     |  $$$$$$/|  $$$$$/$$$$/|  $$$$$$$| $$      | $$|  $$$$$$/|  $$$$$$/| $$|  $$$$$$/\n" +
+                        "|__/      \\______/  \\_____/\\___/  \\_______/|__/      |__/ \\______/  \\______/ |__/ \\______/ " +
+                        "\n" + info + "\n\n" + content;
+
+        try (final OutputStream stream = connection.getOutputStream()) {
+            stream.write(content.getBytes(StandardCharsets.UTF_8));
+        }
+
+        try (final InputStream stream = connection.getInputStream()) {
+            return "https://paste.helpch.at/" + new Gson().fromJson(CharStreams.toString(new InputStreamReader(stream, StandardCharsets.UTF_8)), JsonObject.class).get("key").getAsString();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package me.overlight.powertools.spigot;
 
+import me.overlight.powertools.spigot.Libraries.ColorFormat;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.core.Filter;
@@ -28,6 +29,7 @@ public class ConsoleMessageFilter
                 return Result.DENY;
             }
         }
+        ConsoleMessageSaver.addConsoleMessage(ColorFormat.removeAllFormats(message));
         return Result.NEUTRAL;
     }
 

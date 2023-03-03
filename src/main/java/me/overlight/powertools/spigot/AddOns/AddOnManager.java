@@ -62,6 +62,15 @@ public class AddOnManager {
         }
     }
 
+    public static String getAsString(){
+        String result = "";
+        for(AddOn addon: addOns){
+            if(addon.isEnabled())
+                result += addon.getName() + ", ";
+        }
+        return result.substring(0, result.length() - 2);
+    }
+
     public static void loadAddons() {
         if (addOns.isEmpty()) return;
         for (AddOn addon :

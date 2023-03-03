@@ -57,6 +57,7 @@ public class TabComplete
                         "pts knockback {TARGET}",
                         "pts hide:kb {TARGET}",
                         "pts knockbackall",
+                        "pts dump {plugin/console/config}",
                         "pts addons",
                         "pts freeze {TARGET}",
                         "pts hide:fr {TARGET}",
