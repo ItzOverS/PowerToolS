@@ -17,6 +17,7 @@ public enum PlCommands {
     mute("mute", "Mute a player to prevent them from sending chat & sign placement", "mute {target} {date} [reason]", PlPerms.Perms.Mute.get()),
     unmute("unmute", "unMute a player if they're muted", "unmute {target}", PlPerms.Perms.UnMute.get()),
     vote("vote", "vote between players for something in game", "vote create", PlPerms.Perms.VoteCreate.get()),
+    plugins("plugins", "manage your plugins!", "plugins {action} {pluginName}", PlPerms.Perms.Plugins.get())
     ;
     final String name, hover, click, perm;
 

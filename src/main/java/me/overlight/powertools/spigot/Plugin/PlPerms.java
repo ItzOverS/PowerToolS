@@ -38,6 +38,11 @@ public class PlPerms {
         UnMute("unmute.command"),
         VoteCreate("vote.create"),
         DistanceChatBypass("distancechat.bypass"),
+        Plugins_Enable("plugins.enable"),
+        Plugins_Disable("plugins.disable"),
+        Plugins_Restart("plugins.restart"),
+        Plugins_Info("plugins.info"),
+        Plugins("plugins"),
         ;
         private final String perm;
 

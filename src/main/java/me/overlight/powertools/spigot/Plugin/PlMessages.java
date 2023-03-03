@@ -65,6 +65,16 @@ public enum PlMessages {
     Vote_VoteEnded("@color_greenVote ended & was have %VOTERS% voter(s)"),
     Vote_TargetVoteHasExpired("@color_redTarget vote has expired"),
     ;
+    Plugins_PluginAlreadyEnabled("@color_greenPlugin @color_gold%PLUGIN_NAME%@color_green already enabled"),
+    Plugins_PluginNotFind("@color_redPlugin @color_gold%PLUGIN_NAME%@color_green not find in enabled or disabled plugins"),
+    Plugins_PluginSimplifyEnabled("@color_greenPlugin @color_gold%PLUGIN_NAME%@color_green simplify enabled"),
+    Plugins_AllPluginSimplifyEnabled("@color_greenAll plugins simplify enabled"),
+    Plugins_AllPluginSimplifyDisabled("@color_greenAll plugins simplify disabled"),
+    Plugins_AllPluginSimplifyRestarted("@color_greenAll plugins simplify restarted"),
+    Plugins_PluginAlreadyDisabled("@color_redPlugin @color_gold%PLUGIN_NAME%@color_red already disabled"),
+    Plugins_PluginSimplifyDisabled("@color_greenPlugin @color_gold%PLUGIN_NAME%@color_green simplify disabled"),
+    Plugins_PluginSimplifyRestarted("@color_greenPlugin @color_gold%PLUGIN_NAME%@color_green simplify restarted"),
+    Plugins_ThisCommandExecuteForOnePlugin("@color_redYou can only execute this command for one plugin not 'all'");
     private final String desc;
 
     PlMessages(String desc) {

@@ -81,6 +81,7 @@ public class TabComplete
                         "pts cps {TARGET}",
                         "pts help {COMMANDS}",
                         "pts vote create",
+                        "pts plugins {enable/disable/restart/info} {PLUGINS}"
                 };
                 Set<String> currentIndexCommands = new HashSet<>();
                 for (String value : commands) {
@@ -147,6 +148,10 @@ public class TabComplete
             return new ArrayList<>(Arrays.asList("cps", "ping"));
         else if (text.equals("{COMMANDS}"))
             return ImplementedVariables.getPluginCommands();
+        else if (text.contains("/")) {
+            return new ArrayList<>(Arrays.asList(text.substring(1).substring(0, text.length() - 2).split("/")));
+        } else if (text.equals("{PLUGINS}"))
+            return ImplementedVariables.getPlugins();
         return new ArrayList<>(Collections.singletonList(text));
     }
 
@@ -161,6 +166,12 @@ public class TabComplete
             List<String> commands = new ArrayList<>();
             for (PlCommands value : PlCommands.values()) commands.add(value.getName());
             return commands;
+        }
+
+        public static List<String> getPlugins() {
+            List<String> plugins = new ArrayList<>();
+            Arrays.stream(Bukkit.getServer().getPluginManager().getPlugins()).forEach(plugin -> plugins.add(plugin.getName()));
+            return plugins;
         }
     }
 
