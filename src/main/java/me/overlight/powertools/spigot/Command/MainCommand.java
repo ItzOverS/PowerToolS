@@ -603,6 +603,8 @@ public class MainCommand
                         } else {
                             sender.sendMessage(PlMessages.OnlyPlayersCanUseCommand.get());
                         }
+                    } else {
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools vote create")));
                     }
                     break;
                 case "dump":
