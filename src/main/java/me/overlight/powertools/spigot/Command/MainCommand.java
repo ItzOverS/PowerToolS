@@ -630,7 +630,7 @@ public class MainCommand
                                 break;
                             case "config":
                                 try {
-                                    sender.sendMessage(PlMessages.SimplifyCreatedConfigDump.get(new RepItem("%URL%", pasteAtInternet(ConsoleMessageSaver.getConsole(), "PowerToolS version: " + PlInfo.VERSION))));
+                                    sender.sendMessage(PlMessages.SimplifyCreatedConfigDump.get(new RepItem("%URL%", pasteAtInternet(PowerTools.config.saveToString(), "PowerToolS version: " + PlInfo.VERSION))));
                                 } catch (IOException e) {
                                     sender.sendMessage(PlMessages.FailedCreateConfigDump.get());
                                 }
