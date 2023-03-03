@@ -529,6 +529,10 @@ public class MainCommand
                     }
                     break;
                 case "mute":
+                    if (!PlPerms.hasPerm(sender, PlPerms.Perms.Mute.get())) {
+                        sender.sendMessage(PlMessages.NoPermission.get());
+                        return false;
+                    }
                     if (args.length == 3) { // /pts mute _OverLight_ 3d
                         if (isPlayerValid(args[1])) {
                             if (!Mute.isPlayerMuted(args[1])) {
@@ -551,6 +555,10 @@ public class MainCommand
                     }
                     break;
                 case "unmute":
+                    if (!PlPerms.hasPerm(sender, PlPerms.Perms.UnMute.get())) {
+                        sender.sendMessage(PlMessages.NoPermission.get());
+                        return false;
+                    }
                     if (args.length == 2) { // /pts mute _OverLight_
                         if (Mute.isPlayerMuted(args[1])) {
                             Mute.unMute(args[1]);
@@ -565,6 +573,10 @@ public class MainCommand
                 case "vote":
                     if (args.length == 2 &&
                             args[1].equalsIgnoreCase("create")) {
+                        if (!PlPerms.hasPerm(sender, PlPerms.Perms.VoteCreate.get())) {
+                            sender.sendMessage(PlMessages.NoPermission.get());
+                            return false;
+                        }
                         if (sender instanceof Player) {
                             Vote.openVoteGUI((Player) sender);
                         } else {
