@@ -6,9 +6,16 @@ import org.bukkit.entity.Player;
 import java.lang.reflect.InvocationTargetException;
 
 public class NMSSupport {
-    public static Class<?> getClass(String className) {
+    public static Class<?> getMinecraftServerClass(String className) {
         try {
             return Class.forName("net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3] + "." + className);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    public static Class<?> getBukkitClass(String className) {
+        try {
+            return Class.forName("org.bukkit.craftbukkit" + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3] + "." + className);
         } catch (Exception e) {
             return null;
         }
@@ -18,6 +25,6 @@ public class NMSSupport {
             throws NoSuchMethodException, NoSuchFieldException, InvocationTargetException, IllegalAccessException {
         Object handle = player.getClass().getMethod("getHandle").invoke(player),
                 playerConnection = handle.getClass().getField("playerConnection").get(handle);
-        playerConnection.getClass().getMethod("sendPacket", NMSSupport.getClass("Packet")).invoke(playerConnection, packet);
+        playerConnection.getClass().getMethod("sendPacket", NMSSupport.getMinecraftServerClass("Packet")).invoke(playerConnection, packet);
     }
 }
