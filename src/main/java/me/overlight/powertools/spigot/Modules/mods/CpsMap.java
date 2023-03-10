@@ -27,6 +27,8 @@ public class CpsMap
 
     @EventHandler
     public void event(PlayerInteractEvent e) {
+        if (e.getPlayer() == null) return;
+        if (!e.getPlayer().isOnline()) return;
         if (Arrays.asList(Action.LEFT_CLICK_AIR, Action.LEFT_CLICK_BLOCK).contains(e.getAction())) {
             LMB.put(e.getPlayer().getName(), LMB.getOrDefault(e.getPlayer().getName(), 0) + 1);
             Bukkit.getScheduler().scheduleSyncDelayedTask(PowerTools.INSTANCE, () -> LMB.put(e.getPlayer().getName(), LMB.get(e.getPlayer().getName()) - 1), 20);
