@@ -83,6 +83,7 @@ public class TabComplete
                         "pts help {COMMANDS}",
                         "pts vote create",
                         "pts plugins {enable/disable/restart/info} {PLUGINS}"
+                        "pts speed {fly/speed} {1/2/3/4/5/6/7/8/9/10}",
                 };
                 Set<String> currentIndexCommands = new HashSet<>();
                 for (String value : commands) {

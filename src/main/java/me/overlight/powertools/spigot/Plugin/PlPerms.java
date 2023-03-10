@@ -43,7 +43,7 @@ public class PlPerms {
         Plugins_Restart("plugins.restart"),
         Plugins_Info("plugins.info"),
         Plugins("plugins"),
-        ;
+        Speed("speed.command");
         private final String perm;
 
         Perms(String perm) {

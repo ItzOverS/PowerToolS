@@ -85,7 +85,13 @@ public enum PlMessages {
     Plugins_PluginAlreadyDisabled("@color_redPlugin @color_gold%PLUGIN_NAME%@color_red already disabled"),
     Plugins_PluginSimplifyDisabled("@color_greenPlugin @color_gold%PLUGIN_NAME%@color_green simplify disabled"),
     Plugins_PluginSimplifyRestarted("@color_greenPlugin @color_gold%PLUGIN_NAME%@color_green simplify restarted"),
-    Plugins_ThisCommandExecuteForOnePlugin("@color_redYou can only execute this command for one plugin not 'all'");
+    Plugins_ThisCommandExecuteForOnePlugin("@color_redYou can only execute this command for one plugin not 'all'"),
+    Speed_InvalidNumber("@color_redNumber entered is not validate"),
+    Speed_NumberIsNegative("@color_redNumbers can only positive"),
+    Speed_SimplifyAppliedFlySpeed("@color_greenSuccessful set your @color_goldfly@color_green speed to @color_gold%NUM%"),
+    Speed_SimplifyAppliedMovementSpeed("@color_greenSuccessful set your @color_goldmovement@color_green speed to @color_gold%NUM%"),
+
+    ;
     private final String desc;
 
     PlMessages(String desc) {
@@ -96,5 +102,11 @@ public enum PlMessages {
         String item = ColorFormat.formatColor(this.desc);
         for (RepItem i : items) item = item.replace(i.key(), i.value());
         return PlInfo.PREFIX + item;
+    }
+
+    public String get(Player player, RepItem... items) {
+        String item = ColorFormat.formatColor(this.desc);
+        for (RepItem i : items) item = item.replace(i.key(), i.value());
+        return PlaceholderAPI.setPlaceholders(player, PlInfo.PREFIX + item);
     }
 }

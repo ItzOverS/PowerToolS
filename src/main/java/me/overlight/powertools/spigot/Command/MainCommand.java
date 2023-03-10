@@ -761,6 +761,33 @@ public class MainCommand
                         sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools plugins {enable/disable/restart/info} {pluginName}")));
                     }
                     break;
+                case "speed":
+                    if (args.length == 3) {
+                        if (!args[1].equals("fly") && !args[1].equals("walk")) break;
+                        float num = 0;
+                        try {
+                            num = Float.parseFloat(args[2]);
+                        } catch (NumberFormatException ex) {
+                            sender.sendMessage(PlMessages.Speed_InvalidNumber.get());
+                            break;
+                        }
+                        if (num < 0) {
+                            sender.sendMessage(PlMessages.Speed_NumberIsNegative.get());
+                        } else {
+                            if (sender instanceof Player) {
+                                if (args[1].equals("fly")) {
+                                    ((Player) sender).setFlySpeed(num);
+                                    sender.sendMessage(PlMessages.Speed_SimplifyAppliedFlySpeed.get(new RepItem("%NUM%", args[2])));
+                                } else {
+                                    ((Player) sender).setWalkSpeed(num);
+                                    sender.sendMessage(PlMessages.Speed_SimplifyAppliedFlySpeed.get(new RepItem("%NUM%", args[2])));
+                                }
+                                break;
+                            }
+                            sender.sendMessage(PlMessages.OnlyPlayersCanUseCommand.get());
+                        }
+                    }
+                    break;
                 default:
                     sender.sendMessage(PlMessages.CommandNotFind.get());
             }
