@@ -4,15 +4,11 @@ import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import io.github.retrooper.packetevents.PacketEvents;
-import me.overlight.powertools.spigot.APIs.PluginManager;
 import me.overlight.powertools.spigot.AddOns.AddOnManager;
 import me.overlight.powertools.spigot.AddOns.Main.AntiBot.BlackListManager;
 import me.overlight.powertools.spigot.AddOns.Main.AntiBot.WhiteListManager;
 import me.overlight.powertools.spigot.ConsoleMessageSaver;
-import me.overlight.powertools.spigot.Libraries.AlertUtils;
-import me.overlight.powertools.spigot.Libraries.ColorFormat;
-import me.overlight.powertools.spigot.Libraries.MuteEntry;
-import me.overlight.powertools.spigot.Libraries.RepItem;
+import me.overlight.powertools.spigot.Libraries.*;
 import me.overlight.powertools.spigot.Modules.impls.Timer;
 import me.overlight.powertools.spigot.Modules.mods.*;
 import me.overlight.powertools.spigot.Plugin.*;
@@ -759,6 +755,24 @@ public class MainCommand
                         }
                     } else {
                         sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools plugins {enable/disable/restart/info} {pluginName}")));
+                    }
+                    break;
+                case "uptime":
+                    if (!PlPerms.hasPerm(sender, PlPerms.Perms.UpTimeSpect.get())) {
+                        sender.sendMessage(PlMessages.NoPermission.get());
+                        return false;
+                    }
+                    if (args.length == 1) {
+                        sender.sendMessage(PlInfo.PREFIX +
+                                ChatColor.GOLD + "Server enabled for " +
+                                (PowerTools.upTimeTimer.year == 0 ? "" : PowerTools.upTimeTimer.year + " year" + (PowerTools.upTimeTimer.year == 1 ? " " : "s ")) +
+                                (PowerTools.upTimeTimer.month == 0 ? "" : PowerTools.upTimeTimer.month + " month" + (PowerTools.upTimeTimer.month == 1 ? " " : "s ")) +
+                                (PowerTools.upTimeTimer.day == 0 ? "" : PowerTools.upTimeTimer.day + " day" + (PowerTools.upTimeTimer.day == 1 ? " " : "s ")) +
+                                (PowerTools.upTimeTimer.hour == 0 ? "" : PowerTools.upTimeTimer.hour + " hour" + (PowerTools.upTimeTimer.hour == 1 ? " " : "s ")) +
+                                (PowerTools.upTimeTimer.minute == 0 ? "" : PowerTools.upTimeTimer.minute + " minute" + (PowerTools.upTimeTimer.minute == 1 ? " " : "s ")) +
+                                (PowerTools.upTimeTimer.second == 0 ? "" : PowerTools.upTimeTimer.second + " second" + (PowerTools.upTimeTimer.second == 1 ? " " : "s ")));
+                    } else {
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools uptime")));
                     }
                     break;
                 case "speed":

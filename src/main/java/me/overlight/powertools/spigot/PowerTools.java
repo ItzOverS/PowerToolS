@@ -24,6 +24,8 @@ import me.overlight.powertools.spigot.AddOns.Server.PluginHider.PluginHider;
 import me.overlight.powertools.spigot.AddOns.Survival.FallingBlocks;
 import me.overlight.powertools.spigot.AddOns.Survival.NoRespawn;
 import me.overlight.powertools.spigot.AddOns.Survival.RandomSpawn;
+import me.overlight.powertools.spigot.AddOns.WorldAddOns.ChunkLoadingLimits;
+import me.overlight.powertools.spigot.AddOns.WorldAddOns.WorldEnvironments;
 import me.overlight.powertools.spigot.Command.MainCommand;
 import me.overlight.powertools.spigot.Command.TabComplete;
 import me.overlight.powertools.spigot.Discord.Bot;
@@ -32,6 +34,7 @@ import me.overlight.powertools.spigot.Discord.WebHooks.DiscordWebhook;
 import me.overlight.powertools.spigot.Libraries.ColorFormat;
 import me.overlight.powertools.spigot.Libraries.PlaceHolders;
 import me.overlight.powertools.spigot.Modules.ModuleManager;
+import me.overlight.powertools.spigot.Modules.impls.Timer;
 import me.overlight.powertools.spigot.Modules.mods.*;
 import me.overlight.powertools.spigot.Plugin.PlInfo;
 import me.overlight.powertools.spigot.PowerModules.ExtensionManager;
@@ -43,6 +46,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -52,6 +56,7 @@ public class PowerTools
     public static PowerTools INSTANCE;
     public static FileConfiguration config;
     private static String err = "";
+    public static Timer upTimeTimer = new Timer(0, 0, 0, 0, 0, 0);
 
     @Override
     public void onLoad() {
@@ -73,6 +78,12 @@ public class PowerTools
     @Override
     public void onEnable() {
         try {
+            new BukkitRunnable() {
+                public void run() {
+                    upTimeTimer.add(0, 0, 0, 0, 0, 1);
+                }
+            }.runTaskTimer(this, 20, 20);
+
             ((Logger) LogManager.getRootLogger()).addFilter(new ConsoleMessageFilter());
             Alert(Target.CONSOLE, "@color_greenEnabling " + PlInfo.INV_PREFIX.substring(0, PlInfo.INV_PREFIX.length() - 11));
             INSTANCE = this;
