@@ -266,6 +266,8 @@ public class PowerTools
             AddOnManager.registerAddOn(new RandomMOTD(), new BanMOTD(), new AntiRejoin(), new ForcePing(), new PluginHider(), new DiscordSync(), new ConsoleMessageDeny());
         if (config.getBoolean("RenderAddOns.enabled"))
             AddOnManager.registerAddOn(new ScoreBoards(), new TabList());
+        if (config.getBoolean("WorldAddOns.enabled"))
+            AddOnManager.registerAddOn(new WorldEnvironments(), new ChunkLoadingLimits());
         AddOnManager.loadAddons();
     }
 

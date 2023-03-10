@@ -1,4 +1,4 @@
-package me.overlight.powertools.spigot.AddOns.Main;
+package me.overlight.powertools.spigot.AddOns.WorldAddOns;
 
 import me.overlight.powertools.spigot.AddOns.AddOn;
 import me.overlight.powertools.spigot.PowerTools;
@@ -22,7 +22,7 @@ public class WorldEnvironments
         implements Listener {
 
     public WorldEnvironments() {
-        super("WorldEnvironments", "1.0", "Control World Environments", PowerTools.config.getBoolean("WorldEnvironments.enabled"));
+        super("WorldAddOns.WorldEnvironments", "1.0", "Control World Environments", PowerTools.config.getBoolean("WorldAddOns.WorldEnvironments.enabled"));
     }
 
     @EventHandler

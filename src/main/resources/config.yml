@@ -331,18 +331,6 @@ ServerAddOns:
   PublicChat:
     enabled: false
 
-WorldEnvironments:
-  enabled: false
-  allowHunger: false
-  allowDamage: false
-  allowPvp: false
-  allowTp: true
-  allowFly: true
-  allowBlockBreak: false
-  allowBlockPlace: false
-  allowInteract: true
-  disableNether: false
-  disableEnd: false
 
 RenderAddOns:
   enabled: false
@@ -379,4 +367,22 @@ RenderAddOns:
         footer:
           - ''
           - '&6Use /teamspeak join our teamspeak'
-        per-player: "%vault_rank% %player_name% %cl-version%"
+        per-player: "%vault_rank% %player_name% %cl-version%"        per-player: "%vault_rank% %player_name% %cl-version%"
+  enabled: false
+  WorldEnvironments:
+    enabled: false
+    allowHunger: false
+    allowDamage: false
+    allowPvp: false
+    allowTp: true
+    allowFly: true
+    allowBlockBreak: false
+    allowBlockPlace: false
+    allowInteract: true
+    disableNether: false
+    disableEnd: false
+
+  ChunkLoadingLimits:
+    enabled: false
+    interval: 20 # 20 Ticks = 1 Second
+    maxChunks: 200
