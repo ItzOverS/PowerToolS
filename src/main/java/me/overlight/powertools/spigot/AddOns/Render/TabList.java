@@ -37,9 +37,9 @@ public class TabList
                 else
                     player.setPlayerListName(ChatColor.translateAlternateColorCodes('&', sec.getString("per-player")));
                 try {
-                    Object packet = Objects.requireNonNull(NMSSupport.getClass("PacketPlayOutPlayerListHeaderFooter")).getConstructor().newInstance();
-                    Object header = Objects.requireNonNull(NMSSupport.getClass("ChatComponentText")).getConstructor(String.class).newInstance((Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) ? me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, headerString) : headerString),
-                            footer = Objects.requireNonNull(NMSSupport.getClass("ChatComponentText")).getConstructor(String.class).newInstance((Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) ? me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, footerString) : footerString);
+                    Object packet = Objects.requireNonNull(NMSSupport.getMinecraftServerClass("PacketPlayOutPlayerListHeaderFooter")).getConstructor().newInstance();
+                    Object header = Objects.requireNonNull(NMSSupport.getMinecraftServerClass("ChatComponentText")).getConstructor(String.class).newInstance((Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) ? me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, headerString) : headerString),
+                            footer = Objects.requireNonNull(NMSSupport.getMinecraftServerClass("ChatComponentText")).getConstructor(String.class).newInstance((Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) ? me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, footerString) : footerString);
                     Field a = packet.getClass().getDeclaredField((PacketEvents.get().getServerUtils().getVersion().isOlderThan(ServerVersion.v_1_13)) ? "a" : "header"),
                             b = packet.getClass().getDeclaredField((PacketEvents.get().getServerUtils().getVersion().isOlderThan(ServerVersion.v_1_13)) ? "b" : "footer");
                     a.setAccessible(true);
