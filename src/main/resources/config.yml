@@ -207,6 +207,15 @@ CommandRedirect:
     "land bw": "bw"
     "rl": "reload"
 
+RulesAccept:
+  enabled: false
+  rules:
+    - "&6Do not use bugs to get stuff"
+    - "&6Scamming players have result ban"
+    - "&6If you found any bug report it in our discord"
+    - ""
+    - "&cDestroying this rules have result ban!"
+
 Report:
   enabled: false
   delayBetweenReports: 600000 # 600000 miliSeconds = 600 Seconds = 10 Minutes
