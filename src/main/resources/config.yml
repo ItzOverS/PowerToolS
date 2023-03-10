@@ -1,5 +1,5 @@
 # Welcome to PowerTools PowerTools.config!!
-# You can use this plugin addons in this file!
+# You can use PowerToolS's addons in this file!
 
 # Enable this if you using bungeecord
 # Plugin will sync with bungeecord...
@@ -332,7 +332,7 @@ ServerAddOns:
 
   ConsoleMessageDeny:
     enabled: false
-    messages: # Message will filter one of the texts below contains in it
+    messages: # Message blocked if one of the texts below contains in it
       - "test1 message deny..."
       - "test2 message deny..."
       - "test3 message deny..."
@@ -380,7 +380,9 @@ RenderAddOns:
         footer:
           - ''
           - '&6Use /teamspeak join our teamspeak'
-        per-player: "%vault_rank% %player_name% %cl-version%"        per-player: "%vault_rank% %player_name% %cl-version%"
+        per-player: "%vault_rank% %player_name% %cl-version%"
+
+WorldAddOns:
   enabled: false
   WorldEnvironments:
     enabled: false
