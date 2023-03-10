@@ -331,6 +331,8 @@ ServerAddOns:
   PublicChat:
     enabled: false
 
+  NoUUIDSpoof: # Only works in online-mode servers ( not cracked server )
+    enabled: false
 
 RenderAddOns:
   enabled: false
