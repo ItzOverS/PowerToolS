@@ -11,7 +11,7 @@ public enum PlMessages {
     KnockBack_StickSimplifyGiven("@color_greenSimplify given @color_gold%PLAYER_NAME%@color_green, knockback stick"),
     Freeze_StickSimplifyGiven("@color_greenSimplify given @color_gold%PLAYER_NAME%@color_green, freeze stick"),
     Rotate_StickSimplifyGiven("@color_greenSimplify given @color_gold%PLAYER_NAME%@color_green, rotate stick"),
-    KnockBack_PlayerInBlock("@color_gold%PLAYER_NAME% @color_redis in block & i can't give they knockback"),
+    KnockBack_PlayerInBlock("@color_gold%PLAYER_NAME% @color_redis in block & I can't give they knockback"),
     Freeze_TargetIsNowFrozen("@color_gold%PLAYER_NAME% @color_greenis now frozen"),
     Freeze_TargetIsNoLongerFrozen("@color_gold%PLAYER_NAME% @color_redis no longer frozen"),
     Protect_PlayerIsNowProtected("@color_gold%PLAYER_NAME% @color_greenis now protected"),
