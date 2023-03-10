@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class AlertUtils {
     public static void sendActionBar(Player player, String text) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException {
-        Object packet = Objects.requireNonNull(NMSSupport.getClass("PacketPlayOutChat")).getConstructor(NMSSupport.getClass("IChatBaseComponent"), byte.class).newInstance(Objects.requireNonNull(NMSSupport.getClass("ChatComponentText")).getConstructor(String.class).newInstance(text), (byte) 2);
+        Object packet = Objects.requireNonNull(NMSSupport.getMinecraftServerClass("PacketPlayOutChat")).getConstructor(NMSSupport.getMinecraftServerClass("IChatBaseComponent"), byte.class).newInstance(Objects.requireNonNull(NMSSupport.getMinecraftServerClass("ChatComponentText")).getConstructor(String.class).newInstance(text), (byte) 2);
         NMSSupport.sendPacket(player, packet);
     }
 
