@@ -37,7 +37,7 @@ public final class PowerExt
         module = this;
         try {
             //((Logger) LogManager.getRootLogger()).addFilter((Filter)new JDAMessageDeny());
-            bot = JDABuilder.createDefault(PowerTools.config.getString(getConfigName() + ".token"), GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MESSAGES).build();
+            bot = JDABuilder.createDefault(PowerTools.config.getString("Discord.Bot.token"), GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MESSAGES).build();
             bot.addEventListener(new DiscordMessageListener(this));
             getServer().getPluginManager().registerEvents(new GameEventHandler(), this);
         } catch (Exception ex) {
@@ -54,7 +54,6 @@ public final class PowerExt
     public String[] getConfiguration() {
         return new String[]{
                 "enabled:false:boolean",
-                "token:'YOUR_TOKEN':string",
                 "channelID:YOUR_VERIFY_CHANNEL_ID:string"
         };
     }
