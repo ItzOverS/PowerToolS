@@ -254,8 +254,8 @@ public class PowerTools
 
     public static void loadAddOns() {
         AddOnManager.registerAddOn(new AfkCheck(), new AntiWorldDownLoader(), new CpsCheck(), new PingCheck(), new ChatManager(), new ForceSpawn(), new JoinMessage(), new CommandRedirect(),
-                new QuitMessage(), new UserNameManager(), new CommandDeny(), new PvpManager(), new PvpRegisterer(), new VersionCheck(), new WorldEnvironments(), new ChatFormat(),
-                new SlashServer(), new Captcha(), new NetworkChecker(), new AntiBot(), new DistanceChat());
+                new QuitMessage(), new UserNameManager(), new CommandDeny(), new PvpManager(), new PvpRegisterer(), new VersionCheck(), new ChatFormat(),
+                new SlashServer(), new Captcha(), new NetworkChecker(), new AntiBot(), new DistanceChat(), new RulesAccept());
         if (config.getBoolean("BedwarsAddOns.enabled"))
             AddOnManager.registerAddOn(new AntiTeamUp(), new TntKnockback(), new FireBallKnockback());
         if (config.getBoolean("HubAddOns.enabled"))
