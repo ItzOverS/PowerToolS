@@ -25,7 +25,7 @@ public class MainEventHandler
             public void run() {
                 if (!new File("plugins\\PowerToolS\\JoinedPlayers.yml").exists()) {
                     try {
-                        PowerTools.config.save(new File("plugins\\PowerToolS\\JoinedPlayers.yml"));
+                        new YamlConfiguration().save(new File("plugins\\PowerToolS\\JoinedPlayers.yml"));
                     } catch (Exception ignored) {
                     }
                 }
