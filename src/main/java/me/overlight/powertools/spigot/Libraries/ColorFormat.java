@@ -41,6 +41,7 @@ public class ColorFormat {
         for (char ch : text.toCharArray()) {
             if (ch == '&') {
                 text = text.substring(index, 2);
+                index -= 2;
             }
             index++;
         }
