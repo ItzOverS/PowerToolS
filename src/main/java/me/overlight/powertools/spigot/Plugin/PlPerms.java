@@ -44,7 +44,7 @@ public class PlPerms {
         Plugins_Info("plugins.info"),
         Plugins("plugins"),
         UpTimeSpect("uptime.command"),
-        Speed("speed.command");
+        Speed("speed.command"),
         InvSee("invsee.command"),
         ;
         private final String perm;

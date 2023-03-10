@@ -776,6 +776,10 @@ public class MainCommand
                     }
                     break;
                 case "speed":
+                    if (!PlPerms.hasPerm(sender, PlPerms.Perms.Speed.get())) {
+                        sender.sendMessage(PlMessages.NoPermission.get());
+                        return false;
+                    }
                     if (args.length == 3) {
                         if (!args[1].equals("fly") && !args[1].equals("walk")) break;
                         float num = 0;
@@ -794,12 +798,16 @@ public class MainCommand
                                     sender.sendMessage(PlMessages.Speed_SimplifyAppliedFlySpeed.get(new RepItem("%NUM%", args[2])));
                                 } else {
                                     ((Player) sender).setWalkSpeed(num);
-                                    sender.sendMessage(PlMessages.Speed_SimplifyAppliedFlySpeed.get(new RepItem("%NUM%", args[2])));
+                                    sender.sendMessage(PlMessages.Speed_SimplifyAppliedMovementSpeed.get(new RepItem("%NUM%", args[2])));
                                 }
                                 break;
                             }
                             sender.sendMessage(PlMessages.OnlyPlayersCanUseCommand.get());
                         }
+                    } else {
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools speed {fly/walk} {1-10}")));
+                    }
+                    break;
                 case "invsee":
                     if (!PlPerms.hasPerm(sender, PlPerms.Perms.InvSee.get())) {
                         sender.sendMessage(PlMessages.NoPermission.get());
