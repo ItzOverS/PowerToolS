@@ -85,6 +85,7 @@ public class TabComplete
                         "pts plugins {enable/disable/restart/info} {PLUGINS}",
                         "pts uptime",
                         "pts speed {fly/speed} {1/2/3/4/5/6/7/8/9/10}",
+                        "pts invsee {TARGET}",
                 };
                 Set<String> currentIndexCommands = new HashSet<>();
                 for (String value : commands) {

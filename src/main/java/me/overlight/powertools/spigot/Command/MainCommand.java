@@ -800,6 +800,25 @@ public class MainCommand
                             }
                             sender.sendMessage(PlMessages.OnlyPlayersCanUseCommand.get());
                         }
+                case "invsee":
+                    if (!PlPerms.hasPerm(sender, PlPerms.Perms.InvSee.get())) {
+                        sender.sendMessage(PlMessages.NoPermission.get());
+                        return false;
+                    }
+                    if (!(sender instanceof Player)) {
+                        sender.sendMessage(PlMessages.OnlyPlayersCanUseCommand.get());
+                        break;
+                    }
+                    if (args.length == 2) {
+                        if (isPlayerValid(args[1])) {
+                            Player player = Bukkit.getPlayer(args[1]);
+                            ((Player) sender).openInventory(player.getInventory());
+                            sender.sendMessage(PlMessages.InvSee_SimplifyOpenedTargetInventory.get(new RepItem("NAME", args[1])));
+                        } else {
+                            sender.sendMessage(PlMessages.PlayerNotFind.get());
+                        }
+                    } else {
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools invsee {playerName}")));
                     }
                     break;
                 default:

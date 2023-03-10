@@ -90,7 +90,7 @@ public enum PlMessages {
     Speed_NumberIsNegative("@color_redNumbers can only positive"),
     Speed_SimplifyAppliedFlySpeed("@color_greenSuccessful set your @color_goldfly@color_green speed to @color_gold%NUM%"),
     Speed_SimplifyAppliedMovementSpeed("@color_greenSuccessful set your @color_goldmovement@color_green speed to @color_gold%NUM%"),
-
+    InvSee_SimplifyOpenedTargetInventory("@color_greenSimplify opened @color_gold%NAME%@color_green's inventory"),
     ;
     private final String desc;
 

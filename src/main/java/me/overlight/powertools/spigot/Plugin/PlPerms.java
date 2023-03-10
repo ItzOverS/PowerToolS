@@ -45,6 +45,8 @@ public class PlPerms {
         Plugins("plugins"),
         UpTimeSpect("uptime.command"),
         Speed("speed.command");
+        InvSee("invsee.command"),
+        ;
         private final String perm;
 
         Perms(String perm) {
