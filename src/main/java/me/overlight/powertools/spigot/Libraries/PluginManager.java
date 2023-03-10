@@ -1,4 +1,4 @@
-package me.overlight.powertools.spigot.APIs;
+package me.overlight.powertools.spigot.Libraries;
 
 import me.overlight.powertools.spigot.PowerTools;
 import org.bukkit.Bukkit;

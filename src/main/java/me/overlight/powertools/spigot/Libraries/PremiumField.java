@@ -1,4 +1,4 @@
-package me.overlight.powertools.spigot.APIs;
+package me.overlight.powertools.spigot.Libraries;
 
 public enum PremiumField {
     TRUE("YES"),
