@@ -56,8 +56,13 @@ public class PowerTools
     @Override
     public void onLoad() {
         INSTANCE = this;
-        ((Logger) LogManager.getRootLogger()).addFilter(new ConsoleMessageFilter());
         PacketEvents.create(this);
+
+        if (PacketEvents.get().isInitialized() && PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_18_2)) {
+            Alert(Target.CONSOLE, "@color_redPlugin disabled due PacketEvents not support +1.19 minecraft version");
+            this.getServer().getPluginManager().disablePlugin(this);
+        }
+
         PacketEvents.get().getSettings()
                 .checkForUpdates(false)
                 .bStats(true)
@@ -68,6 +73,7 @@ public class PowerTools
     @Override
     public void onEnable() {
         try {
+            ((Logger) LogManager.getRootLogger()).addFilter(new ConsoleMessageFilter());
             Alert(Target.CONSOLE, "@color_greenEnabling " + PlInfo.INV_PREFIX.substring(0, PlInfo.INV_PREFIX.length() - 11));
             INSTANCE = this;
             saveDefaultConfig();
