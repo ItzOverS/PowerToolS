@@ -4,7 +4,6 @@ import me.overlight.powertools.spigot.AddOns.AddOnManager;
 import me.overlight.powertools.spigot.Plugin.PlCommands;
 import me.overlight.powertools.spigot.PowerTools;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -12,6 +11,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TabComplete
         implements TabCompleter {
@@ -82,7 +82,8 @@ public class TabComplete
                         "pts cps {TARGET}",
                         "pts help {COMMANDS}",
                         "pts vote create",
-                        "pts plugins {enable/disable/restart/info} {PLUGINS}"
+                        "pts plugins {enable/disable/restart/info} {PLUGINS}",
+                        "pts uptime",
                         "pts speed {fly/speed} {1/2/3/4/5/6/7/8/9/10}",
                 };
                 Set<String> currentIndexCommands = new HashSet<>();
@@ -102,7 +103,11 @@ public class TabComplete
                     }
                     if (value.split(" ")[args.length].startsWith("hide:")) skipCommand = true;
                     if (skipCommand) continue;
-                    currentIndexCommands.addAll(replaceVars(value.split(" ")[args.length]));
+                    if (args[args.length - 1].trim().equals("")) {
+                        currentIndexCommands.addAll(replaceVars(value.split(" ")[args.length]));
+                    } else {
+                        currentIndexCommands.addAll(replaceVars(value.split(" ")[args.length]).stream().filter(v -> v.startsWith(args[args.length - 1])).collect(Collectors.toList()));
+                    }
                 }
 
                 return new ArrayList<>(currentIndexCommands);
@@ -111,44 +116,12 @@ public class TabComplete
         return null;
     }
 
-    public String mixArray(String[] array, String splitter) {
-        String s = "";
-        for (String value : array) s += value + splitter;
-        return s.substring(0, s.length() - splitter.length());
-    }
-
-    private String mixArray(List<String> array, String splitter, int from, int length) {
-        String main = "";
-        int index = -1;
-        for (String s : array) {
-            index++;
-            if (index >= from && index <= length + from)
-                main += s + splitter;
-        }
-        return main.substring(0, main.length() - splitter.length());
-    }
-
-    public List<String> getMaterialList() {
-        List<String> mats = new ArrayList<>();
-        for (Material mat : Material.values()) {
-            mats.add(mat.name());
-        }
-        return mats;
-    }
-
-    public List<String> getNumsIn(int start, int end) {
-        List<String> i = new ArrayList<>();
-        for (int m = start; m < end; m++)
-            i.add(m + "");
-        return i;
-    }
-
     public List<String> replaceVars(String text) {
         if (text.equals("{TARGET}"))
             return ImplementedVariables.getOnlinePlayers();
         else if (text.equals("{COMMANDS}"))
             return ImplementedVariables.getPluginCommands();
-        else if (text.contains("/")) {
+        else if (text.contains("/") && text.startsWith("{") && text.endsWith("}")) {
             return new ArrayList<>(Arrays.asList(text.substring(1).substring(0, text.length() - 2).split("/")));
         } else if (text.equals("{PLUGINS}"))
             return ImplementedVariables.getPlugins();
