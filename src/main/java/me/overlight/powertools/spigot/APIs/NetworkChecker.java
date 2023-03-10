@@ -1,5 +1,6 @@
 package me.overlight.powertools.spigot.APIs;
 
+import me.overlight.powertools.spigot.Libraries.PremiumField;
 import me.overlight.powertools.spigot.PowerTools;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -76,9 +77,18 @@ public class NetworkChecker {
         return address.getAddress().toString().split("/")[0];
     }
 
+    public static String getPremiumPlayerUUID(Player player) throws IOException, ParseException {
+        HttpURLConnection client = (HttpURLConnection) new URL("https://api.mojang.com/users/profiles/minecraft/" + player.getName()).openConnection();
+        client.setRequestMethod("GET");
+        client.setRequestProperty("accept", "application/json");
+        client.setRequestProperty("userAgent", "Mozilla/5.0");
+        if (client.getResponseCode() != 200) return null;
+        return (String) getAsJsoN(client.getInputStream()).get("uuid");
+    }
+
     public static JSONObject getPlayerIPv4API(Player player) {
         try {
-            if (requests > 43) throw new StackOverflowError("Requests per minute excepted");
+            if (requests > 43) throw new StackOverflowError("Requests excepted");
             HttpURLConnection client = (HttpURLConnection) new URL("http://ip-api.com/json/" + getPlayerIPv4(player) + "?fields=1196571").openConnection();
             client.setRequestMethod("GET");
             client.setRequestProperty("accept", "application/json");
