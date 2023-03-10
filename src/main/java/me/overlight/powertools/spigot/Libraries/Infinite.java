@@ -1,4 +1,4 @@
-package me.overlight.powertools.spigot.APIs;
+package me.overlight.powertools.spigot.Libraries;
 
 import java.util.ArrayList;
 import java.util.Arrays;

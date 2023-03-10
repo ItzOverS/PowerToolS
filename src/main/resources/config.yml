@@ -26,7 +26,6 @@ ChatManager:
     filterSplitters: true
     Kick:
       enabled: true
-      msg: "&6SPAM is not allowed on this server" # Use '\n' for nextLine
   WordBlock:
     enabled: true
     Words: [ "fuck", "bitch", "fvck" ]
@@ -34,15 +33,12 @@ ChatManager:
       UniCodes: true
       Splitters: true
       MultiLetter: true
-    msg: "&cWe flagged your message"
   AntiDuplicate:
     enabled: true
     maxDuplicate: 2
-    msg: "&cDuplicated text in message"
   MessageDelay:
     enabled: true
     delay: 2
-    msg: "&cYou have to wait to send another message"
   PlayerMentions:
     enabled: false
     Mode: "title" # ["title", "chat", "both"]

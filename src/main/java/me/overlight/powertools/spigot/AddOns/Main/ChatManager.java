@@ -1,7 +1,8 @@
 package me.overlight.powertools.spigot.AddOns.Main;
 
-import me.overlight.powertools.spigot.APIs.Infinite;
 import me.overlight.powertools.spigot.AddOns.AddOn;
+import me.overlight.powertools.spigot.Libraries.Infinite;
+import me.overlight.powertools.spigot.Plugin.PlMessages;
 import me.overlight.powertools.spigot.PowerTools;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -44,9 +45,9 @@ public class ChatManager
                 }, PowerTools.config.getInt(this.getName() + ".MessageDelay.delay") * 20L);
             } else {
                 if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".MessageDelay.msg"))));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PlMessages.ChatManager_MessagesDelay.get(e.getPlayer())));
                 else
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".MessageDelay.msg")));
+                    sender.sendMessage(PlMessages.ChatManager_MessagesDelay.get());
                 e.setCancelled(true);
                 return;
             }
@@ -64,9 +65,9 @@ public class ChatManager
                     e.setCancelled(true);
                     Bukkit.getScheduler().runTask(PowerTools.INSTANCE, () -> {
                         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
-                            PowerTools.kick(sender, ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".AntiSpam.Kick.msg"))));
+                            PowerTools.kick(sender, PlMessages.ChatManager_AntiSpam.get(e.getPlayer()));
                         else
-                            PowerTools.kick(sender, ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".AntiSpam.Kick.msg")));
+                            PowerTools.kick(sender, PlMessages.ChatManager_AntiSpam.get());
                     });
                     return;
                 }
@@ -122,9 +123,9 @@ public class ChatManager
             }
             if (messageFlagged) {
                 if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".WordBlock.msg"))));
+                    sender.sendMessage(PlMessages.ChatManager_BadWordDetected.get(e.getPlayer()));
                 else
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".WordBlock.msg")));
+                    sender.sendMessage(PlMessages.ChatManager_BadWordDetected.get());
                 e.setCancelled(true);
                 return;
             }
@@ -137,9 +138,9 @@ public class ChatManager
                 if (Count(newMSG, str) > PowerTools.config.getLong(this.getName() + ".AntiDuplicate.maxDuplicate")) {
                     e.setCancelled(true);
                     if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(e.getPlayer(), PowerTools.config.getString(this.getName() + ".AntiDuplicate.msg"))));
+                        sender.sendMessage(PlMessages.ChatManager_DuplicateWord.get(e.getPlayer()));
                     else
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString(this.getName() + ".AntiDuplicate.msg")));
+                        sender.sendMessage(PlMessages.ChatManager_DuplicateWord.get());
                     return;
                 }
             }
@@ -158,6 +159,15 @@ public class ChatManager
                         Bukkit.getPlayer(name).sendTitle(ChatColor.GOLD + sender.getName(), ChatColor.RED + "Has mentioned you");
                         Bukkit.getPlayer(name).sendMessage(ChatColor.GOLD + sender.getName() + ChatColor.RED + " has mentioned you");
                     }
+                }
+            }
+        }
+        if (PowerTools.config.getBoolean(this.getName() + ".AntiAdventure.enabled")) {
+            for (String n : message.split(" ")) {
+                if (n.contains(".") && n.length() > 4 && message.split("\\.")[0].length() > 2 && message.split("\\.")[1].length() > 2) {
+                    if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+                        sender.sendMessage(PlMessages.ChatManager_AntiAdventure.get(e.getPlayer()));
+                    else sender.sendMessage(PlMessages.ChatManager_AntiAdventure.get());
                 }
             }
         }
@@ -215,11 +225,11 @@ public class ChatManager
         return newText;
     }
 
-    private static char DeUniCodedChar(char targ) {
-        if (targ > 65281 && targ < 65376) {
-            return ((char) (targ - 65248));
+    private static char DeUniCodedChar(char target) {
+        if (target > 65281 && target < 65376) {
+            return ((char) (target - 65248));
         }
-        return targ;
+        return target;
     }
 
     private static int getDuplicates(String message, String lastMessage) {
