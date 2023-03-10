@@ -38,9 +38,7 @@ public class DiscordMessageListener
             AuditableRestAction<Void> result = event.getMessage().delete();
             PowerExt.discordIDsUser.put(mcUsername, author);
             Bukkit.getPlayer(mcUsername).sendMessage(PlInfo.PREFIX + ChatColor.GREEN + "You has been simplify verified");
-            YamlConfiguration yml = new PluginYaml("discordLinks").getYaml();
-            yml.set(mcUsername, author);
-            new PluginYaml("discordLinks").setYaml(yml).saveYaml();
+            new PluginYaml("discordLinks").insertItem(mcUsername, author).saveYaml();
         } catch (Exception ignored) {
         }
     }
