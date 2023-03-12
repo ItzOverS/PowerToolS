@@ -18,7 +18,11 @@ public class Vault {
         } else {
             return false;
         }
-        return setupEconomy() && setupChat() && setupPermissions();
+        try {
+            return setupEconomy() && setupChat() && setupPermissions();
+        } catch (Exception ex) {
+            return false;
+        }
     }
 
     public static void enabledVault() {
@@ -44,12 +48,18 @@ public class Vault {
 
     private static boolean setupChat() {
         RegisteredServiceProvider<Chat> rsp = PowerTools.INSTANCE.getServer().getServicesManager().getRegistration(Chat.class);
+        if (rsp == null) {
+            return false;
+        }
         chat = rsp.getProvider();
         return chat != null;
     }
 
     private static boolean setupPermissions() {
         RegisteredServiceProvider<Permission> rsp = PowerTools.INSTANCE.getServer().getServicesManager().getRegistration(Permission.class);
+        if (rsp == null) {
+            return false;
+        }
         perms = rsp.getProvider();
         return perms != null;
     }
