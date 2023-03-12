@@ -53,65 +53,67 @@ public class TabComplete
                     else return Collections.singletonList(PowerTools.config.getString(args[1] + "." + args[2]));
                 }
             } else {
-                String[] commands = {
-                        "pts knockback {TARGET}",
-                        "pts hide:kb {TARGET}",
-                        "pts knockbackall",
-                        "pts dump {plugin/console/config}",
-                        "pts addons",
-                        "pts freeze {TARGET}",
-                        "pts hide:fr {TARGET}",
-                        "pts rotate {TARGET}",
-                        "pts hide:rot {TARGET}",
-                        "pts playtime {TARGET}",
-                        "pts hide:pt {TARGET}",
-                        "pts protect {TARGET}",
-                        "pts hide:prot {TARGET}",
-                        "pts mute {TARGET}",
-                        "pts unmute {TARGET}",
-                        "pts vanish {TARGET}",
-                        "pts toggle {cps/ping} {TARGET}",
-                        "pts blacklist add {TARGET}",
-                        "pts blacklist remove {TARGET}",
-                        "pts blacklist list",
-                        "pts whitelist add {TARGET}",
-                        "pts whitelist remove {TARGET}",
-                        "pts whitelist list",
-                        "pts toggle tps",
-                        "pts toggle remove",
-                        "pts cps {TARGET}",
-                        "pts help {COMMANDS}",
-                        "pts vote create",
-                        "pts plugins {enable/disable/restart/info} {PLUGINS}",
-                        "pts uptime",
-                        "pts speed {fly/speed} {1/2/3/4/5/6/7/8/9/10}",
-                        "pts invsee {TARGET}",
-                };
-                Set<String> currentIndexCommands = new HashSet<>();
-                for (String value : commands) {
-                    if (value.split(" ").length <= args.length) continue;
-                    boolean skipCommand = false;
-                    for (int m = 0; m < args.length; m++) {
-                        boolean itemContains = false;
-                        for (String r : replaceVars(value.replace("hide:", "").split(" ")[m + 1])) {
-                            if (r.startsWith(args[m])) {
-                                itemContains = true;
-                                break;
+                if (sender.isOp()) {
+                    String[] commands = {
+                            "pts knockback {TARGET}",
+                            "pts hide:kb {TARGET}",
+                            "pts knockbackall",
+                            "pts dump {plugin/console/config}",
+                            "pts addons",
+                            "pts freeze {TARGET}",
+                            "pts hide:fr {TARGET}",
+                            "pts rotate {TARGET}",
+                            "pts hide:rot {TARGET}",
+                            "pts playtime {TARGET}",
+                            "pts hide:pt {TARGET}",
+                            "pts protect {TARGET}",
+                            "pts hide:prot {TARGET}",
+                            "pts mute {TARGET}",
+                            "pts unmute {TARGET}",
+                            "pts vanish {TARGET}",
+                            "pts toggle {cps/ping} {TARGET}",
+                            "pts blacklist add {TARGET}",
+                            "pts blacklist remove {TARGET}",
+                            "pts blacklist list",
+                            "pts whitelist add {TARGET}",
+                            "pts whitelist remove {TARGET}",
+                            "pts whitelist list",
+                            "pts toggle tps",
+                            "pts toggle remove",
+                            "pts cps {TARGET}",
+                            "pts help {COMMANDS}",
+                            "pts vote create",
+                            "pts plugins {enable/disable/restart/info} {PLUGINS}",
+                            "pts uptime",
+                            "pts speed {fly/speed} {1/2/3/4/5/6/7/8/9/10}",
+                            "pts invsee {TARGET}",
+                    };
+                    Set<String> currentIndexCommands = new HashSet<>();
+                    for (String value : commands) {
+                        if (value.split(" ").length <= args.length) continue;
+                        boolean skipCommand = false;
+                        for (int m = 0; m < args.length; m++) {
+                            boolean itemContains = false;
+                            for (String r : replaceVars(value.replace("hide:", "").split(" ")[m + 1])) {
+                                if (r.startsWith(args[m])) {
+                                    itemContains = true;
+                                    break;
+                                }
                             }
+                            if (!itemContains)
+                                skipCommand = true;
                         }
-                        if (!itemContains)
-                            skipCommand = true;
+                        if (value.split(" ")[args.length].startsWith("hide:")) skipCommand = true;
+                        if (skipCommand) continue;
+                        if (args[args.length - 1].trim().equals("")) {
+                            currentIndexCommands.addAll(replaceVars(value.split(" ")[args.length]));
+                        } else {
+                            currentIndexCommands.addAll(replaceVars(value.split(" ")[args.length]).stream().filter(v -> v.startsWith(args[args.length - 1])).collect(Collectors.toList()));
+                        }
                     }
-                    if (value.split(" ")[args.length].startsWith("hide:")) skipCommand = true;
-                    if (skipCommand) continue;
-                    if (args[args.length - 1].trim().equals("")) {
-                        currentIndexCommands.addAll(replaceVars(value.split(" ")[args.length]));
-                    } else {
-                        currentIndexCommands.addAll(replaceVars(value.split(" ")[args.length]).stream().filter(v -> v.startsWith(args[args.length - 1])).collect(Collectors.toList()));
-                    }
-                }
 
-                return new ArrayList<>(currentIndexCommands);
+                    return new ArrayList<>(currentIndexCommands);
+                }
             }
         }
         return null;
