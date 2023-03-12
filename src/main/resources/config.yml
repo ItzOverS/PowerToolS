@@ -264,7 +264,7 @@ BedwarsAddOns:
   enabled: false
   AntiTeamup:
     enabled: false
-    distance: 5
+    distance: 4.5
     maxVL: 20
 
   TntKnockback:
