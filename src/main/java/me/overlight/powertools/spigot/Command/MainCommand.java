@@ -836,7 +836,7 @@ public class MainCommand
             // args.length == 0
             if (!PlPerms.hasPerm(sender, "powertools")) {
                 sender.sendMessage(ColorFormat.formatColor("@color_aqua@format_mid_line=============================="));
-                sender.sendMessage(ColorFormat.formatColor("@color_aquaPowerToolS v" + PlInfo.VERSION + " by ItzOverS"));
+                sender.sendMessage(ColorFormat.formatColor("@color_aquaPowerToolS v" + PlInfo.VERSION + " by _OverLight_"));
                 sender.sendMessage(ColorFormat.formatColor("@color_aquaGitHub: https://github.com/ItzOverS/"));
                 sender.sendMessage(ColorFormat.formatColor("@color_aqua@format_mid_line=============================="));
             } else {
