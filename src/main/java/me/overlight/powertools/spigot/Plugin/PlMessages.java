@@ -93,6 +93,7 @@ public enum PlMessages {
     Speed_SimplifyAppliedFlySpeed("@color_greenSuccessful set your @color_goldfly@color_green speed to @color_gold%NUM%"),
     Speed_SimplifyAppliedMovementSpeed("@color_greenSuccessful set your @color_goldmovement@color_green speed to @color_gold%NUM%"),
     InvSee_SimplifyOpenedTargetInventory("@color_greenSimplify opened @color_gold%NAME%@color_green's inventory"),
+    ItemDisabler_ThisItemHasBeenDisabled("@color_redThis item has been disabled!"),
     ;
     private final String desc;
 

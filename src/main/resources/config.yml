@@ -401,3 +401,9 @@ WorldAddOns:
     enabled: false
     interval: 20 # 20 Ticks = 1 Second
     maxChunks: 200
+
+  ItemDisabler:
+    enabled: false
+    items:
+      - ""
+      - ""
