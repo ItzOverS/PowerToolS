@@ -1,4 +1,4 @@
-package me.overlight.powertools.spigot.AddOns.WorldAddOns;
+package me.overlight.powertools.spigot.AddOns.World;
 
 import me.overlight.powertools.spigot.AddOns.AddOn;
 import me.overlight.powertools.spigot.PowerTools;
