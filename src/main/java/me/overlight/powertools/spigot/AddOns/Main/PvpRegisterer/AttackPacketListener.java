@@ -38,7 +38,7 @@ public class AttackPacketListener
             if (((Player) action.getEntity()).getGameMode() == GameMode.CREATIVE || ((Player) action.getEntity()).getGameMode() == GameMode.ADVENTURE)
                 return;
         if (PowerTools.config.getBoolean("PvpRegisterer.registerDamages"))
-            if (((LivingEntity) action.getEntity()).getHealth() - 1 > -1)
+            if (((LivingEntity) action.getEntity()).getHealth() - 1 > 0)
                 ((LivingEntity) action.getEntity()).setHealth(((LivingEntity) action.getEntity()).getHealth() - 1);
         if (PowerTools.config.getBoolean("PvpRegisterer.registerKnockback")) {
             Vector vec = action.getEntity().getVelocity().multiply(event.getPlayer().getLocation().getDirection()).multiply(0.5);
