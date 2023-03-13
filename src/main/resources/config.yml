@@ -194,7 +194,7 @@ DistanceChat:
   maxDistance: 70
 
 # -->> Note: This option may create lag in public servers ( +10 players )
-PvpRegisterer: # Required 100mg/1cps
+PvpRegisterer: # Required 10mg/1cps
   enabled: false
   registerDamages: true
   registerKnockback: true
