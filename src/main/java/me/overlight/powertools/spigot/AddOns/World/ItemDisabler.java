@@ -31,9 +31,9 @@ public class ItemDisabler
         new BukkitRunnable() {
             public void run() {
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    for (ItemStack stack : player.getInventory().getContents()) {
+                    for (ItemStack stack : player.getInventory()) {
                         if (stack == null) continue;
-                        if (PowerTools.config.getStringList("WorldAddOns.ItemDisabler.items").contains(stack.getType().name())) {
+                        if (PowerTools.config.getStringList("WorldAddOns.ItemDisabler.items").stream().anyMatch(item -> item.equalsIgnoreCase(stack.getType().name().toLowerCase()))) {
                             player.sendMessage(PlMessages.ItemDisabler_ThisItemHasBeenDisabled.get());
                             player.getInventory().remove(stack);
                         }
