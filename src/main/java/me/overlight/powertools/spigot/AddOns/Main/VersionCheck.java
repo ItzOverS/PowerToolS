@@ -1,7 +1,6 @@
 package me.overlight.powertools.spigot.AddOns.Main;
 
 import io.github.retrooper.packetevents.PacketEvents;
-import io.github.retrooper.packetevents.utils.server.ServerVersion;
 import me.overlight.powertools.spigot.AddOns.AddOn;
 import me.overlight.powertools.spigot.Libraries.RepItem;
 import me.overlight.powertools.spigot.Plugin.PlInfo;
@@ -26,7 +25,7 @@ public class VersionCheck
     public static HashMap<String, String> playersClientBrand = new HashMap<>();
 
     public VersionCheck() {
-        super("VersionCheck", "1.0", "check players version", PowerTools.config.getBoolean("VersionCheck.enabled"), (PacketEvents.get().getServerUtils().getVersion().isNewerThanOrEquals(ServerVersion.v_1_13)) ? "mc:brand" : "MC|Brand");
+        super("VersionCheck", "1.0", "check players version", PowerTools.config.getBoolean("VersionCheck.enabled"), PowerTools.handleChannel("MC|Brand"));
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.utils.server.ServerVersion;
+import me.overlight.powertools.ServerData;
 import me.overlight.powertools.spigot.APIs.UpdateChecker;
 import me.overlight.powertools.spigot.APIs.Vault;
 import me.overlight.powertools.spigot.AddOns.AddOnManager;
@@ -64,21 +65,24 @@ public class PowerTools
         INSTANCE = this;
         PacketEvents.create(this);
 
-        if (PacketEvents.get().isInitialized() && PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_18_2)) {
-            Alert(Target.CONSOLE, "@color_redPlugin disabled due PacketEvents not support +1.19 minecraft version");
-            this.getServer().getPluginManager().disablePlugin(this);
+        if (ServerData.isNewerThan(ServerData.getServerVersion(), "1.18.2")) {
+            err = "Plugin disabled due PacketEvents not support +1.19 minecraft version";
         }
 
         PacketEvents.get().getSettings()
                 .checkForUpdates(false)
                 .bStats(true)
-                .fallbackServerVersion(PacketEvents.get().getServerUtils().getVersion());
-        PacketEvents.get().load();
+                .fallbackServerVersion(ServerData.isNewerThan(ServerData.getServerVersion(), ServerData.formatVersion(ReverseServerVersionByPacketEvents()[1].name())) ? ReverseServerVersionByPacketEvents()[1] : PacketEvents.get().getServerUtils().getVersion());
     }
 
     @Override
     public void onEnable() {
+        if (err != "") {
+            this.getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
         try {
+            PacketEvents.get().load();
             new BukkitRunnable() {
                 public void run() {
                     upTimeTimer.add(0, 0, 0, 0, 0, 1);
@@ -189,14 +193,10 @@ public class PowerTools
 
         PacketEvents.get().terminate();
 
-        if (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12)) {
-            getServer().getMessenger().unregisterIncomingPluginChannel(this, "wdl:init");
-            getServer().getMessenger().unregisterOutgoingPluginChannel(this, "wdl:control");
-        } else {
-            getServer().getMessenger().unregisterIncomingPluginChannel(this, "WDL|INIT");
-            getServer().getMessenger().unregisterOutgoingPluginChannel(this, "WDL|CONTROL");
-        }
-        getServer().getMessenger().unregisterIncomingPluginChannel(this, (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12)) ? "mc:brand" : "MC|BRAND");
+        getServer().getMessenger().unregisterIncomingPluginChannel(this, handleChannel("WDL|INIT"));
+        getServer().getMessenger().unregisterOutgoingPluginChannel(this, handleChannel("WDL|CONTROL"));
+
+        getServer().getMessenger().unregisterIncomingPluginChannel(this, handleChannel("MC|BRAND"));
 
         AddOnManager.unRegisterAll();
 
@@ -291,5 +291,22 @@ public class PowerTools
                 ex.printStackTrace();
             }
         }
+    }
+
+    public static String handleChannel(String channel) {
+        return ServerData.isNewerThan(ServerData.getServerVersion(), "1.12.2") ? channel.replace("|", ":").toLowerCase() : channel;
+    }
+
+    public static ServerVersion[] ReverseServerVersionByPacketEvents() {
+        ServerVersion[] array = ServerVersion.values();
+        int i = 0;
+        int j = array.length - 1;
+        ServerVersion tmp;
+        while (j > i) {
+            tmp = array[j];
+            array[j--] = array[i];
+            array[i++] = tmp;
+        }
+        return array;
     }
 }

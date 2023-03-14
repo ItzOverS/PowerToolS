@@ -1,7 +1,5 @@
 package me.overlight.powertools.spigot.AddOns.Main;
 
-import io.github.retrooper.packetevents.PacketEvents;
-import io.github.retrooper.packetevents.utils.server.ServerVersion;
 import me.overlight.powertools.spigot.AddOns.AddOn;
 import me.overlight.powertools.spigot.Discord.WebHooks.DiscordAPI;
 import me.overlight.powertools.spigot.Plugin.PlInfo;
@@ -17,29 +15,18 @@ public class AntiWorldDownLoader
         implements Listener, PluginMessageListener {
     public AntiWorldDownLoader() {
         super("AntiWorldDownLoader", "1.0", "prevent players from download server's maps using map downloaders", PowerTools.config.getBoolean("AntiWorldDownLoader.enabled"));
-        if (this.enabled()) {
-            if (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12)) {
-                PowerTools.INSTANCE.getServer().getMessenger().registerIncomingPluginChannel(PowerTools.INSTANCE, "wdl:init", this);
-                PowerTools.INSTANCE.getServer().getMessenger().registerOutgoingPluginChannel(PowerTools.INSTANCE, "wdl:control");
-            } else {
-                PowerTools.INSTANCE.getServer().getMessenger().registerIncomingPluginChannel(PowerTools.INSTANCE, "WDL|INIT", this);
-                PowerTools.INSTANCE.getServer().getMessenger().registerOutgoingPluginChannel(PowerTools.INSTANCE, "WDL|CONTROL");
-            }
-            PowerTools.INSTANCE.getServer().getPluginManager().registerEvents(this, PowerTools.INSTANCE);
-        }
+    }
+
+    @Override
+    public void onEnabled() {
+        PowerTools.INSTANCE.getServer().getMessenger().registerIncomingPluginChannel(PowerTools.INSTANCE, PowerTools.handleChannel("WDL|INIT"), this);
+        PowerTools.INSTANCE.getServer().getMessenger().registerOutgoingPluginChannel(PowerTools.INSTANCE, PowerTools.handleChannel("WDL|CONTROL"));
     }
 
     @Override
     public void onDisabled() {
-        if (this.isEnabled()) {
-            if (PacketEvents.get().getServerUtils().getVersion().isNewerThan(ServerVersion.v_1_12)) {
-                PowerTools.INSTANCE.getServer().getMessenger().unregisterIncomingPluginChannel(PowerTools.INSTANCE, "wdl:init", this);
-                PowerTools.INSTANCE.getServer().getMessenger().unregisterOutgoingPluginChannel(PowerTools.INSTANCE, "wdl:control");
-            } else {
-                PowerTools.INSTANCE.getServer().getMessenger().unregisterIncomingPluginChannel(PowerTools.INSTANCE, "WDL|INIT", this);
-                PowerTools.INSTANCE.getServer().getMessenger().unregisterOutgoingPluginChannel(PowerTools.INSTANCE, "WDL|CONTROL");
-            }
-        }
+        PowerTools.INSTANCE.getServer().getMessenger().unregisterIncomingPluginChannel(PowerTools.INSTANCE, PowerTools.handleChannel("WDL|INIT"));
+        PowerTools.INSTANCE.getServer().getMessenger().unregisterOutgoingPluginChannel(PowerTools.INSTANCE, PowerTools.handleChannel("WDL|CONTROL"));
     }
 
     public void onPluginMessageReceived(String channel, Player player, byte[] data) {
