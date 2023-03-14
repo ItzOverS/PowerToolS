@@ -1,18 +1,12 @@
 package me.overlight.powertools.spigot.AddOns.Main;
 
-import me.overlight.powertools.spigot.APIs.NMSSupport;
 import me.overlight.powertools.spigot.AddOns.AddOn;
 import me.overlight.powertools.spigot.Plugin.PlInfo;
 import me.overlight.powertools.spigot.PowerTools;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.minecraft.server.v1_8_R3.NBTTagList;
-import net.minecraft.server.v1_8_R3.NBTTagString;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -73,6 +67,7 @@ public class RulesAccept
     }
 
     public ItemStack getBook(String title, String author, String[] pages){
+        /*
         ItemStack stack = new ItemStack(Material.WRITTEN_BOOK, 1);
         Class<?> itemStackk = NMSSupport.getBukkitClass("inventory.CraftItemStack");
         net.minecraft.server.v1_8_R3.ItemStack cis = CraftItemStack.asNMSCopy(stack);
@@ -86,6 +81,7 @@ public class RulesAccept
         nbt.set("pages", list);
         cis.setTag(nbt);
         stack = CraftItemStack.asBukkitCopy(cis);
-        return stack;
+        */
+        return null;
     }
 }
