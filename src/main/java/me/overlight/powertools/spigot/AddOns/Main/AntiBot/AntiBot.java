@@ -59,9 +59,9 @@ public class AntiBot
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        if (PowerTools.config.getBoolean(this.getName() + ".PingAttack.enabled") && PowerTools.config.getBoolean("bungeecord"))
+        if (PowerTools.config.getBoolean(this.getName() + ".PingAttack.enabled") && PacketEvents.get().getServerUtils(). isBungeeCordEnabled())
             PowerTools.INSTANCE.getServer().getMessenger().registerIncomingPluginChannel(PowerTools.INSTANCE, "pts:ab:bungee", new ChannelListener());
-        else if (PowerTools.config.getBoolean(this.getName() + ".PingAttack.enabled") && !PowerTools.config.getBoolean("bungeecord"))
+        else if (PowerTools.config.getBoolean(this.getName() + ".PingAttack.enabled") && !PacketEvents.get().getServerUtils(). isBungeeCordEnabled())
             PacketEvents.get().getEventManager().registerListener(new PacketListener());
         PowerTools.INSTANCE.getServer().getPluginCommand("verify").setExecutor(new Verify());
         PowerTools.INSTANCE.getServer().getPluginCommand("verify").setTabCompleter(new TabCompleteCancel());

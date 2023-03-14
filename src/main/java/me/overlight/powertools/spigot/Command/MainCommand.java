@@ -610,7 +610,7 @@ public class MainCommand
                                 try {
                                     String dump = PlInfo.DUMP_STYLE
                                             .replace("%SERVER_VERSION%", PacketEvents.get().getServerUtils().getVersion().name() + " (" + PacketEvents.get().getServerUtils().getVersion().getProtocolVersion() + ")")
-                                            .replace("%PL_VERSION%", PlInfo.VERSION).replace("%BUNGEE_CONNECTED%", String.valueOf(PowerTools.config.getBoolean("bungeecord")))
+                                            .replace("%PL_VERSION%", PlInfo.VERSION).replace("%BUNGEE_CONNECTED%", String.valueOf(PacketEvents.get().getServerUtils().isBungeeCordEnabled()))
                                             .replace("%ENABLED_ADDONS%", AddOnManager.getAsString()).replace("%ENABLED_EXTENSIONS%", ExtensionManager.getAsString())
                                             .replace("%PLUGINS%", PluginManager.getEnabledPluginsAsString()).replace("%OS%", PacketEvents.get().getServerUtils().getOS().name());
 
@@ -641,7 +641,7 @@ public class MainCommand
                         try {
                             String dump = PlInfo.DUMP_STYLE
                                     .replace("%SERVER_VERSION%", PacketEvents.get().getServerUtils().getVersion().name() + " (" + PacketEvents.get().getServerUtils().getVersion().getProtocolVersion() + ")")
-                                    .replace("%PL_VERSION%", PlInfo.VERSION).replace("%BUNGEE_CONNECTED%", String.valueOf(PowerTools.config.getBoolean("bungeecord")))
+                                    .replace("%PL_VERSION%", PlInfo.VERSION).replace("%BUNGEE_CONNECTED%", String.valueOf(PacketEvents.get().getServerUtils().isBungeeCordEnabled()))
                                     .replace("%ENABLED_ADDONS%", AddOnManager.getAsString()).replace("%ENABLED_EXTENSIONS%", ExtensionManager.getAsString())
                                     .replace("%PLUGINS%", PluginManager.getEnabledPluginsAsString()).replace("%OS%", PacketEvents.get().getServerUtils().getOS().name());
 

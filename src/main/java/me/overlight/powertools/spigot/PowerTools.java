@@ -253,7 +253,7 @@ public class PowerTools
     }
 
     public static void kick(Player player, String reason) {
-        if (PowerTools.config.getBoolean("bungeecord")) {
+        if (PacketEvents.get().getServerUtils().isBungeeCordEnabled()) {
             ByteArrayDataOutput data = ByteStreams.newDataOutput();
             data.writeUTF("kick|" + player.getName() + "|" + reason);
             player.sendPluginMessage(PowerTools.INSTANCE, "pts:bungee", data.toByteArray());
