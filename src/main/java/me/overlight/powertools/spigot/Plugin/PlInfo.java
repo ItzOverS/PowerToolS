@@ -9,6 +9,7 @@ public class PlInfo {
     public static final String DUMP_STYLE =
             "Server version: %SERVER_VERSION%\n" +
                     "Plugin version: %PL_VERSION%\n" +
+                    "Operating System: %OS%\n" +
                     "Bungee Sync: %BUNGEE_CONNECTED%\n\n" +
                     "- Enabled AddOns: %ENABLED_ADDONS%\n" +
                     "- Enabled Extensions: %ENABLED_EXTENSIONS%\n" +

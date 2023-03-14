@@ -612,7 +612,7 @@ public class MainCommand
                                             .replace("%SERVER_VERSION%", PacketEvents.get().getServerUtils().getVersion().name() + " (" + PacketEvents.get().getServerUtils().getVersion().getProtocolVersion() + ")")
                                             .replace("%PL_VERSION%", PlInfo.VERSION).replace("%BUNGEE_CONNECTED%", String.valueOf(PowerTools.config.getBoolean("bungeecord")))
                                             .replace("%ENABLED_ADDONS%", AddOnManager.getAsString()).replace("%ENABLED_EXTENSIONS%", ExtensionManager.getAsString())
-                                            .replace("%PLUGINS%", PluginManager.getEnabledPluginsAsString());
+                                            .replace("%PLUGINS%", PluginManager.getEnabledPluginsAsString()).replace("%OS%", PacketEvents.get().getServerUtils().getOS().name());
 
                                     sender.sendMessage(PlMessages.SimplifyCreatedDump.get(new RepItem("%URL%", pasteAtInternet(dump, "PowerToolS's DUMP url"))));
                                 } catch (IOException ex) {
@@ -643,7 +643,7 @@ public class MainCommand
                                     .replace("%SERVER_VERSION%", PacketEvents.get().getServerUtils().getVersion().name() + " (" + PacketEvents.get().getServerUtils().getVersion().getProtocolVersion() + ")")
                                     .replace("%PL_VERSION%", PlInfo.VERSION).replace("%BUNGEE_CONNECTED%", String.valueOf(PowerTools.config.getBoolean("bungeecord")))
                                     .replace("%ENABLED_ADDONS%", AddOnManager.getAsString()).replace("%ENABLED_EXTENSIONS%", ExtensionManager.getAsString())
-                                    .replace("%PLUGINS%", PluginManager.getEnabledPluginsAsString());
+                                    .replace("%PLUGINS%", PluginManager.getEnabledPluginsAsString()).replace("%OS%", PacketEvents.get().getServerUtils().getOS().name());
 
                             sender.sendMessage(PlMessages.SimplifyCreatedDump.get(new RepItem("%URL%", pasteAtInternet(dump, "PowerToolS's DUMP url"))));
                         } catch (IOException ex) {
