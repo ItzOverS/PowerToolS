@@ -23,6 +23,7 @@ import me.overlight.powertools.spigot.AddOns.Server.*;
 import me.overlight.powertools.spigot.AddOns.Server.DiscordSync.DiscordSync;
 import me.overlight.powertools.spigot.AddOns.Server.PluginHider.PluginHider;
 import me.overlight.powertools.spigot.AddOns.Survival.FallingBlocks;
+import me.overlight.powertools.spigot.AddOns.Survival.NoRedstoneRepeat;
 import me.overlight.powertools.spigot.AddOns.Survival.NoRespawn;
 import me.overlight.powertools.spigot.AddOns.Survival.RandomSpawn;
 import me.overlight.powertools.spigot.AddOns.World.ChunkLoadingLimits;
@@ -73,6 +74,8 @@ public class PowerTools
                 .checkForUpdates(false)
                 .bStats(true)
                 .fallbackServerVersion(ServerData.isNewerThan(ServerData.getServerVersion(), ServerData.formatVersion(ReverseServerVersionByPacketEvents()[1].name())) ? ReverseServerVersionByPacketEvents()[1] : PacketEvents.get().getServerUtils().getVersion());
+
+        if (err != "") ((Logger) LogManager.getRootLogger()).addFilter(new ConsoleMessageFilter());
     }
 
     @Override
@@ -89,7 +92,6 @@ public class PowerTools
                 }
             }.runTaskTimer(this, 20, 20);
 
-            ((Logger) LogManager.getRootLogger()).addFilter(new ConsoleMessageFilter());
             Alert(Target.CONSOLE, "@color_greenEnabling " + PlInfo.INV_PREFIX.substring(0, PlInfo.INV_PREFIX.length() - 11));
             INSTANCE = this;
             saveDefaultConfig();
