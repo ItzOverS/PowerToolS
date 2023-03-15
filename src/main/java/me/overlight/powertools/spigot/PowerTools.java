@@ -273,7 +273,7 @@ public class PowerTools
         if (config.getBoolean("HubAddOns.enabled"))
             AddOnManager.registerAddOn(new KnockbackPlate(), new VoidTP());
         if (config.getBoolean("SurvivalAddOns.enabled"))
-            AddOnManager.registerAddOn(new ChatManager(), new NoRespawn(), new RandomSpawn(), new FallingBlocks());
+            AddOnManager.registerAddOn(new ChatManager(), new NoRespawn(), new RandomSpawn(), new FallingBlocks(), new NoRedstoneRepeat());
         if (config.getBoolean("ServerAddOns.enabled"))
             AddOnManager.registerAddOn(new RandomMOTD(), new BanMOTD(), new AntiRejoin(), new ForcePing(), new PluginHider(), new DiscordSync(), new ConsoleMessageDeny(), new NoUUIDSpoof());
         if (config.getBoolean("RenderAddOns.enabled"))

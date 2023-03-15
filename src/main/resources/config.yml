@@ -256,6 +256,11 @@ SurvivalAddOns:
       - AIR
       - GRASS
 
+  NoRedstoneRepeat:
+    enabled: false
+    interval: 50
+    maxRepeat: 5
+
 BedwarsAddOns:
   enabled: false
   AntiTeamup:
