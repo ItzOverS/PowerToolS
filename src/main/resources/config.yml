@@ -138,7 +138,7 @@ QuitMessage:
   # Insert %ONLINE% for amount of onlinePlayers on server
   message: "&6[&c-&6]&a%NAME%"
 
-afkCheck:
+AfkCheck:
   enabled: false
   kickOnAFK: true
   maxDelayNoAction: 300000 # 300000 MiliSec = 300 Sec = 5 Min

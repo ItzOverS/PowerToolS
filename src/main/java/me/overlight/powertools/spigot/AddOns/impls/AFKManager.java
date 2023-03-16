@@ -57,7 +57,7 @@ public class AFKManager {
                 return true;
             } else {
                 long timeElapsed = System.currentTimeMillis() - lastMovement.get(player);
-                return timeElapsed >= PowerTools.config.getLong("afkCheck.maxDelayNoAction");
+                return timeElapsed >= PowerTools.config.getLong("AfkCheck.maxDelayNoAction");
             }
         } else {
             lastMovement.put(player, System.currentTimeMillis());
@@ -90,7 +90,7 @@ public class AFKManager {
                     announceToOthers(player, false);
 
                 } else if (!wasAFK && nowAFK) {
-                    if (PowerTools.config.getBoolean("afkCheck.kickOnAFK")) {
+                    if (PowerTools.config.getBoolean("AfkCheck.kickOnAFK")) {
                         kick(player.getName());
                         previousData.put(player, true);
                         lastMovement.remove(player);
@@ -113,18 +113,18 @@ public class AFKManager {
             if (isAFK) {
 
                 if (player != target)
-                    if (PowerTools.config.getBoolean("afkCheck.notification.chat.enabled"))
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("afkCheck.notification.chat.AFKmessage").replace("%NAME%", target.getDisplayName())));
-                if (PowerTools.config.getBoolean("afkCheck.notification.tab.enabled")) {
+                    if (PowerTools.config.getBoolean("AfkCheck.notification.chat.enabled"))
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("AfkCheck.notification.chat.AFKmessage").replace("%NAME%", target.getDisplayName())));
+                if (PowerTools.config.getBoolean("AfkCheck.notification.tab.enabled")) {
                     playersListName.put(target.getName(), target.getDisplayName());
-                    player.setPlayerListName(player.getDisplayName() + ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(PowerTools.config.getString("afkCheck.notification.tab.tag"))));
+                    player.setPlayerListName(player.getDisplayName() + ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(PowerTools.config.getString("AfkCheck.notification.tab.tag"))));
                 }
 
             } else {
                 if (player != target)
-                    if (PowerTools.config.getBoolean("afkCheck.notification.chat.enabled"))
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("afkCheck.notification.chat.NotAFKmessage").replace("%NAME%", target.getDisplayName())));
-                if (PowerTools.config.getBoolean("afkCheck.notification.tab.enabled")) {
+                    if (PowerTools.config.getBoolean("AfkCheck.notification.chat.enabled"))
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', PowerTools.config.getString("AfkCheck.notification.chat.NotAFKmessage").replace("%NAME%", target.getDisplayName())));
+                if (PowerTools.config.getBoolean("AfkCheck.notification.tab.enabled")) {
                     player.setPlayerListName(playersListName.get(target.getName()));
                     playersListName.remove(target.getName());
                 }
@@ -140,7 +140,7 @@ public class AFKManager {
                         Alert(PowerTools.Target.STAFF, ChatColor.GOLD + name + ChatColor.RED + " has kicked for AFKing");
                         AfkCheck.afkManager.playerLeft(Bukkit.getPlayer(name));
                         PowerTools.kick(Bukkit.getPlayer(name), PlInfo.KICK_PREFIX + ChatColor.RED + "AFK");
-                        if (PowerTools.config.getBoolean("afkCheck.alert-on-discord")) {
+                        if (PowerTools.config.getBoolean("AfkCheck.alert-on-discord")) {
                             DiscordAPI.sendEmbedOnWebhook(name + " kicked - AFK", name + " has kicked for **afking**...");
                         }
                     }
