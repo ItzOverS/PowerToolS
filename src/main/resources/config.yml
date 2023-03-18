@@ -43,6 +43,9 @@ ChatManager:
     delay: 1 # 1 Second command cooldown
   AntiAdventure: # Prevent players from sending links
     enabled: true
+  Item2Chat:
+    enabled: false
+    chatPlaceHolder: "[item]"
 
 NetworkChecker: # This plugin uses an api that only render 45 requests per minute ( sometimes this addon may don't check players )
   enabled: false
