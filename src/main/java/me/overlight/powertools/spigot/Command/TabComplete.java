@@ -81,8 +81,8 @@ public class TabComplete
                         boolean skipCommand = false;
                         for (int m = 0; m < args.length; m++) {
                             boolean itemContains = false;
-                            for (String r : replaceVars(value.replace("hide:", "").split(" ")[m + 1])) {
-                                if (r.startsWith(args[m])) {
+                            for (String r : replaceVars(value.split(" ")[m + 1])) {
+                                if (r.replace("hide:", "").startsWith(args[m])) {
                                     itemContains = true;
                                     break;
                                 }
@@ -90,12 +90,12 @@ public class TabComplete
                             if (!itemContains)
                                 skipCommand = true;
                         }
-                        if (value.split(" ")[args.length].startsWith("hide:")) skipCommand = true;
+                        List<String> items = replaceVars(value.split(" ")[args.length]).stream().filter(p -> !p.startsWith("hide:")).collect(Collectors.toList());
                         if (skipCommand) continue;
                         if (args[args.length - 1].trim().equals("")) {
-                            currentIndexCommands.addAll(replaceVars(value.split(" ")[args.length]));
+                            currentIndexCommands.addAll(items);
                         } else {
-                            currentIndexCommands.addAll(replaceVars(value.split(" ")[args.length]).stream().filter(v -> v.startsWith(args[args.length - 1])).collect(Collectors.toList()));
+                            currentIndexCommands.addAll(items.stream().filter(v -> v.startsWith(args[args.length - 1])).collect(Collectors.toList()));
                         }
                     }
 
