@@ -94,7 +94,10 @@ public enum PlMessages {
     Speed_SimplifyAppliedMovementSpeed("@color_greenSuccessful set your @color_goldmovement@color_green speed to @color_gold%NUM%"),
     InvSee_SimplifyOpenedTargetInventory("@color_greenSimplify opened @color_gold%NAME%@color_green's inventory"),
     ItemDisabler_ThisItemHasBeenDisabled("@color_redThis item has been disabled!"),
-    ;
+    Optimizer_SimplifyRemovedItemsAndMobs("@color_redSimplify removed @color_green%ITEMS% item(s) @color_red&@color_green %MOBS% mob(s)@color_red from ground"),
+    Optimizer_SimplifyRemovedItems("@color_redSimplify removed @color_green%ITEMS% item(s)@color_red from ground"),
+    Optimizer_ItemWillRemovedIn("@color_red%OBJ% on ground will remove in @color_gold%TIME% second(s)"),
+    Optimizer_SimplifyRemovedMobs("@color_redSimplify removed @color_green %MOBS% mob(s)@color_red from ground");
     private final String desc;
 
     PlMessages(String desc) {

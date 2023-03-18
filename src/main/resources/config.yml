@@ -408,3 +408,11 @@ WorldAddOns:
     items:
       - ""
       - ""
+
+  Optimizer:
+    enabled: false
+    remove-interval: 1200 #ticks - after detecting new mobs & ...
+    check-interval: 100 #ticks
+    ItemRemover: true
+    EntityRemover: true
+    AlertInterval: [ 1000, 1140, 1160, 1180 ]

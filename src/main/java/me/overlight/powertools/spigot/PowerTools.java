@@ -28,6 +28,7 @@ import me.overlight.powertools.spigot.AddOns.Survival.NoRespawn;
 import me.overlight.powertools.spigot.AddOns.Survival.RandomSpawn;
 import me.overlight.powertools.spigot.AddOns.World.ChunkLoadingLimits;
 import me.overlight.powertools.spigot.AddOns.World.ItemDisabler;
+import me.overlight.powertools.spigot.AddOns.World.Optimizer;
 import me.overlight.powertools.spigot.AddOns.World.WorldEnvironments;
 import me.overlight.powertools.spigot.Command.MainCommand;
 import me.overlight.powertools.spigot.Command.TabComplete;
@@ -281,7 +282,7 @@ public class PowerTools
         if (config.getBoolean("RenderAddOns.enabled"))
             AddOnManager.registerAddOn(new ScoreBoards(), new TabList());
         if (config.getBoolean("WorldAddOns.enabled"))
-            AddOnManager.registerAddOn(new WorldEnvironments(), new ChunkLoadingLimits(), new ItemDisabler());
+            AddOnManager.registerAddOn(new WorldEnvironments(), new ChunkLoadingLimits(), new ItemDisabler(), new Optimizer());
         AddOnManager.loadAddons();
     }
 
