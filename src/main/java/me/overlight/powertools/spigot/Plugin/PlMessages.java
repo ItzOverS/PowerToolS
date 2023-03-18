@@ -97,7 +97,14 @@ public enum PlMessages {
     Optimizer_SimplifyRemovedItemsAndMobs("@color_redSimplify removed @color_green%ITEMS% item(s) @color_red&@color_green %MOBS% mob(s)@color_red from ground"),
     Optimizer_SimplifyRemovedItems("@color_redSimplify removed @color_green%ITEMS% item(s)@color_red from ground"),
     Optimizer_ItemWillRemovedIn("@color_red%OBJ% on ground will remove in @color_gold%TIME% second(s)"),
-    Optimizer_SimplifyRemovedMobs("@color_redSimplify removed @color_green %MOBS% mob(s)@color_red from ground");
+    Optimizer_SimplifyRemovedMobs("@color_redSimplify removed @color_green %MOBS% mob(s)@color_red from ground"),
+    Worlds_Go_TargetWorldNotFound("@color_redCould not found world @color_gold%WORLD%"),
+    Worlds_Go_SuccessFulEnteredWorld("@color_greenSimplify teleported to @color_gold%WORLD%"),
+    Worlds_Create_NameAlreadyExists("@color_redThe name you selected is existing"),
+    Worlds_Create_SimplifyCreated("@color_greenSimplify create a new world! Use /powertools world go %WORLD%"),
+    Worlds_Delete_TargetNotFound("@color_redTarget world not found"),
+    Worlds_Delete_SimplifyDeletedWorld("@color_greenSimplify delete the world called %WORLD%"),
+    ;
     private final String desc;
 
     PlMessages(String desc) {

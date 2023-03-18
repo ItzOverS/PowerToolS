@@ -17,14 +17,14 @@ import me.overlight.powertools.spigot.PowerTools;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.libs.jline.internal.InputStreamReader;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -35,10 +35,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class MainCommand
         implements CommandExecutor {
@@ -827,6 +824,84 @@ public class MainCommand
                         }
                     } else {
                         sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools invsee {playerName}")));
+                    }
+                    break;
+                case "world":
+                    if (args.length > 1) {
+                        switch (args[1].toLowerCase()) {
+                            case "go":
+                                if (args.length == 3) {
+                                    if (!(sender instanceof Player)) {
+                                        sender.sendMessage(PlMessages.OnlyPlayersCanUseCommand.get());
+                                        return false;
+                                    }
+                                    if (!PlPerms.hasPerm(sender, PlPerms.Perms.Worlds_Go.get())) {
+                                        sender.sendMessage(PlMessages.NoPermission.get());
+                                        return false;
+                                    }
+                                    if (Bukkit.getWorld(args[2]) == null) {
+                                        sender.sendMessage(PlMessages.Worlds_Go_TargetWorldNotFound.get(new RepItem("%WORLD%", args[2])));
+                                        break;
+                                    }
+                                    World world = Bukkit.getWorld(args[2]);
+                                    ((Player) sender).teleport(world.getSpawnLocation());
+                                    sender.sendMessage(PlMessages.Worlds_Go_SuccessFulEnteredWorld.get(new RepItem("%WORLD%", world.getName())));
+                                } else {
+                                    sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools world go {worldName}")));
+                                }
+                                break;
+                            case "create":
+                                if (args.length > 2) {
+                                    if (!PlPerms.hasPerm(sender, PlPerms.Perms.Worlds_Create.get())) {
+                                        sender.sendMessage(PlMessages.NoPermission.get());
+                                        return false;
+                                    }
+                                    if (Bukkit.getWorld(args[2]) != null) {
+                                        sender.sendMessage(PlMessages.Worlds_Create_NameAlreadyExists.get());
+                                        break;
+                                    }
+                                    String flags = args.length > 3 ? mixArray(Arrays.asList(args), " ", 3, args.length - 3) : "";
+                                    World newWorld = new WorldCreator(args[2])
+                                            .environment(flags.contains("-d:n") ? World.Environment.NETHER : flags.contains("-d:e") ? World.Environment.THE_END : World.Environment.NORMAL)
+                                            .generateStructures(!flags.contains("-structure:false"))
+                                            .type(flags.contains("-t:f") ? WorldType.FLAT : WorldType.NORMAL)
+                                            .seed(flags.contains("-seed:") ? Long.parseLong(flags.substring(flags.indexOf("-seed:")).split(":")[1].split(" ")[0]) : new Random().nextLong())
+                                            .createWorld();
+                                    Bukkit.getWorlds().add(newWorld);
+                                    sender.sendMessage(PlMessages.Worlds_Create_SimplifyCreated.get(new RepItem("%WORLD%", args[2])));
+                                } else {
+                                    sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools world create {name} [flags: -t:{f/n} -d:{w/n/e} -seed:{seed} -structure:{true/false}]")));
+                                }
+                                break;
+                            case "delete":
+                                if (!PlPerms.hasPerm(sender, PlPerms.Perms.Worlds_Delete.get())) {
+                                    sender.sendMessage(PlMessages.NoPermission.get());
+                                    return false;
+                                }
+                                if (Bukkit.getWorld(args[2]) == null) {
+                                    sender.sendMessage(PlMessages.Worlds_Delete_TargetNotFound.get());
+                                    break;
+                                }
+                                if (args.length != 3) {
+                                    sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools world delete {name}")));
+                                    break;
+                                }
+                                for (Player player : Bukkit.getWorld(args[2]).getPlayers()) {
+                                    player.kickPlayer(PlInfo.KICK_PREFIX + ChatColor.RED + "World deleted!\nRejoin to the server");
+                                }
+                                for (Entity ent : Bukkit.getWorld(args[2]).getEntities()) {
+                                    ent.remove();
+                                }
+                                Bukkit.getWorlds().remove(Bukkit.getWorld(args[2]));
+                                new File(args[2]).delete();
+                                sender.sendMessage(PlMessages.Worlds_Delete_SimplifyDeletedWorld.get(new RepItem("%WORLD%", args[2])));
+                                break;
+                            default:
+                                sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools world {go/create/delete/default/structure} [args]")));
+                                break;
+                        }
+                    } else {
+                        sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools world {go/create/delete} [args]")));
                     }
                     break;
                 default:

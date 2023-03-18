@@ -87,6 +87,8 @@ public class TabComplete
                             "pts uptime",
                             "pts speed {fly/speed} {1/2/3/4/5/6/7/8/9/10}",
                             "pts invsee {TARGET}",
+                            "pts {world/hide:worlds} {go/delete} {WORLDS}",
+                            "pts {world/hide:worlds} create"
                     };
                     Set<String> currentIndexCommands = new HashSet<>();
                     for (String value : commands) {
@@ -124,10 +126,12 @@ public class TabComplete
             return ImplementedVariables.getOnlinePlayers();
         else if (text.equals("{COMMANDS}"))
             return ImplementedVariables.getPluginCommands();
-        else if (text.contains("/") && text.startsWith("{") && text.endsWith("}")) {
+        else if (text.contains("/") && text.startsWith("{") && text.endsWith("}"))
             return new ArrayList<>(Arrays.asList(text.substring(1).substring(0, text.length() - 2).split("/")));
-        } else if (text.equals("{PLUGINS}"))
+        else if (text.equals("{PLUGINS}"))
             return ImplementedVariables.getPlugins();
+        else if (text.equals("{WORLDS}"))
+            return ImplementedVariables.getWorlds();
         return new ArrayList<>(Collections.singletonList(text));
     }
 
@@ -148,6 +152,12 @@ public class TabComplete
             List<String> plugins = new ArrayList<>();
             Arrays.stream(Bukkit.getServer().getPluginManager().getPlugins()).forEach(plugin -> plugins.add(plugin.getName()));
             return plugins;
+        }
+
+        public static List<String> getWorlds() {
+            List<String> worlds = new ArrayList<>();
+            Bukkit.getWorlds().stream().forEach(world -> worlds.add(world.getName()));
+            return worlds;
         }
     }
 

@@ -46,6 +46,9 @@ public class PlPerms {
         UpTimeSpect("uptime.command"),
         Speed("speed.command"),
         InvSee("invsee.command"),
+        Worlds_Go("world.go"),
+        Worlds_Create("world.create"),
+        Worlds_Delete("world.delete"),
         ;
         private final String perm;
 
