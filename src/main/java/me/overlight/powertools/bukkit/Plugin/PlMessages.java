@@ -1,8 +1,8 @@
-package me.overlight.powertools.spigot.Plugin;
+package me.overlight.powertools.bukkit.Plugin;
 
 import me.clip.placeholderapi.PlaceholderAPI;
-import me.overlight.powertools.spigot.Libraries.ColorFormat;
-import me.overlight.powertools.spigot.Libraries.RepItem;
+import me.overlight.powertools.bukkit.Libraries.ColorFormat;
+import me.overlight.powertools.bukkit.Libraries.RepItem;
 import org.bukkit.entity.Player;
 
 public enum PlMessages {

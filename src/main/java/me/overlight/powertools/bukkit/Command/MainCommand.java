@@ -1,19 +1,19 @@
-package me.overlight.powertools.spigot.Command;
+package me.overlight.powertools.bukkit.Command;
 
 import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import io.github.retrooper.packetevents.PacketEvents;
-import me.overlight.powertools.spigot.AddOns.AddOnManager;
-import me.overlight.powertools.spigot.AddOns.Main.AntiBot.BlackListManager;
-import me.overlight.powertools.spigot.AddOns.Main.AntiBot.WhiteListManager;
-import me.overlight.powertools.spigot.ConsoleMessageSaver;
-import me.overlight.powertools.spigot.Libraries.*;
-import me.overlight.powertools.spigot.Modules.impls.Timer;
-import me.overlight.powertools.spigot.Modules.mods.*;
-import me.overlight.powertools.spigot.Plugin.*;
-import me.overlight.powertools.spigot.PowerModules.ExtensionManager;
-import me.overlight.powertools.spigot.PowerTools;
+import me.overlight.powertools.bukkit.AddOns.AddOnManager;
+import me.overlight.powertools.bukkit.AddOns.Main.AntiBot.BlackListManager;
+import me.overlight.powertools.bukkit.AddOns.Main.AntiBot.WhiteListManager;
+import me.overlight.powertools.bukkit.ConsoleMessageSaver;
+import me.overlight.powertools.bukkit.Libraries.*;
+import me.overlight.powertools.bukkit.Modules.impls.Timer;
+import me.overlight.powertools.bukkit.Modules.mods.*;
+import me.overlight.powertools.bukkit.Plugin.*;
+import me.overlight.powertools.bukkit.PowerModules.ExtensionManager;
+import me.overlight.powertools.bukkit.PowerTools;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -579,7 +579,7 @@ public class MainCommand
                             args[1].equalsIgnoreCase("give")) {
                         if (sender instanceof Player) {
                             try {
-                                me.overlight.powertools.spigot.Libraries.Vote.Vote v = Vote.getVoteById(args[3]);
+                                me.overlight.powertools.bukkit.Libraries.Vote.Vote v = Vote.getVoteById(args[3]);
                                 if (v == null) {
                                     sender.sendMessage(PlMessages.Vote_TargetVoteHasExpired.get());
                                     return true;

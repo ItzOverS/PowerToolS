@@ -1,8 +1,8 @@
-package me.overlight.powertools.spigot.Command;
+package me.overlight.powertools.bukkit.Command;
 
-import me.overlight.powertools.spigot.AddOns.AddOnManager;
-import me.overlight.powertools.spigot.Plugin.PlCommands;
-import me.overlight.powertools.spigot.PowerTools;
+import me.overlight.powertools.bukkit.AddOns.AddOnManager;
+import me.overlight.powertools.bukkit.Plugin.PlCommands;
+import me.overlight.powertools.bukkit.PowerTools;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

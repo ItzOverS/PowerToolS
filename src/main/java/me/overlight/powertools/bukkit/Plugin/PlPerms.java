@@ -1,4 +1,4 @@
-package me.overlight.powertools.spigot.Plugin;
+package me.overlight.powertools.bukkit.Plugin;
 
 import org.bukkit.command.CommandSender;
 
