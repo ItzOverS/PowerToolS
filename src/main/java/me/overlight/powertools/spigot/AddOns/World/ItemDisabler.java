@@ -33,7 +33,11 @@ public class ItemDisabler
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     for (ItemStack stack : player.getInventory()) {
                         if (stack == null) continue;
-                        if (PowerTools.config.getStringList("WorldAddOns.ItemDisabler.items").stream().anyMatch(item -> item.equalsIgnoreCase(stack.getType().name().toLowerCase()))) {
+                        if (PowerTools.config.getStringList("WorldAddOns.ItemDisabler.items").stream().anyMatch(
+                                item -> (item.split(":")[0].equalsIgnoreCase("material") && item.split(":")[1].equalsIgnoreCase("equals") && item.split(":")[2].equalsIgnoreCase(stack.getType().name().toLowerCase())) ||
+                                        (item.split(":")[0].equalsIgnoreCase("material") && item.split(":")[1].equalsIgnoreCase("contains") && item.split(":")[2].toLowerCase().contains(stack.getType().name().toLowerCase())) ||
+                                        (item.split(":")[0].equalsIgnoreCase("name") && item.split(":")[1].equalsIgnoreCase("equals") && item.split(":")[2].equalsIgnoreCase(stack.getItemMeta().getDisplayName().toLowerCase())) ||
+                                        (item.split(":")[0].equalsIgnoreCase("name") && item.split(":")[1].equalsIgnoreCase("contains") && stack.getItemMeta().getDisplayName().toLowerCase().contains(item.split(":")[2].toLowerCase())))) {
                             player.sendMessage(PlMessages.ItemDisabler_ThisItemHasBeenDisabled.get());
                             player.getInventory().remove(stack);
                         }

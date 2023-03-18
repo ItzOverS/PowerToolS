@@ -406,8 +406,8 @@ WorldAddOns:
   ItemDisabler:
     enabled: false
     items:
-      - ""
-      - ""
+      - "material:equals:ender_pearl"
+      - "name:contains:iron"
 
   Optimizer:
     enabled: false
