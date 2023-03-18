@@ -1,8 +1,8 @@
 package me.overlight.powertools.discordlink;
 
-import me.overlight.powertools.spigot.Libraries.PluginYaml;
-import me.overlight.powertools.spigot.Plugin.PlInfo;
-import me.overlight.powertools.spigot.PowerTools;
+import me.overlight.powertools.bukkit.Libraries.PluginYaml;
+import me.overlight.powertools.bukkit.Plugin.PlInfo;
+import me.overlight.powertools.bukkit.PowerTools;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.restaction.AuditableRestAction;

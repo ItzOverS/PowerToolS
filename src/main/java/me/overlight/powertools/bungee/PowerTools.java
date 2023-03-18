@@ -1,8 +1,8 @@
 package me.overlight.powertools.bungee;
 
 import me.overlight.powertools.bungee.AddOns.AntiProtocolDetect;
-import me.overlight.powertools.spigot.Libraries.ColorFormat;
-import me.overlight.powertools.spigot.Plugin.PlInfo;
+import me.overlight.powertools.bukkit.Libraries.ColorFormat;
+import me.overlight.powertools.bukkit.Plugin.PlInfo;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;

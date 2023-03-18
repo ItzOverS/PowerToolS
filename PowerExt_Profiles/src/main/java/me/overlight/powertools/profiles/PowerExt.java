@@ -1,6 +1,6 @@
 package me.overlight.powertools.profiles;
 
-import me.overlight.powertools.spigot.PowerModules.PowerModule;
+import me.overlight.powertools.bukkit.PowerModules.PowerModule;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;

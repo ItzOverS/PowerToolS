@@ -1,6 +1,6 @@
 package me.overlight.powertools.profiles;
 
-import me.overlight.powertools.spigot.NMSSupport;
+import me.overlight.powertools.bukkit.NMSSupport;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;

@@ -1,6 +1,6 @@
 package me.overlight.powertools.discordlink;
 
-import me.overlight.powertools.spigot.Plugin.PlInfo;
+import me.overlight.powertools.bukkit.Plugin.PlInfo;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

@@ -1,9 +1,9 @@
 package me.overlight.powertools.profiles;
 
 import io.github.retrooper.packetevents.PacketEvents;
-import me.overlight.powertools.spigot.APIs.NetworkChecker;
-import me.overlight.powertools.spigot.APIs.PremiumField;
-import me.overlight.powertools.spigot.AddOns.Main.VersionCheck;
+import me.overlight.powertools.bukkit.APIs.NetworkChecker;
+import me.overlight.powertools.bukkit.APIs.PremiumField;
+import me.overlight.powertools.bukkit.AddOns.Main.VersionCheck;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 

@@ -1,8 +1,8 @@
 package me.overlight.powertools.commandpanel;
 
-import me.overlight.powertools.spigot.PowerModules.ExtensionManager;
-import me.overlight.powertools.spigot.PowerModules.PowerModule;
-import me.overlight.powertools.spigot.PowerTools;
+import me.overlight.powertools.bukkit.PowerModules.ExtensionManager;
+import me.overlight.powertools.bukkit.PowerModules.PowerModule;
+import me.overlight.powertools.bukkit.PowerTools;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 

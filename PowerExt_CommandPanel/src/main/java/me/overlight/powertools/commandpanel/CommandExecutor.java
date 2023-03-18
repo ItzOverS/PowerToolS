@@ -1,7 +1,7 @@
 package me.overlight.powertools.commandpanel;
 
-import me.overlight.powertools.spigot.Libraries.InvGen;
-import me.overlight.powertools.spigot.PowerTools;
+import me.overlight.powertools.bukkit.Libraries.InvGen;
+import me.overlight.powertools.bukkit.PowerTools;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

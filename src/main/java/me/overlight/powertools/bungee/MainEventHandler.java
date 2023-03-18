@@ -1,7 +1,7 @@
 package me.overlight.powertools.bungee;
 
-import me.overlight.powertools.spigot.AddOns.Main.AntiBot.BlackListManager;
-import me.overlight.powertools.spigot.Libraries.ColorFormat;
+import me.overlight.powertools.bukkit.AddOns.Main.AntiBot.BlackListManager;
+import me.overlight.powertools.bukkit.Libraries.ColorFormat;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.chat.ComponentBuilder;
