@@ -212,11 +212,6 @@ RulesAccept:
     - ""
     - "&cDestroying this rules have result ban!"
 
-Report:
-  enabled: false
-  delayBetweenReports: 600000 # 600000 miliSeconds = 600 Seconds = 10 Minutes
-  reportTheySelf: false
-
 SlashServer:
   enabled: false
   servers:
