@@ -906,6 +906,7 @@ public class MainCommand
                     break;
                 default:
                     sender.sendMessage(PlMessages.CommandNotFind.get());
+                    break;
             }
         } else {
             // args.length == 0
