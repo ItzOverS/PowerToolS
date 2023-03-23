@@ -1,6 +1,6 @@
 name: PowerToolS
 version: '${project.version}'
-main: me.overlight.powertools.spigot.PowerTools
+main: me.overlight.powertools.bukkit.PowerTools
 author: _OverLight_
 softdepend: [ PlaceholderAPI, Vault ]
 website: http://www.daneshian.ir/
