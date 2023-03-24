@@ -33,6 +33,8 @@ public class ItemDisabler
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     for (ItemStack stack : player.getInventory()) {
                         if (stack == null) continue;
+                        if (stack.getItemMeta() == null) continue;
+                        if (stack.getItemMeta().getDisplayName() == null) continue;
                         if (PowerTools.config.getStringList("WorldAddOns.ItemDisabler.items").stream().anyMatch(
                                 item -> (item.split(":")[0].equalsIgnoreCase("material") && item.split(":")[1].equalsIgnoreCase("equals") && item.split(":")[2].equalsIgnoreCase(stack.getType().name().toLowerCase())) ||
                                         (item.split(":")[0].equalsIgnoreCase("material") && item.split(":")[1].equalsIgnoreCase("contains") && item.split(":")[2].toLowerCase().contains(stack.getType().name().toLowerCase())) ||
