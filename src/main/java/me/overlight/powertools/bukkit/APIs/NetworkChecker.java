@@ -93,11 +93,13 @@ public class NetworkChecker {
             client.setRequestMethod("GET");
             client.setRequestProperty("accept", "application/json");
             client.setRequestProperty("userAgent", "Mozilla/5.0");
+            client.setConnectTimeout(1000);
             if (client.getResponseCode() != 200) {
                 return null;
             }
             return getAsJsoN(client.getInputStream());
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
