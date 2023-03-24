@@ -3,7 +3,7 @@ version: '${project.version}'
 main: me.overlight.powertools.bukkit.PowerTools
 author: _OverLight_
 softdepend: [ PlaceholderAPI, Vault ]
-website: http://www.daneshian.ir/
+website: github.com/ItzOverS/
 prefix: PowerToolS
 description: Give staffs powerful options for detecting cheaters
 
