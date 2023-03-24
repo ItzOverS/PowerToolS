@@ -76,7 +76,8 @@ public class PowerTools
                 .bStats(true)
                 .fallbackServerVersion(ServerData.isNewerThan(ServerData.getServerVersion(), ServerData.formatVersion(ReverseServerVersionByPacketEvents()[1].name())) ? ReverseServerVersionByPacketEvents()[1] : PacketEvents.get().getServerUtils().getVersion());
 
-        if (err != "") ((Logger) LogManager.getRootLogger()).addFilter(new ConsoleMessageFilter());
+        PacketEvents.get().load();
+        if (err == "") ((Logger) LogManager.getRootLogger()).addFilter(new ConsoleMessageFilter());
     }
 
     @Override
@@ -86,7 +87,6 @@ public class PowerTools
             return;
         }
         try {
-            PacketEvents.get().load();
             new BukkitRunnable() {
                 public void run() {
                     upTimeTimer.add(0, 0, 0, 0, 0, 1);
