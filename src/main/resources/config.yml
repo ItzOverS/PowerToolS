@@ -178,7 +178,7 @@ AntiWorldDownLoader: # Anti WDL
 
 PingCheck:
   enabled: false
-  maxPing: 1000
+  maxPing: 3000
   alert-on-discord: false
 
 pvpManager:
@@ -305,7 +305,7 @@ ServerAddOns:
 
   ForcePing:
     enabled: false
-    maxDelay: 5000
+    maxDelay: 15000
 
   AntiRejoin: # Works better if ForcePing enabled
     enabled: false
