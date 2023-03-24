@@ -10,7 +10,6 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -36,7 +35,7 @@ public class NetworkChecker
         compo.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(hover).create()));
         for (OfflinePlayer player : Bukkit.getOperators()) {
             if (!player.isOnline()) continue;
-            ((Player) player).spigot().sendMessage(compo);
+                Bukkit.getPlayer(player.getName()).spigot().sendMessage(compo);
         }
         {
             String IPv4 = me.overlight.powertools.bukkit.APIs.NetworkChecker.getPlayerIPv4(e.getPlayer());
@@ -55,7 +54,7 @@ public class NetworkChecker
                 }
                 for (OfflinePlayer player : Bukkit.getOperators()) {
                     if (!player.isOnline()) continue;
-                    ((Player) player).sendMessage(PlMessages.NetworkChecker_PlayerTempBannedForInvalidCountry.get(new RepItem("%PLAYER_NAME%", e.getPlayer().getName())));
+                    Bukkit.getPlayer(player.getName()).sendMessage(PlMessages.NetworkChecker_PlayerTempBannedForInvalidCountry.get(new RepItem("%PLAYER_NAME%", e.getPlayer().getName())));
                 }
             } else {
                 String country = (String) me.overlight.powertools.bukkit.APIs.NetworkChecker.getField(e.getPlayer(), "countryCode");
@@ -66,7 +65,7 @@ public class NetworkChecker
                 }
                 for (OfflinePlayer player : Bukkit.getOperators()) {
                     if (!player.isOnline()) continue;
-                    ((Player) player).sendMessage(PlMessages.NetworkChecker_PlayerTempBannedForInvalidCountry.get(new RepItem("%PLAYER_NAME%", e.getPlayer().getName())));
+                    Bukkit.getPlayer(player.getName()).sendMessage(PlMessages.NetworkChecker_PlayerTempBannedForInvalidCountry.get(new RepItem("%PLAYER_NAME%", e.getPlayer().getName())));
                 }
             }
         }
