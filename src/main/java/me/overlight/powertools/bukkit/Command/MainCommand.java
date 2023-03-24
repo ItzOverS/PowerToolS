@@ -526,7 +526,7 @@ public class MainCommand
                         sender.sendMessage(PlMessages.NoPermission.get());
                         return false;
                     }
-                    if (args.length == 3) { // /pts mute _OverLight_ 3d
+                    if (args.length == 3) {
                         if (isPlayerValid(args[1])) {
                             if (!Mute.isPlayerMuted(args[1])) {
                                 Mute.mutedPlayers.add(new MuteEntry(args[1], args[2], "The Mute Hammer has Spoken", Mute.currentTime()));
@@ -552,7 +552,7 @@ public class MainCommand
                         sender.sendMessage(PlMessages.NoPermission.get());
                         return false;
                     }
-                    if (args.length == 2) { // /pts mute _OverLight_
+                    if (args.length == 2) {
                         if (Mute.isPlayerMuted(args[1])) {
                             Mute.unMute(args[1]);
                             sender.sendMessage(PlMessages.Mute_UserNoLongerMuted.get(new RepItem("%USERNAME%", args[1])));
