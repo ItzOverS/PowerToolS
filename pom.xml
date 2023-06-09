@@ -123,9 +123,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.DV8FromTheWorld</groupId>
+            <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>v5.0.0-beta.3</version>
+            <version>5.0.0-beta.10</version>
             <exclusions>
                 <exclusion>
                     <groupId>club.minnced</groupId>
