@@ -600,6 +600,33 @@ public class MainCommand
                         sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools vote create")));
                     }
                     break;
+                /*case "img2map":
+                    if (sender instanceof Player) {
+                        if (args.length == 2) {
+                            if (PacketEvents.get().getServerUtils().getVersion().isOlderThan(ServerVersion.v_1_16_2)) {
+                                sender.sendMessage(PlMessages.OutDatedFuture.get(new RepItem("%VERSION%", "+1.16")));
+                            } else {
+                                MapView view = Bukkit.createMap(((Player) sender).getWorld());
+                                view.getRenderers().clear();
+                                ImageMapLoader renderer = new ImageMapLoader();
+                                if (renderer.loadImage(args[1])) {
+                                    ItemStack stack = new ItemStack(Material.valueOf("FILLED_MAP"), 1);
+                                    MapMeta meta = (MapMeta) stack.getItemMeta();
+                                    view.addRenderer(renderer);
+                                    ((Player) sender).getInventory().addItem(stack);
+                                    ((Player) sender).sendMap(view);
+                                    sender.sendMessage(PlMessages.Img2Map_SimplifyCreatedMap.get());
+                                } else {
+                                    sender.sendMessage(PlMessages.Img2Map_TargetUrlNotFind.get());
+                                }
+                            }
+                        } else {
+                            sender.sendMessage(PlMessages.InvalidUsage.get(new RepItem("%CORRECT%", "/powertools img2map {url}")));
+                        }
+                    } else {
+                        sender.sendMessage(PlMessages.OnlyPlayersCanUseCommand.get());
+                    }
+                    break;*/
                 case "dump":
                     if (args.length == 2) {
                         switch (args[1]) {

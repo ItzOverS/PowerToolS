@@ -70,6 +70,7 @@ public class TabComplete
                             "pts toggle {tps/remove}",
                             "pts help {COMMANDS}",
                             "pts vote create",
+                            //"pts img2map <URL>",
                             "pts plugins {enable/disable/restart/info} {PLUGINS}",
                             "pts speed {fly/speed} {1/2/3/4/5/6/7/8/9/10}",
                             "pts {world/hide:worlds} {go/delete} {WORLDS}",
