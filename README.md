@@ -12,6 +12,8 @@
 * PVP manager method
 * Deny commands (remove them!)
 * Afk detection & kick (customizable)
+* World management
+* Anti Plugin detector
 * ForceSpawn method & other addons (customizable)
 * Some AddOns for Survival, Bedwars & SkyBlock(Soon) 
 * & more & more ...
