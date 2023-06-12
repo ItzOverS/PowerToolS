@@ -117,9 +117,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.retrooper</groupId>
+            <groupId>io.github.retrooper</groupId>
             <artifactId>packetevents</artifactId>
-            <version>v1.8.4</version>
+            <version>1.8.5</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

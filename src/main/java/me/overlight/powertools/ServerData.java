@@ -22,7 +22,13 @@ public class ServerData {
         if (Integer.parseInt(v1.split("\\.")[0]) < Integer.parseInt(v2.split("\\.")[0])) {
             return false;
         } else if (Integer.parseInt(v1.split("\\.")[0]) == Integer.parseInt(v2.split("\\.")[0])) {
-            return isNewerThan(v1.substring(v1.split("\\.")[0].length() + 1), v2.substring(v2.split("\\.")[0].length() + 1));
+            try {
+                String a = v1.substring(v1.split("\\.")[0].length() + 1),
+                        b = v2.substring(v2.split("\\.")[0].length() + 1);
+                return isNewerThan(a, b);
+            } catch (Exception ex) {
+                return false;
+            }
         } else {
             return true;
         }

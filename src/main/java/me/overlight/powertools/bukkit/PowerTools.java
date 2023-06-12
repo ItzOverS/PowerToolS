@@ -67,10 +67,6 @@ public class PowerTools
         INSTANCE = this;
         PacketEvents.create(this);
 
-        if (ServerData.isNewerThan(ServerData.getServerVersion(), "1.18.2")) {
-            err = "Plugin disabled due PacketEvents not support +1.19 minecraft version";
-        }
-
         PacketEvents.get().getSettings()
                 .checkForUpdates(false)
                 .bStats(true)
