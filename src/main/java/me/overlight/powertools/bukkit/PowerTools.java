@@ -48,17 +48,20 @@ import org.apache.logging.log4j.core.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
 import java.io.IOException;
 
 public class PowerTools
         extends JavaPlugin {
     public static PowerTools INSTANCE;
     public static FileConfiguration config;
+    public static FileConfiguration messages;
     private static String err = "";
     public static Timer upTimeTimer = new Timer(0, 0, 0, 0, 0, 0);
 
@@ -92,8 +95,11 @@ public class PowerTools
             Alert(Target.CONSOLE, "@color_greenEnabling " + PlInfo.INV_PREFIX.substring(0, PlInfo.INV_PREFIX.length() - 11));
             INSTANCE = this;
             saveDefaultConfig();
+            saveResource("messages.yml", false);
 
             PowerTools.config = getConfig();
+            PowerTools.messages = YamlConfiguration.loadConfiguration(new File("plugins\\PowerToolS\\messages.yml"));
+            PlInfo.load();
 
             if (Vault.implementAPI()) {
                 getServer().getConsoleSender().sendMessage(PlInfo.PREFIX + ChatColor.GREEN + "simplify connected to vault options");

@@ -3,6 +3,7 @@ package me.overlight.powertools.bukkit.Plugin;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.overlight.powertools.bukkit.Libraries.ColorFormat;
 import me.overlight.powertools.bukkit.Libraries.RepItem;
+import me.overlight.powertools.bukkit.PowerTools;
 import org.bukkit.entity.Player;
 
 public enum PlMessages {
@@ -115,13 +116,13 @@ public enum PlMessages {
     }
 
     public String get(RepItem... items) {
-        String item = ColorFormat.formatColor(this.desc);
+        String item = ColorFormat.formatColor(PowerTools.messages.contains(this.name()) ? PowerTools.messages.getString(this.name()) : desc);
         for (RepItem i : items) item = item.replace(i.key(), i.value());
         return PlInfo.PREFIX + item;
     }
 
     public String get(Player player, RepItem... items) {
-        String item = ColorFormat.formatColor(this.desc);
+        String item = ColorFormat.formatColor(PowerTools.messages.contains(this.name()) ? PowerTools.messages.getString(this.name()) : desc);
         for (RepItem i : items) item = item.replace(i.key(), i.value());
         return PlaceholderAPI.setPlaceholders(player, PlInfo.PREFIX + item);
     }
