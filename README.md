@@ -18,7 +18,7 @@
 * Some AddOns for Survival, Bedwars & SkyBlock(Soon) 
 * & more & more ...
 
-# Soft-Depedencies ( not required ) 
+# Soft-Depedencies ( Optional ) 
 - Vault-Economy: https://www.spigotmc.org/resources/vault.34315/ ( for SurvivalAddOns.ChatGames if you wants give players money )
 - PlaceHolderAPI: https://www.spigotmc.org/resources/placeholderapi.6245/ ( for connect to placeholder api & insert placeholders )
 
